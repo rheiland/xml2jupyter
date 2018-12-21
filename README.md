@@ -1,13 +1,15 @@
 # xml2jupyter
 Using an XML configuration file (for the [PhysiCell](http://physicell.mathcancer.org/) simulator), generate a GUI consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html).
 
+<!--
 If you simply want to try the notebook, without downloading anything, try clicking on this Binder badge [![Binder](https://img.shields.io/badge/PhysiCell-JupyterGUI-E66581.svg)](https://mybinder.org/v2/gh/rheiland/xml2gui/master?filepath=PhysiCell.ipynb) to run it from your browser.
+-->
 
 <!--
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/rheiland/xml2gui/master?filepath=PhysiCell.ipynb) Click the binder badge to play with the notebook from your browser without installing anything.
 -->
 
-# Installation
+## Installation
 This project requires a Python distribution with modules not found in the standard
 library. In particular, it needs matplotlib (and all its dependencies), scipy.io, and Jupyter (notebooks). You have at least a couple of different options:
 
@@ -26,7 +28,7 @@ conda install scipy
 conda install jupyter
 ```
 
-# Usage
+## Usage
 After you have the desired Python modules:
 
 - Copy your project's configuration file (.xml) to this directory, calling it "myconfig.xml"
@@ -52,3 +54,8 @@ If you don't have your current working directory in your PATH, you will need to 
 ./heterogeneity myconfig.xml     # on Unix
 .\heterogeneity myconfig.xml     # on Windows
 ```
+## Contributions
+
+We welcome users' feedback and contributions. Please use the Issues feature for comments related to this repository and project.
+
+For questions related to PhysiCell, please join us at https://groups.google.com/forum/#!forum/physicell-users.
