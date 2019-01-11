@@ -31,6 +31,12 @@ conda install jupyter
 ```
 
 ## Usage
+
+Copy your .xml file to ```test.xml```, e.g.,
+```
+$ cp config_samples/config_biorobots.xml test.xml
+```
+
 After you have the desired Python modules:
 
 - Copy your project's configuration file (.xml) to this directory, calling it "myconfig.xml"
