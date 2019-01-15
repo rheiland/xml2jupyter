@@ -1,6 +1,7 @@
-# Build the paper (on *nix)
+# Build (on *nix) the paper to produce a JOSS-like pdf
+
+Run this script:
 ```
-make
-bash gen_pdf.sh
+$ bash gen_pdf.sh
 ```
-should generate	`paper.pdf`.
+It requires `make, pandoc, sed, and pdflatex` and should generate	the `paper.pdf` from the `paper.md`.
