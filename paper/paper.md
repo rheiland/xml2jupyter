@@ -44,6 +44,15 @@ and the values are written to the XML configuration file.
 Xml2jupyter has been tested using the PhysiCell [@PhysiCell:2018] simulation software
 and will be used by students for classroom and research projects.
 
+A PhysiCell configuration file defines model-specific user parameters in XML. Each parameter element
+consists of its name with attributes defining its data *type* and any *units* associated
+with it, along with the parameter's default value. The attributes will determine the appearance and 
+behavior of the Jupyter widget. For numeric widgets (the most common type), xml2jupyter will 
+calculate a delta step size as a function of the default value.
+
+To illustrate, we share a portion of the *user_parameters* section from the XML configuration file for the
+*biorobots* sample project (included with PhysiCell):
+
 ```xml
 <user_parameters>
   <random_seed type="int" units="dimensionless">0</random_seed> 
@@ -57,14 +66,16 @@ and will be used by students for classroom and research projects.
   <!-- for cell definitions -->
   <elastic_coefficient type="double" units="1/min">0.05</elastic_coefficient>
   ... 
+  <director_color type="string" units="none">limegreen</director_color>
 </user_parameters>
 ```
-A portion of a sample XML configuration file.
-
+A user would execute a Python script, `xml2jupyter.py`, that parses this XML and generates a Python 
+module containing the Jupyter widgets, together with methods to populate their values from the XML
+and write their values back to the XML. This can be displayed as a very simple GUI in a Jupyter
+notebook to provide the mapping to/from the XML parameter values, as shown below:
 
 ![](images/test_screen.png)
 
-The resulting Jupyter notebook containing the widgets for the above XML.
 
 # PhysiCell Jupyter GUI
 
