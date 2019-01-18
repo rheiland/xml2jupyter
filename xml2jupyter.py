@@ -1,4 +1,5 @@
-# This script parses a PhysiCell configuration (.xml) file and generates a Jupyter (Python) module
+#
+# Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
 # containing associated widgets for user parameters.
 #
 # Authors: Randy Heiland, Daniel Mishler, Tyler Zhang, Eric Bower, and Paul Macklin
@@ -8,7 +9,7 @@ import math
 import xml.etree.ElementTree as ET
 
 if (len(sys.argv) < 2):
-    print("Usage: python " + sys.argv[0] + "<config-file.xml>")
+    print("Usage: python " + sys.argv[0] + " <config-file.xml>")
     sys.exit(1)
 config_file = sys.argv[1]
 
@@ -20,9 +21,17 @@ config_file = sys.argv[1]
 # #        break
 #         sys.exit(1)
 with open('mygui.py') as f:
-  newText = f.read().replace('myconfig.xml', config_file)
+#  newText = f.read().replace('myconfig.xml', config_file) # rwh todo: don't assume this string; find line
+  file_str = f.read()
+  idx = file_str.find('main_xml_filename')  # verify > -1
+  file_pre = file_str[:idx] 
+  idx2 = file_str[idx:].find('\n')
+  file_post = file_str[idx+idx2:] 
+
 with open('mygui.py', "w") as f:
-  f.write(newText)
+  f.write(file_pre)
+  f.write("main_xml_filename = '" + config_file + "'")
+  f.write(file_post)
 
 user_tab_header = """ 
 # This file is auto-generated from a Python script that parses a PhysiCell configuration (.xml) file.
@@ -99,7 +108,7 @@ for child in uep:
     print(child.tag, child.attrib)
     units_str = ""
     if 'units' in child.attrib.keys():
-        if child.attrib['units'] != "dimensionless":
+        if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
             units_str = child.attrib['units']
     if 'type' in child.attrib.keys():
 #             self.therapy_activation_time = BoundedFloatText(
@@ -131,39 +140,46 @@ for child in uep:
                 # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
                 user_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
 
-            elif child.attrib['type'] == "int":  # warning: math.log(1000,10)=2.99..., math.log10(1000)=3  Sigh.
+            # Integers
+            elif child.attrib['type'] == "int":  # warning: math.log(1000,10)=2.99..., math.log10(1000)=3  
                 if (abs(int(child.text)) > 0):
                     delta_val = pow(10,int(math.log10(abs(int(child.text)))) - 1)
                 else:
-                    delta_val = 1  # if initial value=0.0, we're totally guessing at what a good delta is
+                    delta_val = 1  # if initial value=0, we're totally guessing at what a good delta is
                 print('int: ',int(child.text),', delta_val=',delta_val)
 
                 user_tab_header += indent2 + "value=" + child.text + ",\n"
                 user_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
 
+            # Booleans
             elif child.attrib['type'] == "bool":
                 pass
 
-            # And finally, append the info at the end of this widget
+
+            # Finally, append the info at the end of this widget
             user_tab_header += indent2 + "style=style, layout=layout)\n"
 
-    #        self.tab = VBox([HBox([self.therapy_activation_time, Label('min')]), 
-    #        vbox_str += indent2 + "HBox([" + full_name + ", Label('min')]), \n"
             vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "')]), \n"
 
             # float, int, bool
-    #        fill_gui_str += indent + full_name + ".value = float(uep.find('.//" + child.tag + "').text)\n"
             fill_gui_str += indent + full_name + ".value = " + type_cast[child.attrib['type']] + "(uep.find('.//" + child.tag + "').text)\n"
-    #        self.therapy_activation_time.value = float(uep.find(".//therapy_activation_time").text)
 
             fill_xml_str += indent + "uep.find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
-    #         uep.find(".//therapy_activation_time").text = str(self.therapy_activation_time.value)
 
 vbox_str += indent + "])"
 
 # Write the beginning of the Python module for the user parameters tab in the GUI
 user_tab_file = "user_params.py"
-print("\n ---> " + user_tab_file)
+print("\n --------------------------------- ")
+print("Generated a new: ", user_tab_file)
+print()
+print("If this is your first time:")
+print("Run the GUI via:  jupyter notebook mygui.ipynb")
+print("run the Jupyter menu item:  Cell -> Run All")
+print()
+print("If you already have a GUI running and you just want to use new User Params:")
+print("run the Jupyter menu item:  Kernel -> Restart & Run All")
+print()
 fp= open(user_tab_file, 'w')
 fp.write(user_tab_header)
 fp.write(vbox_str)
