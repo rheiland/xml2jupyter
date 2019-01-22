@@ -8,10 +8,16 @@ import sys
 import math
 import xml.etree.ElementTree as ET
 
-if (len(sys.argv) < 2):
-    print("Usage: python " + sys.argv[0] + " <config-file.xml>")
+num_args = len(sys.argv)
+print("num_args=",num_args)
+if ( num_args < 2):
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>]")
     sys.exit(1)
 config_file = sys.argv[1]
+
+if ( num_args == 3):
+    gui_file = sys.argv[2]
+
 
 # First, let's use this config file name in the (main) mygui.py module:
 # f_main = open('mygui.py', 'r')
@@ -20,18 +26,19 @@ config_file = sys.argv[1]
 #         print(line)
 # #        break
 #         sys.exit(1)
-with open('mygui.py') as f:
-#  newText = f.read().replace('myconfig.xml', config_file) # rwh todo: don't assume this string; find line
-  file_str = f.read()
-  idx = file_str.find('main_xml_filename')  # verify > -1
-  file_pre = file_str[:idx] 
-  idx2 = file_str[idx:].find('\n')
-  file_post = file_str[idx+idx2:] 
+if (num_args == 3):
+    with open('mygui.py') as f:
+    #  newText = f.read().replace('myconfig.xml', config_file) # rwh todo: don't assume this string; find line
+        file_str = f.read()
+        idx = file_str.find('main_xml_filename')  # verify > -1
+        file_pre = file_str[:idx] 
+        idx2 = file_str[idx:].find('\n')
+        file_post = file_str[idx+idx2:] 
 
-with open('mygui.py', "w") as f:
-  f.write(file_pre)
-  f.write("main_xml_filename = '" + config_file + "'")
-  f.write(file_post)
+    with open('mygui.py', "w") as f:
+        f.write(file_pre)
+        f.write("main_xml_filename = '" + config_file + "'")
+        f.write(file_post)
 
 user_tab_header = """ 
 # This file is auto-generated from a Python script that parses a PhysiCell configuration (.xml) file.
