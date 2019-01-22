@@ -167,10 +167,10 @@ for child in uep:
             # Booleans
             elif child.attrib['type'] == "bool":
                 user_tab_header += indent2 + "value=" + child.text + ",\n"
-			
-			# Strings
-			elif child.attrib['type'] == "string":
-				user_tab_header += indent2 + "value=" + child.text + ",\n"
+            
+            # Strings
+            elif child.attrib['type'] == "string":
+                user_tab_header += indent2 + "value=" + child.text + ",\n"
 
 
             # Finally, append the info at the end of this widget
