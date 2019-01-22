@@ -111,8 +111,14 @@ widgets = {"double":"FloatText", "int":"IntText", "bool":"Checkbox", "string":"T
 type_cast = {"double":"float", "int":"int", "bool":"bool", "string":""}
 vbox_str = "\n" + indent + "self.tab = VBox([\n"
 
+tag_list = []
 for child in uep:
     print(child.tag, child.attrib)
+    if child.tag in tag_list:
+        print("-------> Warning: duplicate tag!  ", child.tag)
+        continue
+    else:
+        tag_list.append(child.tag)
     units_str = ""
     if 'units' in child.attrib.keys():
         if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
