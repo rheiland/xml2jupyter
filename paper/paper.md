@@ -45,13 +45,35 @@ Xml2jupyter has been tested using the PhysiCell [@PhysiCell:2018] simulation sof
 and will be used by students for classroom and research projects.
 
 A PhysiCell configuration file defines model-specific user parameters in XML. Each parameter element
-consists of its name with attributes defining its data *type* and any *units* associated
-with it, along with the parameter's default value. The attributes will determine the appearance and 
-behavior of the Jupyter widget. For numeric widgets (the most common type), xml2jupyter will 
-calculate a delta step size as a function of the default value.
+consists of its name with attributes, defining its data *type* and *units* (optional), 
+and the parameter's default value. The attributes will determine the appearance and 
+behavior of the Jupyter widget. For numeric widgets (the most common type for PhysiCell), 
+xml2jupyter will calculate a delta step size as a function of the default value and this 
+step size will be used by the widget.
 
-To illustrate, we share a portion of the *user_parameters* section from the XML configuration file for the
-*biorobots* sample project (included with PhysiCell):
+<!-- 
+```xml
+<user_parameters>
+  <answer type="int" units="Triganic Pu">42</answer> 
+  <author type="string">DNA</author>
+  <enjoyed type="boolean">True</enjoyed>
+</user_parameters>
+```
+-->
+To illustrate, we show the following contrived XML example, containing each of the four allowed data types: 
+
+![](images/silly_xml-60.png)
+
+When we map this into Jupyter widgets, we have the following that shows the rendered widgets (left). The
+middle snapshot shows the result after the user does a single delta step (up) on the `radius` (note the step size of 10)
+and the right snapshot after the user single steps the `threads` (note the step size of 1).
+
+![](images/silly1-50.png)
+![](images/silly2-50.png)
+![](images/silly3-50.png)
+
+In another example, we use an XML configuration file from the
+*biorobots* sample project included with PhysiCell:
 
 ```xml
 <user_parameters>
@@ -69,6 +91,11 @@ To illustrate, we share a portion of the *user_parameters* section from the XML 
   <director_color type="string" units="none">limegreen</director_color>
 </user_parameters>
 ```
+
+A workflow to demonstrate this project is the following: 
+
+* python xml2jupyter.py `<config_file>`.xml
+
 A user would execute a Python script, `xml2jupyter.py`, that parses this XML and generates a Python 
 module containing the Jupyter widgets, together with methods to populate their values from the XML
 and write their values back to the XML. This can be displayed as a very simple GUI in a Jupyter
@@ -97,12 +124,30 @@ Additional tabs used by the PhysiCell Jupyter GUI.
 -![](images/heterogeneity_params.png)
 The images above show hetero...  -->
 
+# Extensions and Discussion
+We hope others will be inspired to extend the idea of this project to other text-based 
+configuration files. XML is only one of several data-interchange formats. 
+<!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
+It just happens to be the one of interest to us for PhysiCell.
+
+Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], a scientific
+cloud for running simulations and visualizing results.
+
+![](images/nanohub_cells.png)
+
+![](images/nanohub_o2.png)
+
+![](images/nanohub_chemo.png)
+
+![](images/nanohub_therap.png)
+
 
 # Acknowledgements
 
 We thank the National Science Foundation for providing funding via NSF EEC-1720625.
+NCI grant #... Paul?
 We acknowledge support from our collaborators at Purdue University, especially Martin Hunt, who 
-contributed to our `pc4nanobio` tool on nanoHUB.
+helped port our Jupyter tools to nanoHUB.
 
 # References
 
