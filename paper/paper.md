@@ -131,7 +131,10 @@ configuration files. XML is only one of several data-interchange formats.
 It just happens to be the one of interest to us for PhysiCell.
 
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
-a scientific cloud for nanoscience education and research, including running simulations.
+a scientific cloud for nanoscience education and research that includes running 
+interactive or batch simulations. For example, we show screen shots from our `pc4cancerbots`
+tool running on nanoHUB, where the *User Params* tab has been generated using the 
+`xml2jupyter.py` script. Readers can create an account on nanoHUB and run `pc4cancerbots` for themselves.
 
 ![](images/nanohub_params.png)
 
@@ -147,6 +150,10 @@ a scientific cloud for nanoscience education and research, including running sim
 
 ![](images/nano_2x2.png)
 
+We welcome suggestions and, better yet, contributions (via pull requests) to xml2jupyter.
+For example, currently, we simply arrange the generated widgets in a single column.
+It may be preferable to allow a matrix-style layout, using additional attributes in the XML.
+Also, it might be nice to provide more informative *tooltip* text for widgets.
 # Acknowledgements
 
 We thank the National Science Foundation for providing funding via NSF EEC-1720625.
