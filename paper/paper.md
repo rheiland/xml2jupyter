@@ -130,11 +130,12 @@ configuration files. XML is only one of several data-interchange formats.
 <!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
 It just happens to be the one of interest to us for PhysiCell.
 
-Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], a scientific
-cloud for running simulations and visualizing results.
+Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
+a scientific cloud for nanoscience education and research, including running simulations.
 
 ![](images/nanohub_params.png)
 
+<!--
 ![](images/nanohub_cells.png)
 
 ![](images/nanohub_o2.png)
@@ -142,7 +143,9 @@ cloud for running simulations and visualizing results.
 ![](images/nanohub_chemo.png)
 
 ![](images/nanohub_therap.png)
+-->
 
+![](images/nano_2x2.png)
 
 # Acknowledgements
 
