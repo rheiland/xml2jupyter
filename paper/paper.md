@@ -133,6 +133,8 @@ It just happens to be the one of interest to us for PhysiCell.
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], a scientific
 cloud for running simulations and visualizing results.
 
+![](images/nanohub_params.png)
+
 ![](images/nanohub_cells.png)
 
 ![](images/nanohub_o2.png)
