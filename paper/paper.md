@@ -60,13 +60,14 @@ step size will be used by the widget.
 </user_parameters>
 ```
 -->
-To illustrate, we show the following contrived XML example, containing each of the four allowed data types: 
+To illustrate, we show the following contrived XML example, containing each of the four 
+allowed data types (currently): 
 
 ![](images/silly_xml-60.png)
 
-When we map this into Jupyter widgets, we have the following that shows the rendered widgets (left). The
-middle snapshot shows the result after the user does a single delta step (up) on the `radius` (note the step size of 10)
-and the right snapshot after the user single steps the `threads` (note the step size of 1).
+When we map this into Jupyter widgets, we obtain the following rendered results (left). The
+middle snapshot shows the updated numeric value after the user does a single delta step (up) on the `radius` (note the step size of 10)
+and the right snapshot after the user single steps the `threads` value (note the step size of 1).
 
 ![](images/silly1-50.png)
 ![](images/silly2-50.png)
@@ -92,28 +93,40 @@ In another example, we use an XML configuration file from the
 </user_parameters>
 ```
 
-A workflow to demonstrate this project is the following: 
+To demonstrate this project, one would: 1) clone the repository (or download a release), 
+2) copy one of the sample XML configuration files to the root directory, 3) run the 
+`xml2jupyter.py` script, providing the XML file as a argument.
+```
+$ cp config_samples/config_biorobots.xml .
+$ python xml2jupyter.py config_biorobots.xml 
+```
+The `xml2jupyter.py` script parses the XML and generates a Python 
+module, `user_params.py`, containing the Jupyter widgets, together with methods to populate 
+their values from the XML and write their values back to the XML. 
+To "validate" the widgets were generated correctly, one could, minimally, open `user_params.py` 
+in an editor and inspect it.
+<!-- One could then inspect it in an editor to "verify" it is correct.  -->
 
-* python xml2jupyter.py `<config_file>`.xml
-
-A user would execute a Python script, `xml2jupyter.py`, that parses this XML and generates a Python 
-module containing the Jupyter widgets, together with methods to populate their values from the XML
-and write their values back to the XML. This can be displayed as a very simple GUI in a Jupyter
-notebook to provide the mapping to/from the XML parameter values, as shown below:
+But to actually see the widgets rendered in a notebook, we provide a simple test:
+```
+$ python xml2jupyter.py config_biorobots.xml test_user_params.py
+$ jupyter notebook test_gui.ipynb
+```
+This should produce the following result:
 
 ![](images/test_screen.png)
 
 
 # PhysiCell Jupyter GUI
 
-Our ultimate goal is to generate a functional GUI for PhysiCell users. Xml2jupyter provides one
+Our ultimate goal is to generate a fully functional GUI for PhysiCell users. Xml2jupyter provides one
 important piece of this - dynamically generating widgets for custom user parameters for a model.
 With the addition of static components (tabs) of the GUI, a user can also visualize output results
 from simulations.
 This additional functionality requires modules not available in the Python
 standard library, e.g., Matplotlib [@Hunter:2007]
-to display plots, and SciPy to parse PhysiCell output data. We provide instructions for installing these additional dependencies on
-`github link`.
+to display plots, and SciPy to parse PhysiCell output data. We provide instructions for 
+installing these additional dependencies on the README of the repository.
 
 ![](images/biorobots_cells.png)
 ![](images/biorobots_substrates.png)
