@@ -130,8 +130,11 @@ standard library, e.g., Matplotlib [@Hunter:2007] and SciPy.
 We provide instructions for 
 installing these additional dependencies in the repository README.
 
+<!--
 ![](images/biorobots_cells.png)
 ![](images/biorobots_substrates.png)
+-->
+![](images/biorobots_2x1_crop.png)
 
 <!-- 
 -![](images/heterogeneity_params.png)
