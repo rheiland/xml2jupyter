@@ -145,7 +145,7 @@
 		<director_color type="string" units="none">limegreen</director_color> 
 		
 		<!-- colors -->
-		<colorblind_mode type="bool">True</colorblind_mode>
+		<colorblind_mode type="bool" units="none">True</colorblind_mode>
 	
 	</user_parameters>
 	
