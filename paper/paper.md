@@ -94,7 +94,7 @@ In another example, we use an XML configuration file from the
 ```
 
 To demonstrate this project, one would: 1) clone the repository (or download a release), 
-2) copy one of the sample XML configuration files to the root directory, 3) run the 
+2) copy the sample XML configuration file to the root directory, 3) run the 
 `xml2jupyter.py` script, providing the XML file as a argument.
 ```
 $ cp config_samples/config_biorobots.xml .
@@ -122,12 +122,13 @@ This should produce the following notebook in your browser after selecting `Run 
 Our ultimate goal is to generate a fully functional GUI for PhysiCell users. Xml2jupyter provides one
 important piece of this - dynamically generating widgets for custom user parameters for a model.
 With other Python modules that provide additional components (tabs) of the GUI, common to all PhysiCell
-models, a user can configure, run, and visualize output from simulations. Two tabs that provide
+models, a user can configure an entire simulation and visualize its output (we currently
+assume the user will run the simulation from a shell window). Two tabs that provide
 visualization of output files are shown below with results from the *biorobots* simulation.
-Some modules require libraries not available in the Python
+Note that some of the required modules are not available in the Python
 standard library, e.g., Matplotlib [@Hunter:2007] and SciPy.
 We provide instructions for 
-installing these additional dependencies on the README of the repository.
+installing these additional dependencies in the repository README.
 
 ![](images/biorobots_cells.png)
 ![](images/biorobots_substrates.png)
