@@ -137,10 +137,15 @@ installing these additional dependencies on the README of the repository.
 The images above show hetero...  -->
 
 # Extensions and Discussion
-We hope others will be inspired to extend the idea of this project to other text-based 
+
+We hope others will be inspired to extend the core idea of this project to other text-based 
 configuration files. XML is only one of several data-interchange formats. 
 <!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
 It just happens to be the one of interest to us for PhysiCell.
+
+While the additional Python modules that provide visualization are specifically tailored to PhysiCell
+output, they can serve as templates for other file formats and provide similar functionality.
+We welcome contributions, especially for three-dimensional data.
 
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
 a scientific cloud for nanoscience education and research that includes running 
@@ -160,17 +165,22 @@ tool running on nanoHUB, where the *User Params* tab has been generated using th
 ![](images/nanohub_therap.png)
 -->
 
+In the four screenshots below, we show the cell plot tab (upper-left) and three different substrate plots.
+This particular model and simulation is described in this [video](https://www.youtube.com/watch?v=wuDZ40jW__M).
+
 ![](images/nano_2x2.png)
 
-We welcome suggestions and, better yet, contributions (via pull requests) to xml2jupyter.
+We welcome suggestions and, better yet, contributions (via GitHub pull requests) to xml2jupyter.
 For example, currently, we simply arrange the generated widgets in a single column.
 It may be preferable to allow a matrix-style layout, using additional attributes in the XML.
-Also, it might be nice to provide more informative *tooltip* text for widgets.
+Also, it may be possible to provide more informative *tooltip* (balloon) text on a widget and, if so,
+could be provided by another XML attribute.
+Additional ideas for visualization are also welcome.
 
 # Acknowledgements
 
-We thank the National Science Foundation for providing funding via NSF EEC-1720625.
-NCI grant #... Paul?
+We thank the National Science Foundation (1720625) and the
+National Cancer Institute (U01-CA232137-01) for generous support.
 We acknowledge support from our collaborators at Purdue University, especially Martin Hunt, who 
 helped port our Jupyter tools to nanoHUB.
 
