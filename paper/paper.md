@@ -112,7 +112,7 @@ But to actually see the widgets rendered in a notebook, we provide a simple test
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py
 $ jupyter notebook test_gui.ipynb
 ```
-This should produce the following result:
+This should produce the following notebook in your browser after selecting `Run all` in the `Cell` menu:
 
 ![](images/test_screen.png)
 
@@ -121,17 +121,16 @@ This should produce the following result:
 
 Our ultimate goal is to generate a fully functional GUI for PhysiCell users. Xml2jupyter provides one
 important piece of this - dynamically generating widgets for custom user parameters for a model.
-With the addition of static components (tabs) of the GUI, a user can also visualize output results
-from simulations.
-This additional functionality requires modules not available in the Python
-standard library, e.g., Matplotlib [@Hunter:2007]
-to display plots, and SciPy to parse PhysiCell output data. We provide instructions for 
+With other Python modules that provide additional components (tabs) of the GUI, common to all PhysiCell
+models, a user can configure, run, and visualize output from simulations. Two tabs that provide
+visualization of output files are shown below with results from the *biorobots* simulation.
+Some modules require libraries not available in the Python
+standard library, e.g., Matplotlib [@Hunter:2007] and SciPy.
+We provide instructions for 
 installing these additional dependencies on the README of the repository.
 
 ![](images/biorobots_cells.png)
 ![](images/biorobots_substrates.png)
-
-Additional tabs used by the PhysiCell Jupyter GUI.
 
 <!-- 
 -![](images/heterogeneity_params.png)
