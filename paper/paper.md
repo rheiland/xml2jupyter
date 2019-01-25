@@ -166,6 +166,7 @@ We welcome suggestions and, better yet, contributions (via pull requests) to xml
 For example, currently, we simply arrange the generated widgets in a single column.
 It may be preferable to allow a matrix-style layout, using additional attributes in the XML.
 Also, it might be nice to provide more informative *tooltip* text for widgets.
+
 # Acknowledgements
 
 We thank the National Science Foundation for providing funding via NSF EEC-1720625.
