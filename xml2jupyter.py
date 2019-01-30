@@ -124,10 +124,13 @@ for child in uep:
     else:
         tag_list.append(child.tag)
     units_str = ""
+    describe_str = ""
     if 'hidden' in child.attrib.keys() and (child.attrib['hidden'].lower() == "true"):   # do we want to hide this from the user?
         print("  HIDE this parameter from the GUI: ", child.tag)
         continue
 
+    if 'description' in child.attrib.keys():
+        describe_str = ' (' + child.attrib['description'] + ')'
     if 'units' in child.attrib.keys():
         if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
             units_str = child.attrib['units']
@@ -184,7 +187,7 @@ for child in uep:
             # Finally, append the info at the end of this widget
             user_tab_header += indent2 + "style=style, layout=layout)\n"
 
-            vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "')]), \n"
+            vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + describe_str + "')]), \n"
 
             # float, int, bool
             fill_gui_str += indent + full_name + ".value = " + type_cast[child.attrib['type']] + "(uep.find('.//" + child.tag + "').text)\n"
