@@ -5,6 +5,7 @@ import os
 import glob
 import shutil
 import datetime
+import subprocess
 from pathlib import Path
 from basics import BasicsTab
 from user_params import UserTab
@@ -26,15 +27,15 @@ user_tab = UserTab()
 svg = SVGTab()
 sub = SubstrateTab()
 
-main_xml_filename = 'config-biorobots.xml'
+main_xml_filename = 'test.xml'
 full_xml_filename = os.path.abspath(main_xml_filename)
 #print('full_xml_filename=',full_xml_filename)
 
 tree = ET.parse(full_xml_filename)  # this file cannot be overwritten; part of tool distro
 xml_root = tree.getroot()
 
-#nanoHUB_flag = "home/nanohub" in os.environ['HOME']  # True/False (running on nanoHUB or not)
-nanoHUB_flag = False
+nanoHUB_flag = "home/nanohub" in os.environ['HOME']  # True/False (running on nanoHUB or not)
+#nanoHUB_flag = False
 
 def read_config_cb(_b):
     with debug_view:
@@ -143,17 +144,40 @@ write_button = widgets.Button(
 )
 write_button.on_click(write_button_cb)
 
+
+def run_button_cb(s):
+    with debug_view:
+        print('run_button_cb')
+
+#    new_config_file = "config.xml"
+    new_config_file = full_xml_filename
+    write_config_file(new_config_file)
+#    subprocess.call(["biorobots", xml_file_out])
+#    subprocess.call(["myproj", new_config_file])   # spews to shell, but not ctl-C'able
+#    subprocess.call(["myproj", new_config_file], shell=True)  # no
+    subprocess.Popen(["myproj", new_config_file])
+
+run_button = widgets.Button(
+    description='Run',
+    button_style='success',  # 'success', 'info', 'warning', 'danger' or ''
+    tooltip='Update '+ main_xml_filename +' and run a simulation',
+)
+run_button.on_click(run_button_cb)
+
 titles = ['Basics', 'User Params', 'Cell Plots', 'Substrate Plots']
 tabs = widgets.Tab(children=[basics_tab.tab, user_tab.tab, svg.tab, sub.tab],
                    _titles={i: t for i, t in enumerate(titles)},
                    layout=tab_layout)
 
-gui = widgets.VBox(children=[tabs, write_button])
+#gui = widgets.VBox(children=[tabs, write_button])
+gui = widgets.VBox(children=[tabs, run_button])
 fill_gui_params(full_xml_filename)
 
 # pass in (relative) directory where output data is located
 #svg.update(read_config.value)
-output_dir = "output"
+output_dir = "output"   # for local desktop
+if nanoHUB_flag:
+    output_dir = "tmpdir"  # for nanoHUB?
 svg.update(output_dir)
 sub.update_dropdown_fields(output_dir)
 sub.update(output_dir)
