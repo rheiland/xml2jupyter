@@ -27,7 +27,8 @@ if ( num_args == 3):
 # #        break
 #         sys.exit(1)
 if (num_args == 3):
-    with open('mygui.py') as f:
+#    with open('mygui.py') as f:
+    with open(gui_file) as f:
     #  newText = f.read().replace('myconfig.xml', config_file) # rwh todo: don't assume this string; find line
         file_str = f.read()
         idx = file_str.find('main_xml_filename')  # verify > -1
@@ -35,7 +36,8 @@ if (num_args == 3):
         idx2 = file_str[idx:].find('\n')
         file_post = file_str[idx+idx2:] 
 
-    with open('mygui.py', "w") as f:
+#    with open('mygui.py', "w") as f:
+    with open(gui_file, "w") as f:
         f.write(file_pre)
         f.write("main_xml_filename = '" + config_file + "'")
         f.write(file_post)
@@ -111,6 +113,8 @@ widgets = {"double":"FloatText", "int":"IntText", "bool":"Checkbox", "string":"T
 type_cast = {"double":"float", "int":"int", "bool":"bool", "string":""}
 vbox_str = "\n" + indent + "self.tab = VBox([\n"
 
+# TODO: cast attributes to lower case before doing equality tests; perform more testing!
+
 tag_list = []
 for child in uep:
     print(child.tag, child.attrib)
@@ -120,6 +124,10 @@ for child in uep:
     else:
         tag_list.append(child.tag)
     units_str = ""
+    if 'hidden' in child.attrib.keys() and (child.attrib['hidden'].lower() == "true"):   # do we want to hide this from the user?
+        print("  HIDE this parameter from the GUI: ", child.tag)
+        continue
+
     if 'units' in child.attrib.keys():
         if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
             units_str = child.attrib['units']
@@ -190,12 +198,13 @@ user_tab_file = "user_params.py"
 print("\n --------------------------------- ")
 print("Generated a new: ", user_tab_file)
 print()
-print("If this is your first time:")
-print("Run the GUI via:  jupyter notebook mygui.ipynb")
+#print("If this is your first time:")
+#print("Run the GUI via:  jupyter notebook mygui.ipynb")
+print("Test the minimal GUI via:  jupyter notebook test_gui.ipynb")
 print("run the Jupyter menu item:  Cell -> Run All")
 print()
-print("If you already have a GUI running and you just want to use new User Params:")
-print("run the Jupyter menu item:  Kernel -> Restart & Run All")
+print("(or, if you already have a previous GUI running and want to see new params:")
+print("run the Jupyter menu item:  Kernel -> Restart & Run All)")
 print()
 fp= open(user_tab_file, 'w')
 fp.write(user_tab_header)
