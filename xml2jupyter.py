@@ -115,7 +115,7 @@ vbox_str = "\n" + indent + "self.tab = VBox([\n"
 
 # TODO: cast attributes to lower case before doing equality tests; perform more testing!
 
-italicize_flag = True
+italicize_flag = False # True
 tag_list = []
 for child in uep:
     print(child.tag, child.attrib)

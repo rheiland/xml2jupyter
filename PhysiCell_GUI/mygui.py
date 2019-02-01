@@ -27,7 +27,7 @@ user_tab = UserTab()
 svg = SVGTab()
 sub = SubstrateTab()
 
-main_xml_filename = 'test.xml'
+main_xml_filename = 'PhysiCell_settings.xml'
 full_xml_filename = os.path.abspath(main_xml_filename)
 #print('full_xml_filename=',full_xml_filename)
 

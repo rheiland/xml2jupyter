@@ -19,7 +19,7 @@ tab_layout = widgets.Layout(width='950px',   # border='2px solid black',
 user_tab = UserTab()
 
 # read in/parse the .xml file used to generate the GUI widgets.
-main_xml_filename = 'config-biorobots.xml'
+main_xml_filename = 'PhysiCell_settings.xml'
 full_xml_filename = os.path.abspath(main_xml_filename)
 print('full_xml_filename=',full_xml_filename)
 
