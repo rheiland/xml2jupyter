@@ -115,6 +115,7 @@ vbox_str = "\n" + indent + "self.tab = VBox([\n"
 
 # TODO: cast attributes to lower case before doing equality tests; perform more testing!
 
+italicize_flag = True
 tag_list = []
 for child in uep:
     print(child.tag, child.attrib)
@@ -129,8 +130,13 @@ for child in uep:
         print("  HIDE this parameter from the GUI: ", child.tag)
         continue
 
+    describe_str = ''
     if 'description' in child.attrib.keys():
-        describe_str = ' (' + child.attrib['description'] + ')'
+        if italicize_flag:
+            describe_str = child.attrib['description'] 
+            describe_str = describe_str.replace(" ","\ ")
+        else:
+            describe_str = ' (' + child.attrib['description'] + ')'
     if 'units' in child.attrib.keys():
         if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
             units_str = child.attrib['units']
@@ -187,7 +193,13 @@ for child in uep:
             # Finally, append the info at the end of this widget
             user_tab_header += indent2 + "style=style, layout=layout)\n"
 
-            vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + describe_str + "')]), \n"
+            if italicize_flag:
+                if len(describe_str) > 0:
+                    vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "'), " + " Label(r'\((" + describe_str + "\))')]), \n"
+                else:
+                    vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "'), ]), \n"
+            else:
+                vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + describe_str + "')]), \n"
 
             # float, int, bool
             fill_gui_str += indent + full_name + ".value = " + type_cast[child.attrib['type']] + "(uep.find('.//" + child.tag + "').text)\n"
