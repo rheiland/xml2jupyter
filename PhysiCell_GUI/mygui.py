@@ -34,8 +34,9 @@ full_xml_filename = os.path.abspath(main_xml_filename)
 tree = ET.parse(full_xml_filename)  # this file cannot be overwritten; part of tool distro
 xml_root = tree.getroot()
 
-nanoHUB_flag = "home/nanohub" in os.environ['HOME']  # True/False (running on nanoHUB or not)
-#nanoHUB_flag = False
+nanoHUB_flag = False; # True/False (running on nanoHUB or not)
+if( 'HOME' in os.environ.keys() ):
+	nanoHUB_flag = "home/nanohub" in os.environ['HOME']
 
 def read_config_cb(_b):
     with debug_view:
