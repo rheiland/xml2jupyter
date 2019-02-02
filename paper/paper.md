@@ -65,7 +65,7 @@ allowed data types (currently):
 
 ![](images/silly_xml-60.png)
 
-When we map this into Jupyter widgets, we obtain the following rendered results (left). The
+When we map this into Jupyter widgets, we obtain the following rendered result (left). The
 middle snapshot shows the updated numeric value after the user does a single delta step (up) on the `radius` (note the step size of 10)
 and the right snapshot after the user single steps the `threads` value (note the step size of 1).
 
@@ -133,8 +133,9 @@ installing these additional dependencies in the repository README.
 <!--
 ![](images/biorobots_cells.png)
 ![](images/biorobots_substrates.png)
--->
 ![](images/biorobots_2x1_crop.png)
+-->
+![](images/biorobots_2x1b.png)
 
 <!-- 
 -![](images/heterogeneity_params.png)
