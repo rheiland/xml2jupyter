@@ -208,7 +208,12 @@ class SVGTab(object):
                 svals = child.text.split()
                 # title_str = "(" + str(current_idx) + ") Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
                 # title_str = "Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
-                title_str = svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
+#                title_str = svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
+                # mins= round(int(float(xml_root.find(".//current_time").text)))  # TODO: check units = mins
+                mins= round(int(float(svals[7])))  # TODO: check units = mins
+                hrs = int(mins/60)
+                days = int(hrs/24)
+                title_str = '%dd, %dh, %dm' % (int(days),(hrs%24), mins - (hrs*60))
 
             # print("width ",child.attrib['width'])
             # print('attrib=',child.attrib)
