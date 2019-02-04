@@ -32,7 +32,6 @@ From the root directory of xml2jupyter (we demonstrate using Unix-style shell co
 $ cp config_samples/config_biorobots.xml .
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py 
 $ jupyter notebook test_gui.ipynb
-
 ```
 When the notebook starts in your browser, in the "Cell" menu, click "Run All". This should display the minimal notebook that will let you update your XML after changing values in widgets and cicking the 'Write' button.
 
