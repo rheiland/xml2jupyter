@@ -30,7 +30,7 @@ bibliography: paper.bib
 
 # Summary
 
-Jupyter Notebooks [@Kluyver:2016aa] provide executable documents (in a variety of programming languages) that can be run in a web browser. 
+Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable documents (in a variety of programming languages) that can be run in a web browser. 
 When a notebook contains
 graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
 Many scientific simulation packages use
@@ -154,7 +154,7 @@ We welcome contributions, especially for three-dimensional data.
 
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
 a scientific cloud for nanoscience education and research that includes running 
-interactive or batch simulations. For example, we show screen shots from our `pc4cancerbots`
+interactive <!-- or batch --> simulations. For example, we show screen shots from our `pc4cancerbots`
 tool running on nanoHUB, where the *User Params* tab has been generated using the 
 `xml2jupyter.py` script. Readers can create an account on nanoHUB and run `pc4cancerbots` for themselves.
 
@@ -175,12 +175,12 @@ This particular model and simulation is described in this [video](https://www.yo
 
 ![](images/nano_2x2.png)
 
-We welcome suggestions and, better yet, contributions (via GitHub pull requests) to xml2jupyter.
-For example, currently, we simply arrange the generated widgets in a single column.
-It may be preferable to allow a matrix-style layout, using additional attributes in the XML.
-Also, it may be possible to provide more informative *tooltip* (balloon) text on a widget and, if so,
-could be provided by another XML attribute.
-Additional ideas for visualization are also welcome.
+We welcome suggestions and contributions (via GitHub pull requests) to xml2jupyter.
+For example, currently, we arrange the generated parameter widgets in a single column, with (optional) descriptions of the
+parameters. This is an appropriate layout for for an educational setting. But if a GUI will be used by just a single
+researcher, for example, then it may be advantageous to generate a more compact layout of widgets.
+Suggestions for additional visualization functionality are also welcome.
+-->
 
 # Acknowledgements
 
