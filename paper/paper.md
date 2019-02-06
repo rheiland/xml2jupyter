@@ -178,9 +178,9 @@ This particular model and simulation is described in this [video](https://www.yo
 
 We welcome suggestions and contributions (via GitHub pull requests) to xml2jupyter.
 For example, currently, we arrange the generated parameter widgets in a single column, with (optional) descriptions of the
-parameters. This is an appropriate layout for for an educational setting. But if a GUI will be used by just a single
-researcher, for example, then it may be advantageous to generate a more compact layout of widgets.
-Suggestions for additional visualization functionality are also welcome.
+parameters. This is an appropriate layout for an educational setting. But if a GUI will be used by just a single
+researcher, it may be preferable to generate a more compact layout of widgets.
+<!-- Suggestions for additional visualization functionality are also welcome. -->
 -->
 
 # Acknowledgements
