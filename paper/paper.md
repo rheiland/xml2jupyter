@@ -181,7 +181,6 @@ For example, currently, we arrange the generated parameter widgets in a single c
 parameters. This is an appropriate layout for an educational setting. But if a GUI will be used by just a single
 researcher, it may be preferable to generate a more compact layout of widgets.
 <!-- Suggestions for additional visualization functionality are also welcome. -->
--->
 
 # Acknowledgements
 
