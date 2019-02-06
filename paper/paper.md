@@ -122,8 +122,9 @@ This should produce the following notebook in your browser after selecting `Run 
 Our ultimate goal is to generate a fully functional GUI for PhysiCell users. Xml2jupyter provides one
 important piece of this - dynamically generating widgets for custom user parameters for a model.
 With other Python modules that provide additional components (tabs) of the GUI, common to all PhysiCell
-models, a user can configure an entire simulation and visualize its output (we currently
-assume the user will run the simulation from a shell window). Two tabs that provide
+models, a user can configure, run, and visualize output from a simulation.
+<!-- (we currently assume the user will run the simulation from a shell window).  -->
+Two tabs that provide
 visualization of output files are shown below with results from the *biorobots* simulation.
 Note that some of the required modules are not available in the Python
 standard library, e.g., Matplotlib [@Hunter:2007] and SciPy.
