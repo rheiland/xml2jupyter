@@ -18,7 +18,7 @@ class SubstrateTab(object):
         self.output_dir = '.'
 #        self.output_dir = 'tmpdir'
 
-        self.fig = plt.figure(figsize=(7.2,6))  # this strange figsize results in a ~square contour plot
+        # self.fig = plt.figure(figsize=(7.2,6))  # this strange figsize results in a ~square contour plot
 
         # initial value
         self.field_index = 4
