@@ -115,7 +115,7 @@ vbox_str = "\n" + indent + "self.tab = VBox([\n"
 #param_desc_buttons_str = "\n" 
 desc_buttons_str = "\n" 
 row_str = "\n"
-box_str = "\n" + indent + "box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='90%')\n"
+box_str = "\n" + indent + "box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')\n"
 #        box1 = Box(children=row1, layout=box_layout)\n"
 
 # TODO: cast attributes to lower case before doing equality tests; perform more testing!
@@ -123,7 +123,7 @@ box_str = "\n" + indent + "box_layout = Layout(display='flex', flex_flow='row', 
 param_desc_count = 0
 italicize_flag = False
 desc_as_button_flag = True
-desc_as_button_flag = False
+#desc_as_button_flag = False
 tag_list = []
 for child in uep:
     print(child.tag, child.attrib)
@@ -220,7 +220,7 @@ for child in uep:
                     vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "'), ]), \n"
             elif desc_as_button_flag:
                 row_name = "row" + str(param_desc_count)
-                row_str += indent +  row_name + " = [" + full_name + ", Label('" + units_str + "'), " + desc_row_name + "] \n"
+                row_str += indent +  row_name + " = [" + full_name + ", Label('" + units_str + "' , layout=Layout(flex='1 1 auto', width='auto')), " + desc_row_name + "] \n"
                 box_name = "box" + str(param_desc_count)
                 box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
 #        box1 = Box(children=row1, layout=box_layout)\n"
@@ -250,7 +250,7 @@ print("run the Jupyter menu item:  Kernel -> Restart & Run All)")
 print()
 fp= open(user_tab_file, 'w')
 fp.write(user_tab_header)
-fp.write("\n" + indent + "param_button_layout={'width':'550px'} \n")
+fp.write("\n" + indent + "param_button_layout={'width':'400px'} \n")
 #fp.write(param_desc_buttons_str)
 fp.write(desc_buttons_str)
 fp.write(row_str)
