@@ -139,6 +139,7 @@ for child in uep:
         continue
 
     describe_str = ''
+    desc_row_name = None
     if 'description' in child.attrib.keys():
         if italicize_flag:
             describe_str = child.attrib['description'] 
@@ -153,7 +154,10 @@ for child in uep:
             desc_row_name = "desc_row" + str(param_desc_count)
             # desc_buttons_str += indent + desc_row_name + "[ \n"
             desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=param_button_layout) \n"
-            desc_buttons_str += indent + desc_row_name + ".style.button_color = 'lightgreen' \n"
+            if (param_desc_count % 2 == 0):
+                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'lightgreen' \n"
+            else:
+                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'yellow' \n"
         else:
             describe_str = ' (' + child.attrib['description'] + ')'
 
@@ -218,7 +222,7 @@ for child in uep:
                     vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "'), " + " Label(r'\((" + describe_str + "\))')]), \n"
                 else:
                     vbox_str += indent2 + "HBox([" + full_name + ", Label('" + units_str + "'), ]), \n"
-            elif desc_as_button_flag:
+            elif desc_as_button_flag and desc_row_name:
                 row_name = "row" + str(param_desc_count)
                 row_str += indent +  row_name + " = [" + full_name + ", Label('" + units_str + "' , layout=Layout(flex='1 1 auto', width='auto')), " + desc_row_name + "] \n"
                 box_name = "box" + str(param_desc_count)
