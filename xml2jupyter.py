@@ -16,7 +16,7 @@ if ( num_args < 2):
     sys.exit(1)
 config_file = sys.argv[1]
 colorname1 = 'lightgreen'
-colorname2 = 'bisque'
+colorname2 = 'tan'
 
 if ( num_args == 3):
     gui_file = sys.argv[2]
