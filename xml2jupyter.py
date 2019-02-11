@@ -11,13 +11,25 @@ import xml.etree.ElementTree as ET
 num_args = len(sys.argv)
 print("num_args=",num_args)
 if ( num_args < 2):
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>]")
+#    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>]")
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
     sys.exit(1)
 config_file = sys.argv[1]
+colorname1 = 'lightgreen'
+colorname2 = 'bisque'
 
 if ( num_args == 3):
     gui_file = sys.argv[2]
-
+elif ( num_args ==4 ):
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> <gui-file.py> <colorname1> <colorname2>")
+    sys.exit(1)
+elif ( num_args == 5):
+    gui_file = sys.argv[2]
+    colorname1 = sys.argv[3]
+    colorname2 = sys.argv[4]
+else:
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
+    sys.exit(1)
 
 # First, let's use this config file name in the (main) mygui.py module:
 # f_main = open('mygui.py', 'r')
@@ -151,9 +163,9 @@ for child in uep:
             # desc_buttons_str += indent + desc_row_name + "[ \n"
             desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=param_button_layout) \n"
             if (param_desc_count % 2 == 0):
-                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'lightgreen' \n"
+                desc_buttons_str += indent + desc_row_name + ".style.button_color = '" + colorname1 + "'\n"
             else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'bisque' \n"
+                desc_buttons_str += indent + desc_row_name + ".style.button_color = '" + colorname2 + "'\n"
         else:
             describe_str = ' (' + child.attrib['description'] + ')'
 
