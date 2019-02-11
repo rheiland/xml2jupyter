@@ -147,17 +147,13 @@ for child in uep:
         elif desc_as_button_flag:
             describe_str = child.attrib['description']
             param_desc_count += 1
-            # param_desc_button_name = "param_button" + str(param_desc_count)
-            # # param_desc_buttons_str += indent + param_desc_button_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout={'width':'550px'}) \n"
-            # param_desc_buttons_str += indent + param_desc_button_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=param_button_layout) \n"
-            # param_desc_buttons_str += indent + param_desc_button_name + ".style.button_color = 'lightgreen' \n"
             desc_row_name = "desc_row" + str(param_desc_count)
             # desc_buttons_str += indent + desc_row_name + "[ \n"
             desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=param_button_layout) \n"
             if (param_desc_count % 2 == 0):
                 desc_buttons_str += indent + desc_row_name + ".style.button_color = 'lightgreen' \n"
-            else:
-                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'yellow' \n"
+            else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                desc_buttons_str += indent + desc_row_name + ".style.button_color = 'bisque' \n"
         else:
             describe_str = ' (' + child.attrib['description'] + ')'
 
