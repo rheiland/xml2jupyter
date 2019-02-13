@@ -73,28 +73,10 @@ and the right snapshot after the user single steps the `threads` value (note the
 ![](images/silly2-50.png)
 ![](images/silly3-50.png)
 
-In another example, we use an XML configuration file from the
-*biorobots* sample project included with PhysiCell:
-
-```xml
-<user_parameters>
-  <random_seed type="int" units="dimensionless">0</random_seed> 
-
-  <!-- for microenvironment setup --> 
-  <cargo_signal_D type="double" units="micron/min^2">1e3</cargo_signal_D>
-  <cargo_signal_decay type="double" units="1/min">.4</cargo_signal_decay>
-  <director_signal_D type="double" units="micron/min^2">1e3</director_signal_D>
-  <director_signal_decay type="double" units="1/min">.1</director_signal_decay>
-  
-  <!-- for cell definitions -->
-  <elastic_coefficient type="double" units="1/min">0.05</elastic_coefficient>
-  ... 
-  <director_color type="string" units="none">limegreen</director_color>
-</user_parameters>
-```
-
-To demonstrate this project, one would: 1) clone the repository (or download a release), 
-2) copy the sample XML configuration file to the root directory, 3) run the 
+For a more realistic example, consider the `config_biorobots.xml` configuration file (found in the
+`config_samples` directory).
+To demonstrate xml2jupyter on this XML file, one would: 1) clone or download the repository, 
+2) copy the XML configuration file to the root directory, and 3) run the 
 `xml2jupyter.py` script, providing the XML file as a argument.
 ```
 $ cp config_samples/config_biorobots.xml .
@@ -105,7 +87,6 @@ module, `user_params.py`, containing the Jupyter widgets, together with methods 
 their values from the XML and write their values back to the XML. 
 To "validate" the widgets were generated correctly, one could, minimally, open `user_params.py` 
 in an editor and inspect it.
-<!-- One could then inspect it in an editor to "verify" it is correct.  -->
 
 But to actually see the widgets rendered in a notebook, we provide a simple test:
 ```
@@ -114,7 +95,7 @@ $ jupyter notebook test_gui.ipynb
 ```
 This should produce the following notebook in your browser after selecting `Run all` in the `Cell` menu:
 
-![](images/test_screen.png)
+![](images/test_biorobots_params.png)
 
 
 # PhysiCell Jupyter GUI
@@ -155,9 +136,9 @@ We welcome contributions, especially for three-dimensional data.
 
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
 a scientific cloud for nanoscience education and research that includes running 
-interactive <!-- or batch --> simulations. For example, we show screen shots from our `pc4cancerbots`
+interactive <!-- or batch --> simulations. For example, we show screen shots from our `pc4cancerbots`[https://nanohub.org/tools/pc4cancerbots]
 tool running on nanoHUB, where the *User Params* tab has been generated using the 
-`xml2jupyter.py` script. Readers can create an account on nanoHUB and run `pc4cancerbots` for themselves.
+`xml2jupyter.py` script. IReaders can create an account on nanoHUB and run these simulations for themselves.
 
 ![](images/nanohub_params.png)
 

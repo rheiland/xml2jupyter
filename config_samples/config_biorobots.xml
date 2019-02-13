@@ -115,34 +115,34 @@
 	</save>
 	
 	<user_parameters>
-		<random_seed type="int" units="dimensionless">0</random_seed> 
+		<random_seed type="int" units="dimensionless" hidden="true">0</random_seed> 
 
 		<!-- for microenvironment setup --> 
-		<cargo_signal_D type="double" units="micron/min^2">1e3</cargo_signal_D>
-		<cargo_signal_decay type="double" units="1/min">.4</cargo_signal_decay> <!-- 50 micron length scale -->
-		<director_signal_D type="double" units="micron/min^2">1e3</director_signal_D>
-		<director_signal_decay type="double" units="1/min">.1</director_signal_decay> <!-- 100 micron length scale -->
+		<cargo_signal_D type="double" units="micron/min^2" description="cargo signal diffusion coefficient">1e3</cargo_signal_D>
+		<cargo_signal_decay type="double" units="1/min" description="cargo signal decay rate">.4</cargo_signal_decay> <!-- 50 micron length scale -->
+		<director_signal_D type="double" units="micron/min^2" description="director signal diffusion coefficient">1e3</director_signal_D>
+		<director_signal_decay type="double" units="1/min" description="director signal decay rate">.1</director_signal_decay> <!-- 100 micron length scale -->
 		
 		<!-- for cell definitions -->
-		<elastic_coefficient type="double" units="1/min">0.05</elastic_coefficient>
+		<elastic_coefficient type="double" units="1/min" description="elastic coefficient of cells">0.05</elastic_coefficient>
 
-		<worker_motility_persistence_time type="double" units="min">5.0</worker_motility_persistence_time>
-		<worker_migration_speed type="double" units="micron/min">5.0</worker_migration_speed>
-		<attached_worker_migration_bias type="double" units="min">1.0</attached_worker_migration_bias>
-		<unattached_worker_migration_bias type="double" units="min">0.5</unattached_worker_migration_bias>
+		<worker_motility_persistence_time type="double" units="min" description="persistance time for worker motility">5.0</worker_motility_persistence_time>
+		<worker_migration_speed type="double" units="micron/min" description="speed of worker cells">5.0</worker_migration_speed>
+		<attached_worker_migration_bias type="double" description="migration bias of attached workers">1.0</attached_worker_migration_bias>
+		<unattached_worker_migration_bias type="double" description="migration bias of unattached workers">0.5</unattached_worker_migration_bias>
 
 		<!-- tissue setup --> 
-		<number_of_directors type="int" units="none">15</number_of_directors> 
-		<number_of_cargo_clusters type="int" units="none">100</number_of_cargo_clusters>
-		<number_of_workers type="int" units="none">50</number_of_workers>
+		<number_of_directors type="int" units="none" description="# of director cells">15</number_of_directors> 
+		<number_of_cargo_clusters type="int" units="none" description="# of cargo clusters">100</number_of_cargo_clusters>
+		<number_of_workers type="int" units="none" description="# of worker cells">50</number_of_workers>
 		
 		<!-- cargo parameters --> 
-		<drop_threshold type="double" units="dimensionless">0.4</drop_threshold> 
+		<drop_threshold type="double" units="dimensionless" description="threshold to drop cargo">0.4</drop_threshold> 
 		
 		<!-- colors --> 
-		<worker_color type="string" units="none">red</worker_color>
-		<cargo_color type="string" units="none">blue</cargo_color>
-		<director_color type="string" units="none">limegreen</director_color> 
+		<worker_color type="string" units="none" description="color of worker cells">red</worker_color>
+		<cargo_color type="string" units="none" description="color of cargo cells">blue</cargo_color>
+		<director_color type="string" units="none" description="color of director cells">limegreen</director_color> 
 	
 	</user_parameters>
 	
