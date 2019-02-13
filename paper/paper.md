@@ -136,9 +136,13 @@ We welcome contributions, especially for three-dimensional data.
 
 Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
 a scientific cloud for nanoscience education and research that includes running 
-interactive <!-- or batch --> simulations. For example, we show screen shots from our `pc4cancerbots`[https://nanohub.org/tools/pc4cancerbots]
+interactive <!-- or batch --> simulations. For example, we show screen shots from our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
 tool running on nanoHUB, where the *User Params* tab has been generated using the 
-`xml2jupyter.py` script. IReaders can create an account on nanoHUB and run these simulations for themselves.
+`xml2jupyter.py` script. 
+Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include [`pc4heterogen`](https://nanohub.org/tools/pc4heterogen) and [`pcISA`](https://nanohub.org/tools/pcisa).
+Readers can create an account on nanoHUB and run these simulations for themselves.
+We will ask students to create their own nanoHUB tools, using xml2jupyter, that can 1) be run and evaluated by 
+the instructor, 2) be shared with others, and 3) become part of a student's living portfolio. 
 
 ![](images/nanohub_params.png)
 
