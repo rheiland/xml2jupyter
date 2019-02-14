@@ -161,10 +161,10 @@ This particular model and simulation is described in this [video](https://www.yo
 
 ![](images/nano_2x2.png)
 
-We welcome suggestions and contributions (via GitHub pull requests) to xml2jupyter.
+We welcome suggestions and contributions to xml2jupyter.
 For example, currently, we arrange the generated parameter widgets in a single column, with (optional) descriptions of the
-parameters. This is an appropriate layout for an educational setting. But if a GUI will be used by just a single
-researcher, it may be preferable to generate a more compact layout of widgets.
+parameters. This is an appropriate layout for an educational setting. But if a GUI will be used by researchers who are 
+already familiar with the parameters, it may be preferable to generate a more compact layout of widgets.
 <!-- Suggestions for additional visualization functionality are also welcome. -->
 
 # Acknowledgements
