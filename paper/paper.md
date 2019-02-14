@@ -144,7 +144,7 @@ Readers can create an account on nanoHUB and run these simulations for themselve
 We will ask students to create their own nanoHUB tools, using xml2jupyter, that can 1) be run and evaluated by 
 the instructor, 2) be shared with others, and 3) become part of a student's living portfolio. 
 
-![](images/nanohub_params.png)
+![](images/nanohub_cancerbots_params.png)
 
 <!--
 ![](images/nanohub_cells.png)
