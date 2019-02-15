@@ -35,7 +35,7 @@ $ jupyter notebook test_gui.ipynb
 ```
 When the notebook starts in your browser, in the "Cell" menu, click "Run All". This should display the minimal notebook that will let you update your XML after changing values in widgets and cicking the 'Write' button.
 
-![alt text](https://github.com/rheiland/xml2jupyter/blob/master/paper/images/test_screen.png)
+![alt text](https://github.com/rheiland/xml2jupyter/blob/master/paper/images/test_biorobots_params.png)
 
 <!--
 After you have the desired Python modules:
