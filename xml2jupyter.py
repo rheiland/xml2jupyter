@@ -75,11 +75,10 @@ class UserTab(object):
         #style = {'description_width': '250px'}
         style = {'description_width': '25%'}
         layout = {'width': '400px'}
-        param_button_layout={'width':'400px'}
 
-        name_button_layout={'width':'30%'}
+        name_button_layout={'width':'25%'}
         widget_layout = {'width': '15%'}
-        units_button_layout ={'width':'10%'}
+        units_button_layout ={'width':'15%'}
         desc_button_layout={'width':'45%'}
 """
 
@@ -171,7 +170,7 @@ for child in uep:
         param_desc_count += 1
         desc_row_name = "desc_button" + str(param_desc_count)
         # desc_buttons_str += indent + desc_row_name + "[ \n"
-        desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=param_button_layout) \n"
+        desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=desc_button_layout) \n"
         if (param_desc_count % 2):
             desc_buttons_str += indent + desc_row_name + ".style.button_color = '" + colorname1 + "'\n"
         else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
@@ -182,7 +181,7 @@ for child in uep:
 #            units_str = child.attrib['units']
             units_count += 1
             units_btn_name = "units_button" + str(units_count)
-            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=param_button_layout) \n"
+            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
             if (param_desc_count % 2):
                 units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
             else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
@@ -190,7 +189,7 @@ for child in uep:
         else:
             units_count += 1
             units_btn_name = "units_button" + str(units_count)
-            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=param_button_layout) \n"
+            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
             if (param_desc_count % 2):
                 units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
             else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
@@ -198,7 +197,7 @@ for child in uep:
     else:
         units_count += 1
         units_btn_name = "units_button" + str(units_count)
-        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=param_button_layout) \n"
+        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
         if (param_desc_count % 2):
             units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
         else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
@@ -218,7 +217,7 @@ for child in uep:
             #   step=0.02,
             #   style=style, layout=layout)
             param_name_button = "param_name" + str(name_count)
-            user_tab_header += "\n" + indent + param_name_button + " = " + "Button(description='" + child.tag + "', disabled=True, layout=param_button_layout)\n"
+            user_tab_header += "\n" + indent + param_name_button + " = " + "Button(description='" + child.tag + "', disabled=True, layout=name_button_layout)\n"
             if (param_desc_count % 2):
                 user_tab_header += indent + param_name_button + ".style.button_color = '" + colorname1 + "'\n"
             else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
