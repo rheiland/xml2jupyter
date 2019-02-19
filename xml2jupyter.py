@@ -259,6 +259,7 @@ for child in uep:
                     print(" --- ERROR: bool must be True or False, not ", child.text)
                     sys.exit(1)
 
+                print('bool: ',child.text)
                 user_tab_header += indent2 + "value=" + child.text + ",\n"
             
             # Strings
@@ -276,7 +277,10 @@ for child in uep:
             vbox_str += indent2 + box_name + ",\n"
 
             # float, int, bool
-            fill_gui_str += indent + full_name + ".value = " + type_cast[child.attrib['type']] + "(uep.find('.//" + child.tag + "').text)\n"
+            if (type_cast[child.attrib['type']] == "bool"):
+                fill_gui_str += indent + full_name + ".value = ('true' == (uep.find('.//" + child.tag + "').text.lower()) )\n"
+            else:
+                fill_gui_str += indent + full_name + ".value = " + type_cast[child.attrib['type']] + "(uep.find('.//" + child.tag + "').text)\n"
 
             fill_xml_str += indent + "uep.find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
 
