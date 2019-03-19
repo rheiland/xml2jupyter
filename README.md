@@ -12,7 +12,7 @@ If you simply want to try the notebook, without downloading anything, try clicki
 -->
 
 ## Dependencies
-1. Minimally, this project just requires Python (we recommend Python 3.x although 2.x should also work). A standard distribution of Python will let you convert sample XML configuration files into Jupyter widgets. 
+1. Minimally, this project just requires Python (we recommend Python 3.x). A standard distribution of Python will let you convert sample XML configuration files into Jupyter widgets. 
 2. If you install [Jupyter](https://jupyter.org/install), you will be able to display the widgets in a notebook (in your web browser) and modify the XML via the widgets.
 3. If you install some additional Python modules (matplotlib and scipy), not available in the standard library, you will be able to display a GUI notebook for PhysiCell. 
 
