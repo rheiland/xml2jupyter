@@ -1,0 +1,20 @@
+language: python
+python:
+  - "3.7"
+
+os: linux
+
+install:
+  - pip install -r requirements.txt
+
+# Build steps
+script:
+  - cd tests
+  - python ../xml2jupyter.py ../config_biorobots.xml ../test_user_params.py
+
+notifications:
+  email:
+    recipients:
+      - randy.heiland@gmail.com
+    on_success: always # default: change  (always, never)
+    on_failure: always # default: always
