@@ -9,12 +9,18 @@ import math
 import xml.etree.ElementTree as ET
 
 num_args = len(sys.argv)
+config_file = "config.xml"
 print("num_args=",num_args)
 if ( num_args < 2):
 #    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>]")
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
-    sys.exit(1)
-config_file = sys.argv[1]
+#    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
+    print()
+    print("*** NOTE:  using config.xml  ***")
+    print()
+#    sys.exit(1)
+else:
+  config_file = sys.argv[1]
+
 colorname1 = 'lightgreen'
 colorname2 = 'tan'
 
