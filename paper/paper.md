@@ -42,14 +42,15 @@ file and these can, optionally, be incorporated into a larger GUI for a simulati
 Users modify parameter values via the widgets 
 and the values are written to the XML configuration file. 
 Xml2jupyter has been tested using the PhysiCell [@PhysiCell:2018] simulation software
-and will be used by students for classroom and research projects.
+and is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
+create Jupyter GUIs for PhysiCell-related applications running on nanoHUB [@nanoHUB_2013].
 
-A PhysiCell configuration file defines model-specific user parameters in XML. Each parameter element
-consists of its name with attributes, defining its data *type* and *units* (optional), 
+A PhysiCell configuration file defines model-specific `<user_parameters>` in XML. Each parameter element
+consists of its name with attributes, defining its data *type*, *units* (optional), *description* (optional),
 and the parameter's default value. The attributes will determine the appearance and 
 behavior of the Jupyter widget. For numeric widgets (the most common type for PhysiCell), 
 xml2jupyter will calculate a delta step size as a function of the default value and this 
-step size will be used by the widget.
+step size will be used by the widget's graphical increment/decrement feature.
 
 <!-- 
 ```xml
@@ -63,18 +64,43 @@ step size will be used by the widget.
 To illustrate, we show the following contrived XML example, containing each of the four 
 allowed data types (currently): 
 
-![](images/silly_xml-60.png)
+<!-- ![](images/silly_xml-60.png) -->
+<!-- ![](images/config_contrived.png) -->
 
+```
+<PhysiCell_settings>
+  <user_parameters>
+    <radius type="double" units="micron">250.0</radius>
+    <threads type="int">8</threads>
+    <color type="string">red</color>
+    <fix_persistence type="bool">True</fix_persistence>
+  </user_parameters>
+</PhysiCell_settings>
+```
+
+<!--
 When we map this into Jupyter widgets, we obtain the following rendered result (left). The
 middle snapshot shows the updated numeric value after the user does a single delta step (up) on the `radius` (note the step size of 10)
 and the right snapshot after the user single steps the `threads` value (note the step size of 1).
+-->
 
+When we map this into Jupyter widgets, we obtain the following rendered result. 
+The name of the widget and the units (if present) are rendered as (disabled) button widgets. This choice, plus the
+alternating colors on rows of widgets, provide a more visually appealing layout.
+For numeric widgets (type "int" or "double"), we compute a delta step value based on the magnitude (log) 
+of the initial value.
+For example, the `radius` widget will have a step value of 10, whereas `threads` will have a step value of 1.
+
+![](images/contrived3.png)
+<!--
 ![](images/silly1-50.png)
 ![](images/silly2-50.png)
 ![](images/silly3-50.png)
+-->
 
 For a more realistic example, consider the `config_biorobots.xml` configuration file (found in the
-`config_samples` directory).
+`config_samples` directory). The XML elements in the `<user_parameters>` block include the
+(optional) *description* attribute which briefly describes the parameter and is displayed in another widget. 
 To demonstrate xml2jupyter on this XML file, one would: 1) clone or download the repository, 
 2) copy the XML configuration file to the root directory, and 3) run the 
 `xml2jupyter.py` script, providing the XML file as a argument.
@@ -129,20 +155,21 @@ We hope others will be inspired to extend the core idea of this project to other
 configuration files. XML is only one of several data-interchange formats. 
 <!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
 It just happens to be the one of interest to us for PhysiCell.
-
-While the additional Python modules that provide visualization are specifically tailored to PhysiCell
+And while the additional Python modules that provide visualization are also tailored to PhysiCell
 output, they can serve as templates for other file formats and provide similar functionality.
-We welcome contributions, especially for three-dimensional data.
+<!-- We welcome contributions, especially for three-dimensional data. -->
 
-Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB [@nanoHUB_2013], 
+Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
 a scientific cloud for nanoscience education and research that includes running 
 interactive <!-- or batch --> simulations in a browser. For example, we show screen shots from our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
 tool running on nanoHUB, where the *User Params* tab has been generated using the 
 `xml2jupyter.py` script. 
 Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include [`pc4heterogen`](https://nanohub.org/tools/pc4heterogen) and [`pcISA`](https://nanohub.org/tools/pcisa).
 Readers can create an account on nanoHUB and run these simulations for themselves.
-We will ask students to create their own nanoHUB tools, using xml2jupyter, that can 1) be run and evaluated by 
+We encourage students to use xml2jupyter to create their own nanoHUB tools of PhysiCell models that can 
+1) be run and evaluated by 
 the instructor, 2) be shared with others, and 3) become part of a student's living portfolio. 
+(Another repository, https://github.com/rheiland/tool4nanobio, provides instruction and scripts to help)
 
 ![](images/nanohub_cancerbots_params.png)
 
@@ -162,17 +189,21 @@ This particular model and simulation is described in this [video](https://www.yo
 ![](images/nano_2x2.png)
 
 We welcome suggestions and contributions to xml2jupyter.
-For example, currently, we arrange the generated parameter widgets in a single column, with (optional) descriptions of the
-parameters. This is an appropriate layout for an educational setting. But if a GUI will be used by researchers who are 
-already familiar with the parameters, it may be preferable to generate a more compact layout of widgets.
+For example, currently, we arrange the generated parameter widgets vertically, one row per parameter.
+This is an appropriate layout for an educational setting. But if a GUI will be used by researchers who are 
+already familiar with the parameters, it may be preferable to generate a more compact layout of widgets,
+e.g., in a matrix with only the parameter names and values.
 <!-- Suggestions for additional visualization functionality are also welcome. -->
+
+Also, we currently provide just 2-D visualizations of (spatial) data. Obviously, we 
+want to provide 3-D visualizations for 3-D models in the near future.
 
 # Acknowledgements
 
 We thank the National Science Foundation (1720625) and the
 National Cancer Institute (U01-CA232137-01) for generous support.
-We acknowledge support from our collaborators at Purdue University, especially Martin Hunt, who 
-helped port our Jupyter tools to nanoHUB.
+We also thank our collaborators at Purdue University, especially Martin Hunt and Steve Clark, who 
+provided technical support with nanoHUB and Jupyter.
 
 # References
 
