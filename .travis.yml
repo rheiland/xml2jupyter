@@ -7,8 +7,9 @@ install:
 
 # Build steps
 script:
-  - cd tests
-  - python ../xml2jupyter.py ../config_biorobots.xml ../test_user_params.py
+  - python xml2jupyter.py config_biorobots.xml test_user_params.py
+#  - cd tests
+#  - python ../xml2jupyter.py ../config_biorobots.xml ../test_user_params.py
 
 notifications:
   email:
