@@ -123,6 +123,9 @@ This should produce the following notebook in your browser after selecting `Run 
 
 ![](images/test_biorobots_params.png)
 
+**Figure 1.**
+The biorobots model parameters rendered as Jupyter widgets.
+
 
 # PhysiCell Jupyter GUI
 
@@ -143,7 +146,11 @@ installing these additional dependencies in the repository README.
 ![](images/biorobots_substrates.png)
 ![](images/biorobots_2x1_crop.png)
 -->
-![](images/biorobots_2x1b.png)
+![biorobots centerline](images/biorobots_2x1b.png)
+
+**Figure 2.**
+Plotting the biorobots' cells and substrates.
+
 
 <!-- 
 -![](images/heterogeneity_params.png)
