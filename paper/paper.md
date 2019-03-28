@@ -87,10 +87,13 @@ middle snapshot shows the updated numeric value after the user does a single del
 and the right snapshot after the user single steps the `threads` value (note the step size of 1).
 -->
 
-When we map this into Jupyter widgets, we obtain the following rendered result. 
-The name of the parameter, its value, and its attributes, if present, are displayed in a row (as disabled button widgets). 
-Using alternating row colors ("zebra stripes") helps visually match these fields and avoid changing the wrong
-parameter value.
+When we map this into Jupyter widgets, we obtain the rendered results in Figure 1. 
+Notice the `color` parameter is not displayed since we specified it should be
+hidden in the XML.
+The name of the other parameters, their values, and attributes, if present, are displayed 
+in rows (as disabled Jupyter button widgets). 
+Using alternating row colors ("zebra stripes") helps visually match associated fields 
+and avoid changing the wrong parameter value.
 For numeric widgets (type "int" or "double"), we compute a delta step value based on the magnitude (log) 
 of the initial value.
 For example, the `radius` widget will have a step value of 10, whereas `threads` will have a step value of 1.
@@ -124,7 +127,8 @@ But to actually see the widgets rendered in a notebook, we provide a simple test
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py
 $ jupyter notebook test_gui.ipynb
 ```
-This should produce the following notebook in your browser after selecting `Run all` in the `Cell` menu:
+This should display a minimal notebook in your browser and, after selecting `Run all` in 
+the `Cell` menu, you should see the notebook shown in Figure 2.
 
 ![The biorobots parameters rendered as Jupyter widgets.](images/test_biorobots_params.png)
 
@@ -210,7 +214,7 @@ National Cancer Institute (U01-CA232137-01) for generous support.
 Undergraduate and graduate students in the Intelligent Systems Engineering deparment 
 at Indiana University provided internal testing, and students and researchers 
 within the NSF nanoMFG (1720701) group generously provided external testing. All of
-their feedback provided considerable improvements to this project.
+their feedback resulted in considerable improvements to this project.
 Finally, we thank our collaborators at Purdue University, especially Martin Hunt and 
 Steve Clark, who provided technical support with nanoHUB and Jupyter.
 
