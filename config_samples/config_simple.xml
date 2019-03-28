@@ -1,0 +1,8 @@
+<PhysiCell_settings>
+  <user_parameters>
+    <radius type="double" units="micron" description="tumor radius">250.0</radius> 
+    <threads type="int">8</threads> 
+    <color type="string" hidden="true">red</color> 
+    <fix_persistence type="bool">True</fix_persistence> 
+  </user_parameters>
+</PhysiCell_settings>
