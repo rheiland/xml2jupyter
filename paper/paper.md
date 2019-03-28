@@ -30,7 +30,8 @@ bibliography: paper.bib
 
 # Summary
 
-Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable documents (in a variety of programming languages) that can be run in a web browser. 
+Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable documents (in a variety 
+of programming languages) that can be run in a web browser. 
 When a notebook contains
 graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
 Many scientific simulation packages use text-based configuration files to provide parameter values.
@@ -83,7 +84,8 @@ allowed data types (currently) and the various attributes:
 
 <!--
 When we map this into Jupyter widgets, we obtain the following rendered result (left). The
-middle snapshot shows the updated numeric value after the user does a single delta step (up) on the `radius` (note the step size of 10)
+middle snapshot shows the updated numeric value after the user does a single delta step (up) on 
+the `radius` (note the step size of 10)
 and the right snapshot after the user single steps the `threads` value (note the step size of 1).
 -->
 
@@ -151,7 +153,7 @@ installing these additional dependencies in the repository README.
 ![](images/biorobots_substrates.png)
 ![](images/biorobots_2x1_crop.png)
 -->
-![Plotting the biorobots (cells) and signals (substrates).](images/biorobots_2x1b.png)
+![Plotting the biorobots (cells; left) and signals (substrates; right).](images/biorobots_2x1b.png)
 
 <!-- 
 -![](images/heterogeneity_params.png)
@@ -169,18 +171,24 @@ output, they can serve as templates for other file formats and provide similar f
 
 xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
 a scientific cloud for nanoscience education and research that includes running 
-interactive <!-- or batch --> simulations in a browser. For example, we show screen shots from our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
-tool running on nanoHUB, where the *User Params* tab has been generated using the 
-`xml2jupyter.py` script. 
-Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include [`pc4heterogen`](https://nanohub.org/tools/pc4heterogen), [`pcISA`](https://nanohub.org/tools/pcisa).
+interactive <!-- or batch --> simulations in a browser. For example, 
+Figure 4 shows the xml2jupyter-generated *User Params* tab in our
+our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
+tool running on nanoHUB.
+Figure 5 shows the cells (upper-left) and three different substrate plots for this same tool.
+This particular model and simulation is described in this [video](https://www.youtube.com/watch?v=wuDZ40jW__M).
+
+Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include 
+[`pc4heterogen`](https://nanohub.org/tools/pc4heterogen), [`pcISA`](https://nanohub.org/tools/pcisa),
 and [`pc4cancerimmune`](https://nanohub.org/tools/pc4cancerimmune).
 Readers can create an account on nanoHUB and run these simulations for themselves.
 We encourage students to use xml2jupyter to create their own nanoHUB tools of PhysiCell models that can 
 1) be run and evaluated by 
 the instructor, 2) be shared with others, and 3) become part of a student's living portfolio. 
-(Another repository, https://github.com/rheiland/tool4nanobio, provides instructions and scripts to help.)
+(Another repository, https://github.com/rheiland/tool4nanobio, provides instructions and scripts to help
+generate a full GUI from an existing PhysiCell model.)
 
-![The cancer biorobots parameters rendered as Jupyter widgets.](images/nanohub_cancerbots_params.png)
+![The cancer biorobots parameters in a nanoHUB Jupyter application.](images/nanohub_cancerbots_params.png)
 
 <!--
 ![](images/nanohub_cells.png)
@@ -192,8 +200,6 @@ the instructor, 2) be shared with others, and 3) become part of a student's livi
 ![](images/nanohub_therap.png)
 -->
 
-In the four screenshots below, we show the cell plot tab (upper-left) and three different substrate plots.
-This particular model and simulation is described in this [video](https://www.youtube.com/watch?v=wuDZ40jW__M).
 
 ![The cancer biorobots Jupyter notebook on nanoHUB.](images/nano_2x2.png)
 
@@ -204,8 +210,8 @@ already familiar with the parameters, it may be preferable to generate a more co
 e.g., in a matrix with only the parameter names and values.
 <!-- Suggestions for additional visualization functionality are also welcome. -->
 
-Also, we currently provide just 2-D visualizations of (spatial) data. Obviously, we 
-want to provide 3-D visualizations for 3-D models in the near future.
+Also, we currently provide just 2-D visualizations of (spatial) data. In the near future, we 
+plan to provide 3-D visualizations of 3-D models and we welcome suggestions from the community.
 
 # Acknowledgements
 
