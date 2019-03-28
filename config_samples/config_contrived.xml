@@ -1,8 +1,0 @@
-<PhysiCell_settings>
-  <user_parameters>
-    <radius type="double" units="micron">250.0</radius> 
-    <threads type="int">8</threads> 
-    <color type="string">red</color> 
-    <debug type="bool">True</debug> 
-  </user_parameters>
-</PhysiCell_settings>
