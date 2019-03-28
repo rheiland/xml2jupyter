@@ -1,5 +1,5 @@
 ---
-title: 'Xml2jupyter: Mapping parameters between XML and Jupyter widgets'
+title: 'xml2jupyter: Mapping parameters between XML and Jupyter widgets'
 tags:
   - Jupyter
   - XML
@@ -36,17 +36,18 @@ graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
 Many scientific simulation packages use
 text-based configuration files (hopefully in some standard format) to provide parameter values.
 <!-- For many users, especially novice users, editing such a configuration file can be burdensome. -->
-Xml2jupyter is a Python package that bridges this gap. It provides a mapping between configuration files, formatted in 
+xml2jupyter is a Python package that bridges this gap. It provides a mapping between configuration files, formatted in 
 the Extensible Markup Language (XML), and Jupyter widgets. Widgets are automatically generated from the XML
 file and these can, optionally, be incorporated into a larger GUI for a simulation package. 
 Users modify parameter values via the widgets 
 and the values are written to the XML configuration file. 
-Xml2jupyter has been tested using the PhysiCell [@PhysiCell:2018] simulation software
+xml2jupyter has been tested using the PhysiCell [@PhysiCell:2018] simulation software
 and is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
 create Jupyter GUIs for PhysiCell-related applications running on nanoHUB [@nanoHUB_2013].
 
 A PhysiCell configuration file defines model-specific `<user_parameters>` in XML. Each parameter element
 consists of its name with attributes, defining its data *type*, *units* (optional), *description* (optional),
+whether the widget should be *hidden* (optional),
 and the parameter's default value. The attributes will determine the appearance and 
 behavior of the Jupyter widget. For numeric widgets (the most common type for PhysiCell), 
 xml2jupyter will calculate a delta step size as a function of the default value and this 
@@ -61,8 +62,8 @@ step size will be used by the widget's graphical increment/decrement feature.
 </user_parameters>
 ```
 -->
-To illustrate, we show the following contrived XML example, containing each of the four 
-allowed data types (currently): 
+To illustrate, we show the following simple XML example, containing each of the four 
+allowed data types (currently) and the various attributes: 
 
 <!-- ![](images/silly_xml-60.png) -->
 <!-- ![](images/config_contrived.png) -->
@@ -70,9 +71,10 @@ allowed data types (currently):
 ```
 <PhysiCell_settings>
   <user_parameters>
-    <radius type="double" units="micron">250.0</radius>
-    <threads type="int">8</threads>
-    <color type="string">red</color>
+    <radius type="double" units="micron" description="tumor radius">250.0
+    </radius>
+    <threads type="int" >8</threads>
+    <color type="string" hidden="true">red</color>
     <fix_persistence type="bool">True</fix_persistence>
   </user_parameters>
 </PhysiCell_settings>
@@ -85,13 +87,15 @@ and the right snapshot after the user single steps the `threads` value (note the
 -->
 
 When we map this into Jupyter widgets, we obtain the following rendered result. 
-The name of the widget and the units (if present) are rendered as (disabled) button widgets. This choice, plus the
-alternating colors on rows of widgets, provide a more visually appealing layout.
+The name of the parameter and its attributes, if present, are rendered as (disabled) button widgets. This choice, 
+plus alternating row colors ("zebra stripes"), make it easy for a user to see and interpret a parameter's
+meaning and value.
 For numeric widgets (type "int" or "double"), we compute a delta step value based on the magnitude (log) 
 of the initial value.
 For example, the `radius` widget will have a step value of 10, whereas `threads` will have a step value of 1.
 
-![](images/contrived3.png)
+![Simple example of XML parameters as Jupyter widgets.](images/simple_widgets.png)
+
 <!--
 ![](images/silly1-50.png)
 ![](images/silly2-50.png)
@@ -121,15 +125,11 @@ $ jupyter notebook test_gui.ipynb
 ```
 This should produce the following notebook in your browser after selecting `Run all` in the `Cell` menu:
 
-![](images/test_biorobots_params.png)
-
-**Figure 1.**
-The biorobots model parameters rendered as Jupyter widgets.
-
+![The biorobots parameters rendered as Jupyter widgets.](images/test_biorobots_params.png)
 
 # PhysiCell Jupyter GUI
 
-Our ultimate goal is to generate a fully functional GUI for PhysiCell users. Xml2jupyter provides one
+Our ultimate goal is to generate a fully functional GUI for PhysiCell users. xml2jupyter provides one
 important piece of this - dynamically generating widgets for custom user parameters for a model.
 With other Python modules that provide additional components (tabs) of the GUI, common to all PhysiCell
 models, a user can configure, run, and visualize output from a simulation.
@@ -146,11 +146,7 @@ installing these additional dependencies in the repository README.
 ![](images/biorobots_substrates.png)
 ![](images/biorobots_2x1_crop.png)
 -->
-![biorobots centerline](images/biorobots_2x1b.png)
-
-**Figure 2.**
-Plotting the biorobots' cells and substrates.
-
+![Plotting the biorobots (cells) and signals (substrates).](images/biorobots_2x1b.png)
 
 <!-- 
 -![](images/heterogeneity_params.png)
@@ -166,19 +162,20 @@ And while the additional Python modules that provide visualization are also tail
 output, they can serve as templates for other file formats and provide similar functionality.
 <!-- We welcome contributions, especially for three-dimensional data. -->
 
-Xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
+xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
 a scientific cloud for nanoscience education and research that includes running 
 interactive <!-- or batch --> simulations in a browser. For example, we show screen shots from our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
 tool running on nanoHUB, where the *User Params* tab has been generated using the 
 `xml2jupyter.py` script. 
-Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include [`pc4heterogen`](https://nanohub.org/tools/pc4heterogen) and [`pcISA`](https://nanohub.org/tools/pcisa).
+Other PhysiCell-related nanoHUB tools that have been created using xml2jupyter include [`pc4heterogen`](https://nanohub.org/tools/pc4heterogen), [`pcISA`](https://nanohub.org/tools/pcisa).
+and [`pc4cancerimmune`](https://nanohub.org/tools/pc4cancerimmune).
 Readers can create an account on nanoHUB and run these simulations for themselves.
 We encourage students to use xml2jupyter to create their own nanoHUB tools of PhysiCell models that can 
 1) be run and evaluated by 
 the instructor, 2) be shared with others, and 3) become part of a student's living portfolio. 
-(Another repository, https://github.com/rheiland/tool4nanobio, provides instruction and scripts to help)
+(Another repository, https://github.com/rheiland/tool4nanobio, provides instructions and scripts to help.)
 
-![](images/nanohub_cancerbots_params.png)
+![The cancer biorobots parameters rendered as Jupyter widgets.](images/nanohub_cancerbots_params.png)
 
 <!--
 ![](images/nanohub_cells.png)
@@ -193,7 +190,7 @@ the instructor, 2) be shared with others, and 3) become part of a student's livi
 In the four screenshots below, we show the cell plot tab (upper-left) and three different substrate plots.
 This particular model and simulation is described in this [video](https://www.youtube.com/watch?v=wuDZ40jW__M).
 
-![](images/nano_2x2.png)
+![The cancer biorobots Jupyter notebook on nanoHUB.](images/nano_2x2.png)
 
 We welcome suggestions and contributions to xml2jupyter.
 For example, currently, we arrange the generated parameter widgets vertically, one row per parameter.
