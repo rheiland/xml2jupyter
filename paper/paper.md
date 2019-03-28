@@ -207,8 +207,12 @@ want to provide 3-D visualizations for 3-D models in the near future.
 
 We thank the National Science Foundation (1720625) and the
 National Cancer Institute (U01-CA232137-01) for generous support.
-We also thank our collaborators at Purdue University, especially Martin Hunt and Steve Clark, who 
-provided technical support with nanoHUB and Jupyter.
+Undergraduate and graduate students in the Intelligent Systems Engineering deparment 
+at Indiana University provided internal testing, and students and researchers 
+within the NSF nanoMFG (1720701) group generously provided external testing. All of
+their feedback provided considerable improvements to this project.
+Finally, we thank our collaborators at Purdue University, especially Martin Hunt and 
+Steve Clark, who provided technical support with nanoHUB and Jupyter.
 
 # References
 
