@@ -33,9 +33,8 @@ bibliography: paper.bib
 Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable documents (in a variety of programming languages) that can be run in a web browser. 
 When a notebook contains
 graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
-Many scientific simulation packages use
-text-based configuration files (hopefully in some standard format) to provide parameter values.
-<!-- For many users, especially novice users, editing such a configuration file can be burdensome. -->
+Many scientific simulation packages use text-based configuration files to provide parameter values.
+Manually editing these files, to explore how different values affect a simulation, can be burdensome.
 xml2jupyter is a Python package that bridges this gap. It provides a mapping between configuration files, formatted in 
 the Extensible Markup Language (XML), and Jupyter widgets. Widgets are automatically generated from the XML
 file and these can, optionally, be incorporated into a larger GUI for a simulation package. 
@@ -71,9 +70,10 @@ allowed data types (currently) and the various attributes:
 ```
 <PhysiCell_settings>
   <user_parameters>
-    <radius type="double" units="micron" description="tumor radius">250.0
+    <radius type="double" units="micron"
+        description="initial tumor radius">250.0
     </radius>
-    <threads type="int" >8</threads>
+    <threads type="int">8</threads>
     <color type="string" hidden="true">red</color>
     <fix_persistence type="bool">True</fix_persistence>
   </user_parameters>
@@ -87,9 +87,9 @@ and the right snapshot after the user single steps the `threads` value (note the
 -->
 
 When we map this into Jupyter widgets, we obtain the following rendered result. 
-The name of the parameter and its attributes, if present, are rendered as (disabled) button widgets. This choice, 
-plus alternating row colors ("zebra stripes"), make it easy for a user to see and interpret a parameter's
-meaning and value.
+The name of the parameter, its value, and its attributes, if present, are displayed in a row (as disabled button widgets). 
+Using alternating row colors ("zebra stripes") helps visually match these fields and avoid changing the wrong
+parameter value.
 For numeric widgets (type "int" or "double"), we compute a delta step value based on the magnitude (log) 
 of the initial value.
 For example, the `radius` widget will have a step value of 10, whereas `threads` will have a step value of 1.
