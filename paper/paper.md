@@ -201,7 +201,7 @@ generate a full GUI from an existing PhysiCell model.)
 -->
 
 
-![The cancer biorobots Jupyter notebook on nanoHUB.](images/nano_2x2.png)
+![The cancer biorobots Jupyter notebook on nanoHUB.](images/nano_cancerbots_2x2.png)
 
 We welcome suggestions and contributions to xml2jupyter.
 For example, currently, we arrange the generated parameter widgets vertically, one row per parameter.
@@ -211,7 +211,7 @@ e.g., in a matrix with only the parameter names and values.
 <!-- Suggestions for additional visualization functionality are also welcome. -->
 
 Also, we currently provide just 2-D visualizations of (spatial) data. In the near future, we 
-plan to provide 3-D visualizations of 3-D models and we welcome suggestions from the community.
+will provide visualizations of 3-D models and welcome suggestions from the community.
 
 # Acknowledgements
 
