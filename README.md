@@ -2,7 +2,10 @@
 
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
-To see an example application that has been generated with xml2jupyter, click this binder badge: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
+To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
+or the Azure notebooks badge [![Azure Notebooks](https://notebooks.azure.com/launch.svg)](https://notebooks.azure.com/randy-heiland/projects/xml2jupyter).
+
+<!-- [![Azure Notebooks](https://notebooks.azure.com/launch.png)](https://notebooks.azure.com/import/gh/randy-heiland/xml2jupyter) -->
 
 ## Overview
 Using an XML configuration file, generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). This project is primarily in support of the [PhysiCell](http://physicell.mathcancer.org/) simulator and its configuration files, however, the basic idea can be extended to other text-based configuration files. The ```xml2jupyter.py``` Python script provides the core functionality for dynamically creating widgets from XML. The other Python scripts are static and provide a self-contained Jupyter GUI consisting of multiple tabs.
