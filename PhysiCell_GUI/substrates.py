@@ -277,7 +277,7 @@ class SubstrateTab(object):
         if not os.path.isfile(full_fname):
 #            print("File does not exist: ", full_fname)
 #            print("No: ", full_fname)
-            print("Missing output file")  # No:  output00000000_microenvironment0.mat
+            print("Once output files are generated, click the slider.")  # No:  output00000000_microenvironment0.mat
 
             return
 

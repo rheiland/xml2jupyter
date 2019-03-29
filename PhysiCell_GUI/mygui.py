@@ -7,7 +7,8 @@ import shutil
 import datetime
 import subprocess
 from pathlib import Path
-from basics import BasicsTab
+from config import ConfigTab
+from about import AboutTab
 from user_params import UserTab
 from svg import SVGTab
 from substrates import SubstrateTab
@@ -17,12 +18,10 @@ from substrates import SubstrateTab
 debug_view = widgets.Output(layout={'border': '1px solid black'})
 
 constWidth = '180px'
-tab_height = '500px'
-tab_layout = widgets.Layout(width='950px',   # border='2px solid black',
-                            height=tab_height, overflow_y='scroll',)
 
 # create the tabs, but don't display yet
-basics_tab = BasicsTab()
+about_tab = AboutTab()
+config_tab = ConfigTab()
 user_tab = UserTab()
 svg = SVGTab()
 sub = SubstrateTab()
@@ -73,7 +72,7 @@ def write_config_file(name):
 #    full_xml_filename = os.path.abspath(full_xml_filename)
     tree = ET.parse(full_xml_filename)  # this file cannot be overwritten; part of tool distro
     xml_root = tree.getroot()
-    basics_tab.fill_xml(xml_root)
+    config_tab.fill_xml(xml_root)
     user_tab.fill_xml(xml_root)
     tree.write(name)
 
@@ -119,15 +118,15 @@ def get_config_files():
 def fill_gui_params(config_file):
     tree = ET.parse(config_file)
     xml_root = tree.getroot()
-    basics_tab.fill_gui(xml_root)
+    config_tab.fill_gui(xml_root)
     user_tab.fill_gui(xml_root)
     # cells.fill_gui(xml_root)
 
 def update_plot_frames():
-    max_frames = basics_tab.get_num_svg_frames()
+    max_frames = config_tab.get_num_svg_frames()
     svg.update_max_frames_expected(max_frames)
 
-    max_frames = basics_tab.get_num_substrate_frames()
+    max_frames = config_tab.get_num_substrate_frames()
     sub.update_max_frames_expected(max_frames)
 
 def write_button_cb(s):
@@ -165,13 +164,18 @@ run_button = widgets.Button(
 )
 run_button.on_click(run_button_cb)
 
-titles = ['Basics', 'User Params', 'Cell Plots', 'Substrate Plots']
-tabs = widgets.Tab(children=[basics_tab.tab, user_tab.tab, svg.tab, sub.tab],
+tab_height = '500px'
+tab_height = 'auto'
+tab_layout = widgets.Layout(width='950px',   # border='2px solid black',
+                            height=tab_height, overflow_y='scroll',)
+titles = ['About', 'Config Basics', 'User Params', 'Out: Cell Plots', 'Out: Substrate Plots']
+tabs = widgets.Tab(children=[about_tab.tab, config_tab.tab, user_tab.tab, svg.tab, sub.tab],
                    _titles={i: t for i, t in enumerate(titles)},
                    layout=tab_layout)
 
 #gui = widgets.VBox(children=[tabs, write_button])
-gui = widgets.VBox(children=[tabs, run_button])
+write_run_buttons = widgets.HBox([write_button,run_button])
+gui = widgets.VBox(children=[tabs, write_run_buttons])
 fill_gui_params(full_xml_filename)
 
 # pass in (relative) directory where output data is located

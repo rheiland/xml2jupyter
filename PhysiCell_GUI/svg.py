@@ -32,7 +32,7 @@ class SVGTab(object):
 
         max_frames = 1 
         self.svg_plot = interactive(self.plot_svg, frame=(0, max_frames), continuous_update=False)
-        svg_plot_size = '500px'
+        svg_plot_size = '700px'
         self.svg_plot.layout.width = svg_plot_size
         self.svg_plot.layout.height = svg_plot_size
         self.use_defaults = True
@@ -180,7 +180,7 @@ class SVGTab(object):
             # print("File does not exist: ", fname)
             # print("File does not exist: ", full_fname)
             #print("No: ", full_fname)
-            print("Missing output file")   #  No:  snapshot00000000.svg
+            print("Once output files are generated, click the slider.")   #  No:  snapshot00000000.svg
             return
 
         xlist = deque()
@@ -206,14 +206,7 @@ class SVGTab(object):
                 # print("debug> found width --> axes_max =", axes_max)
             if child.text and "Current time" in child.text:
                 svals = child.text.split()
-                # title_str = "(" + str(current_idx) + ") Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
-                # title_str = "Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
-#                title_str = svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
-                # mins= round(int(float(xml_root.find(".//current_time").text)))  # TODO: check units = mins
-                mins= round(int(float(svals[7])))  # TODO: check units = mins
-                hrs = int(mins/60)
-                days = int(hrs/24)
-                title_str = '%dd, %dh, %dm' % (int(days),(hrs%24), mins - (hrs*60))
+                title_str = svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
 
             # print("width ",child.attrib['width'])
             # print('attrib=',child.attrib)

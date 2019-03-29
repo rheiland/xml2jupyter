@@ -1,93 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-/*
-###############################################################################
-# If you use PhysiCell in your project, please cite PhysiCell and the version #
-# number, such as below:                                                      #
-#                                                                             #
-# We implemented and solved the model using PhysiCell (Version x.y.z) [1].    #
-#                                                                             #
-# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
-#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
-#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
-#     DOI: 10.1371/journal.pcbi.1005991                                       #
-#                                                                             #
-# See VERSION.txt or call get_PhysiCell_version() to get the current version  #
-#     x.y.z. Call display_citations() to get detailed information on all cite-#
-#     able software used in your PhysiCell application.                       #
-#                                                                             #
-# Because PhysiCell extensively uses BioFVM, we suggest you also cite BioFVM  #
-#     as below:                                                               #
-#                                                                             #
-# We implemented and solved the model using PhysiCell (Version x.y.z) [1],    #
-# with BioFVM [2] to solve the transport equations.                           #
-#                                                                             #
-# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
-#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
-#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
-#     DOI: 10.1371/journal.pcbi.1005991                                       #
-#                                                                             #
-# [2] A Ghaffarizadeh, SH Friedman, and P Macklin, BioFVM: an efficient para- #
-#     llelized diffusive transport solver for 3-D biological simulations,     #
-#     Bioinformatics 32(8): 1256-8, 2016. DOI: 10.1093/bioinformatics/btv730  #
-#                                                                             #
-###############################################################################
-#                                                                             #
-# BSD 3-Clause License (see https://opensource.org/licenses/BSD-3-Clause)     #
-#                                                                             #
-# Copyright (c) 2015-2018, Paul Macklin and the PhysiCell Project             #
-# All rights reserved.                                                        #
-#                                                                             #
-# Redistribution and use in source and binary forms, with or without          #
-# modification, are permitted provided that the following conditions are met: #
-#                                                                             #
-# 1. Redistributions of source code must retain the above copyright notice,   #
-# this list of conditions and the following disclaimer.                       #
-#                                                                             #
-# 2. Redistributions in binary form must reproduce the above copyright        #
-# notice, this list of conditions and the following disclaimer in the         #
-# documentation and/or other materials provided with the distribution.        #
-#                                                                             #
-# 3. Neither the name of the copyright holder nor the names of its            #
-# contributors may be used to endorse or promote products derived from this   #
-# software without specific prior written permission.                         #
-#                                                                             #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" #
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   #
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  #
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   #
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         #
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        #
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    #
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     #
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     #
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  #
-# POSSIBILITY OF SUCH DAMAGE.                                                 #
-#                                                                             #
-###############################################################################
-*/
---> 
-
-<!--
-<user_details />
--->
-
 <PhysiCell_settings version="devel-version">
 	<domain>
-		<x_min>-1000</x_min>
-		<x_max>1000</x_max>
-		<y_min>-1000</y_min>
-		<y_max>1000</y_max>
-		<z_min>-10</z_min>
-		<z_max>10</z_max>
-		<dx>20</dx>
-		<dy>20</dy>
-		<dz>20</dz>
+		<x_min>-750.0</x_min>
+		<x_max>750.0</x_max>
+		<y_min>-750.0</y_min>
+		<y_max>750.0</y_max>
+		<z_min>-10.0</z_min>
+		<z_max>10.0</z_max>
+		<dx>20.0</dx>
+		<dy>20.0</dy>
+		<dz>20.0</dz>
 		<use_2D>true</use_2D>
 	</domain>
 	
 	<overall>
-		<max_time units="min">60</max_time> 
+		<max_time units="min">14400.0</max_time> 
 		<time_units>min</time_units>
 		<space_units>micron</space_units>
 	</overall>
@@ -97,16 +23,16 @@
 	</parallel> 
 	
 	<save>
-		<folder>output</folder> <!-- use . for root --> 
+		<folder>output</folder>  
 
 		<full_data>
-			<interval units="min">10</interval>
-			<enable>true</enable>
+			<interval units="min">1440</interval>
+			<enable>True</enable>
 		</full_data>
 		
 		<SVG>
-			<interval units="min">10</interval>
-			<enable>true</enable>
+			<interval units="min">1440</interval>
+			<enable>True</enable>
 		</SVG>
 		
 		<legacy_data>
@@ -115,35 +41,62 @@
 	</save>
 	
 	<user_parameters>
-		<random_seed type="int" units="dimensionless">0</random_seed> 
-
-		<!-- for microenvironment setup --> 
-		<cargo_signal_D type="double" units="micron/min^2">1e3</cargo_signal_D>
-		<cargo_signal_decay type="double" units="1/min">.4</cargo_signal_decay> <!-- 50 micron length scale -->
-		<director_signal_D type="double" units="micron/min^2">1e3</director_signal_D>
-		<director_signal_decay type="double" units="1/min">.1</director_signal_decay> <!-- 100 micron length scale -->
+		<random_seed hidden="true" type="int" units="dimensionless">0</random_seed> 
 		
-		<!-- for cell definitions -->
-		<elastic_coefficient type="double" units="1/min">0.05</elastic_coefficient>
-
-		<worker_motility_persistence_time type="double" units="min">5.0</worker_motility_persistence_time>
-		<worker_migration_speed type="double" units="micron/min">5.0</worker_migration_speed>
-		<attached_worker_migration_bias type="double" units="min">1.0</attached_worker_migration_bias>
-		<unattached_worker_migration_bias type="double" units="min">0.5</unattached_worker_migration_bias>
-
-		<!-- tissue setup --> 
-		<number_of_directors type="int" units="none">15</number_of_directors> 
-		<number_of_cargo_clusters type="int" units="none">100</number_of_cargo_clusters>
-		<number_of_workers type="int" units="none">50</number_of_workers>
+		 
+		<therapy_activation_time description="time at which therapy begins" type="double" units="min">10080.0</therapy_activation_time> 
+			 
+		<save_interval_after_therapy_start description="save (output) interval after therapy begins" type="double" units="min">120.0</save_interval_after_therapy_start>
 		
-		<!-- cargo parameters --> 
-		<drop_threshold type="double" units="dimensionless">0.4</drop_threshold> 
+		 
+		<cargo_o2_relative_uptake description="oxygen uptake for cargo cells" type="double" units="dimensionless">0.1</cargo_o2_relative_uptake>
+		<cargo_apoptosis_rate description="apoptosis rate for cargo cells" type="double" units="1/min">4.065e-05</cargo_apoptosis_rate> 
+			
+		<cargo_relative_adhesion description="relative adhesion for cargo cells" type="double" units="dimensionless">0.0</cargo_relative_adhesion>
+		<cargo_relative_repulsion description="relative repulsion for cargo cells" type="double" units="dimensionless">5.0</cargo_relative_repulsion> 
 		
-		<!-- colors --> 
-		<worker_color type="string" units="none">red</worker_color>
-		<cargo_color type="string" units="none">blue</cargo_color>
-		<director_color type="string" units="none">limegreen</director_color> 
-	
+		 
+		<worker_o2_relative_uptake description="oxygen uptake for worker cells" type="double" units="1/min">0.1</worker_o2_relative_uptake>
+		<worker_apoptosis_rate description="apoptosis rate for workers" type="double" units="1/min">0.0</worker_apoptosis_rate>
+		<worker_motility_persistence_time description="motility persistence of workers" type="double" units="min">5.0</worker_motility_persistence_time>
+		<worker_migration_speed description="migration speed for workers" type="double" units="micron/min">2.0</worker_migration_speed>
+		<attached_worker_migration_bias description="migration bias for attached workers" type="double">1.0</attached_worker_migration_bias>
+		<unattached_worker_migration_bias description="migration bias for unattached workers" type="double">1.0</unattached_worker_migration_bias>
+		<worker_relative_adhesion description="relative adhesion for workers" type="double" units="dimensionless">0.0</worker_relative_adhesion>
+		<worker_relative_repulsion description="relative repulsion for workers" type="double" units="dimensionless">5.0</worker_relative_repulsion> 
+
+		
+		<elastic_coefficient description="elastic coefficient of cells" type="double" units="1/min">0.05</elastic_coefficient>		
+		<receptor description="receptor initial value" type="double" units="dimensionless">0.0</receptor>
+		<cargo_release_o2_threshold description="oxygen threshold for releasing cargo" type="double" units="mmHg">10.0</cargo_release_o2_threshold>
+		
+		<max_relative_cell_adhesion_distance description="max distance cells can adhere" type="double" units="dimensionless">1.25</max_relative_cell_adhesion_distance>
+			
+		
+		 
+		<damage_rate description="damage rate during therapy" type="double" units="1/min">0.03333</damage_rate>  
+		<repair_rate description="repair rate during therapy" type="double" units="1/min">0.004167</repair_rate>  
+		<drug_death_rate description="death rate for drug" type="double" units="1/min">0.004167</drug_death_rate>  
+		
+		<worker_fraction description="fraction of cells that are workers" type="double" units="dimensionless">0.1</worker_fraction>
+		<number_of_injected_cells description="# of agents for therapy" type="int" units="dimensionless">500</number_of_injected_cells>
+		
+		
+		<tumor_radius description="initial tumor radius" type="double" units="micron">200.0</tumor_radius> 
+		
+		 
+		<max_elastic_displacement description="max elastic displacement for cells" type="double" units="micron">50.0</max_elastic_displacement>
+		
+		 
+		<attachment_receptor_threshold description="threshold for attachment" type="double" units="dimensionless">0.1</attachment_receptor_threshold>
+		<max_attachment_distance description="max attachment distance" type="double" units="micron">18.0</max_attachment_distance>
+		<min_attachment_distance description="min attachment distance" type="double" units="micron">14.0</min_attachment_distance>
+		
+		
+		<motility_shutdown_detection_threshold description="worker stops if chemoattractant &lt; threshold" type="double" units="dimensionless">0.001</motility_shutdown_detection_threshold>
+			
+		<attached_worker_migration_bias description="migration bias for attached worker" type="double" units="dimensionless">0.5</attached_worker_migration_bias>
+		<unattached_worker_migration_bias description="migration bias for unattached worker" type="double" units="dimensionless">0.5</unattached_worker_migration_bias>
 	</user_parameters>
 	
 </PhysiCell_settings>
