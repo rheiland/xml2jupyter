@@ -160,8 +160,8 @@ def run_button_cb(s):
     try:
         subprocess.Popen(["myproj", new_config_file])  # execute our sim!
     except:
-        print("Unable to run the simulation. Consider running https://nanohub.org/tools/pc4cancerbots")
-        print("However, you can visualize precomputed data - just click/move the sliders in the Plots tabs.")
+        print("On Binder, we only allow exploring the GUI widgets and visualizing precomputed data - click/move the sliders in the Plots tabs.")
+        print("But you can run the actual simulation at https://nanohub.org/tools/pc4cancerbots")
 
 run_button = widgets.Button(
     description='Run',
