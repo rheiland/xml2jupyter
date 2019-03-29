@@ -153,7 +153,7 @@ installing these additional dependencies in the repository README.
 ![](images/biorobots_substrates.png)
 ![](images/biorobots_2x1_crop.png)
 -->
-![Plotting the biorobots (cells; left) and signals (substrates; right).](images/biorobots_2x1b.png)
+![Plotting the biorobots (cells; left) and signals (substrates; right).](images/biorobots_About_montage.png)
 
 <!-- 
 -![](images/heterogeneity_params.png)
@@ -201,7 +201,7 @@ generate a full GUI from an existing PhysiCell model.)
 -->
 
 
-![The cancer biorobots Jupyter notebook on nanoHUB.](images/nano_cancerbots_2x2.png)
+![The cancer biorobots Jupyter notebook on nanoHUB.](images/nanohub_cancerbots_2x2.png)
 
 We welcome suggestions and contributions to xml2jupyter.
 For example, currently, we arrange the generated parameter widgets vertically, one row per parameter.
