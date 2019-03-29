@@ -17,6 +17,8 @@ from substrates import SubstrateTab
 
 debug_view = widgets.Output(layout={'border': '1px solid black'})
 
+run_on_binder = False
+
 constWidth = '180px'
 
 # create the tabs, but don't display yet
@@ -155,10 +157,15 @@ def run_button_cb(s):
 #    subprocess.call(["biorobots", xml_file_out])
 #    subprocess.call(["myproj", new_config_file])   # spews to shell, but not ctl-C'able
 #    subprocess.call(["myproj", new_config_file], shell=True)  # no
-    subprocess.Popen(["myproj", new_config_file])
+    try:
+        subprocess.Popen(["myproj", new_config_file])  # execute our sim!
+    except:
+        print("Unable to run the simulation. Consider running https://nanohub.org/tools/pc4cancerbots")
+        print("However, you can visualize precomputed data - just click/move the sliders in the Plots tabs.")
 
 run_button = widgets.Button(
     description='Run',
+    disabled=run_on_binder,
     button_style='success',  # 'success', 'info', 'warning', 'danger' or ''
     tooltip='Update '+ main_xml_filename +' and run a simulation',
 )
@@ -174,7 +181,8 @@ tabs = widgets.Tab(children=[about_tab.tab, config_tab.tab, user_tab.tab, svg.ta
                    layout=tab_layout)
 
 #gui = widgets.VBox(children=[tabs, write_button])
-write_run_buttons = widgets.HBox([write_button,run_button])
+#write_run_buttons = widgets.HBox([write_button,run_button])  # eliminate 'write button'
+write_run_buttons = widgets.HBox([run_button])
 gui = widgets.VBox(children=[tabs, write_run_buttons])
 fill_gui_params(full_xml_filename)
 
