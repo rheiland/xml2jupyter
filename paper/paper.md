@@ -34,16 +34,19 @@ Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable doc
 of programming languages) that can be run in a web browser. 
 When a notebook contains
 graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
-Many scientific simulation packages use text-based configuration files to provide parameter values.
-Manually editing these files, to explore how different values affect a simulation, can be burdensome.
-xml2jupyter is a Python package that bridges this gap. It provides a mapping between configuration files, formatted in 
+Many scientific simulation packages use text-based configuration files to provide parameter values and 
+runn at the command line without a graphical interface.
+Manually editing these files to explore how different values affect a simulation can be burdensome for 
+technical users, and impossible to use for those with other scientific backgrounds.
+xml2jupyter is a Python package that addresses these scientific bottlenecks. 
+It provides a mapping between configuration files, formatted in 
 the Extensible Markup Language (XML), and Jupyter widgets. Widgets are automatically generated from the XML
-file and these can, optionally, be incorporated into a larger GUI for a simulation package. 
-Users modify parameter values via the widgets 
+file and these can, optionally, be incorporated into a larger GUI for a simulation package, and optionally 
+hosted on cloud resources. Users modify parameter values via the widgets,  
 and the values are written to the XML configuration file which is input to
 the simulation's command-line interface. 
 xml2jupyter has been tested using PhysiCell [@PhysiCell:2018], an open source, agent-based simulator for biology,
-and is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
+and it is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
 create Jupyter GUIs for PhysiCell-related applications running on nanoHUB [@nanoHUB_2013].
 
 A PhysiCell configuration file defines model-specific `<user_parameters>` in XML. Each parameter element
@@ -63,8 +66,8 @@ step size will be used by the widget's graphical increment/decrement feature.
 </user_parameters>
 ```
 -->
-To illustrate, we show the following simple XML example, containing each of the four 
-allowed data types (currently) and the various attributes: 
+To illustrate, we show the following simple XML example, containing each of the four (currently) 
+supported data types  and the various attributes: 
 
 <!-- ![](images/silly_xml-60.png) -->
 <!-- ![](images/config_contrived.png) -->
@@ -88,6 +91,8 @@ middle snapshot shows the updated numeric value after the user does a single del
 the `radius` (note the step size of 10)
 and the right snapshot after the user single steps the `threads` value (note the step size of 1).
 -->
+
+<!-- Paul resumes editing here -->
 
 When we map this into Jupyter widgets, we obtain the rendered results in Figure 1. 
 Notice the `color` parameter is not displayed since we specified it should be
