@@ -34,7 +34,7 @@ Jupyter Notebooks [@Kluyver:2016aa, @Nature_2018_Jupyter] provide executable doc
 of programming languages) that can be run in a web browser. When a notebook contains
 graphical widgets, it becomes an easy-to-use graphical user interface (GUI).
 Many scientific simulation packages use text-based configuration files to provide parameter values and 
-runn at the command line without a graphical interface. Manually editing these files to explore 
+run at the command line without a graphical interface. Manually editing these files to explore 
 how different values affect a simulation can be burdensome for 
 technical users, and impossible to use for those with other scientific backgrounds.
 xml2jupyter is a Python package that addresses these scientific bottlenecks. 
@@ -42,8 +42,7 @@ It provides a mapping between configuration files, formatted in
 the Extensible Markup Language (XML), and Jupyter widgets. Widgets are automatically generated from the XML
 file and these can, optionally, be incorporated into a larger GUI for a simulation package, and optionally 
 hosted on cloud resources. Users modify parameter values via the widgets,  
-and the values are written to the XML configuration file which is input to
-the simulation's command-line interface. 
+and the values are written to the XML configuration file which is input to the simulation's command-line interface. 
 xml2jupyter has been tested using PhysiCell [@PhysiCell:2018], an open source, agent-based simulator for biology,
 and it is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
 create Jupyter GUIs for PhysiCell-related applications running on nanoHUB [@nanoHUB_2013].
@@ -167,11 +166,11 @@ We hope others will be inspired to extend the core idea of this project to other
 configuration files. XML is only one of several data-interchange formats, and while we  
 <!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
 created this tool for XML-based configurations based on needs to create GUIs for PhysiCell projects, 
-the approach should be more broadly applicable to these other formats.  
-<!-- It just happens to be the one of interest to us for PhysiCell. -->
-And while the additional Python modules that provide visualization are also tailored to PhysiCell
+the approach should be more broadly applicable to these other formats. And
+while the additional Python modules that provide visualization are also tailored to PhysiCell
 output, they can serve as templates for other scientific applications whose input and output 
 file formats and provide similar functionality. 
+<!-- It just happens to be the one of interest to us for PhysiCell. -->
 <!-- We welcome contributions, especially for three-dimensional data. -->
 
 xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
@@ -216,7 +215,7 @@ provide additional control over styling and placement by a separate style.xml or
 external cascading style sheet. We will explore these options in the future, with the aim of separating 
 as much GUI specification and styling from the original scientific application as possible. Such a decoupling 
 would make it easier for  scientific developers to continue refining their scientific codes without 
-worrying about impact on the GUI, and without undue encumberence by non-scientific annotations. 
+worrying about impact on the GUI, and without undue encumbrance by non-scientific annotations. 
 <!-- Suggestions for additional visualization functionality are also welcome. -->
 
 Also, we currently provide just 2-D visualizations of (spatial) data. In the near future, we 
