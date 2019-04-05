@@ -170,9 +170,9 @@ a step value of 10, whereas \texttt{threads} will have a step value of
 \end{figure}
 
 For a more realistic example, consider the
-\texttt{config\_biorobots.xml} configuration file (found in the
-\texttt{config\_samples} directory). The XML elements in the
-\texttt{\textless{}user\_parameters\textgreater{}} block include the
+\texttt{config\char`_biorobots.xml} configuration file (found in the
+\texttt{config\char`_samples} directory). The XML elements in the
+\texttt{\textless{}user\char`_parameters\textgreater{}} block include the
 (optional) \emph{description} attribute which briefly describes the
 parameter and is displayed in another widget. To demonstrate xml2jupyter
 on this XML file, one would: 1) clone or download the repository, 2)
@@ -184,12 +184,16 @@ $ cp config_samples/config_biorobots.xml .
 $ python xml2jupyter.py config_biorobots.xml 
 \end{verbatim}
 
+\begin{sloppypar}
 The \texttt{xml2jupyter.py} script parses the XML and generates a Python
-module, \texttt{user\_params.py}, containing the Jupyter widgets,
+module, 
+\texttt{user\char`_params.py}, 
+containing the Jupyter widgets,
 together with methods to populate their values from the XML and write
 their values back to the XML. To ``validate'' the widgets were generated
-correctly, one could, minimally, open \texttt{user\_params.py} in an
+correctly, one could, minimally, open \texttt{user\char`_params.py} in an
 editor and inspect it.
+\end{sloppypar}
 
 But to actually see the widgets rendered in a notebook, we provide a
 simple test:
