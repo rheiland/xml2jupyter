@@ -37,9 +37,9 @@
 \usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,singlelinecheck=off]{caption}
 
 % remove brackets from references
-%\makeatletter
-%\renewcommand{\@biblabel}[1]{\quad#1.}
-%\makeatother
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
 
 % headrule, footrule and page numbers
 \usepackage{lastpage,fancyhdr,graphicx}
@@ -100,7 +100,7 @@ Paul Macklin\textsuperscript{1,*}
 \end{flushleft}
 
 \section*{Abstract}
-Jupyter Notebooks (Kluyver et al. 2016, Perkel (2018)) provide
+Jupyter Notebooks \cite{Kluyver:2016aa,Nature_2018_Jupyter} provide
 executable documents (in a variety of programming languages) that can be
 run in a web browser. When a notebook contains graphical widgets, it
 becomes an easy-to-use graphical user interface (GUI). Many scientific
@@ -118,11 +118,10 @@ and optionally hosted on cloud resources. Users modify parameter values
 via the widgets,
 and the values are written to the XML configuration file which is input
 to the simulation's command-line interface. xml2jupyter has been tested
-using PhysiCell (Ghaffarizadeh et al. 2018), an open source, agent-based
+using PhysiCell \cite{PhysiCell:2018}, an open source, agent-based
 simulator for biology, and it is being used by students for classroom
 and research projects. In addition, we use xml2jupyter to help create
-Jupyter GUIs for PhysiCell-related applications running on nanoHUB
-(Madhavan et al. 2013).
+Jupyter GUIs for PhysiCell-related applications running on nanoHUB \cite{nanoHUB_2013}.
 
 \section*{Introduction}
 A PhysiCell configuration file defines model-specific
@@ -220,8 +219,8 @@ GUI that are common to all PhysiCell models, a user can configure, run,
 and visualize output from a simulation. Two tabs that provide
 visualization of output files are shown below with results from the
 \emph{biorobots} simulation. Note that some of the required modules are
-not available in the Python standard library, e.g., Matplotlib (Hunter
-2007) and SciPy (Jones et al. 2001). We provide instructions for
+not available in the Python standard library, e.g., Matplotlib \cite{Hunter:2007}
+and SciPy \cite{Jones:2001}. 2001). We provide instructions for
 installing these additional dependencies in the repository README.
 
 \begin{figure}
@@ -313,47 +312,6 @@ external testing. All of their feedback resulted in considerable
 improvements to this project. Finally, we thank our collaborators at
 Purdue University, especially Martin Hunt and Steve Clark, who provided
 technical support with nanoHUB and Jupyter.
-
-\hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
-
-\hypertarget{refs}{}
-\leavevmode\hypertarget{ref-PhysiCell:2018}{}%
-Ghaffarizadeh, Ahmadreza, Randy Heiland, Samuel H. Friedman, Shannon M.
-Mumenthaler, and Paul Macklin. 2018. ``PhysiCell: An Open Source
-Physics-Based Cell Simulator for 3-d Multicellular Systems.'' \emph{PLOS
-Computational Biology} 14 (2). Public Library of Science: 1--31.
-doi:\href{https://doi.org/10.1371/journal.pcbi.1005991}{10.1371/journal.pcbi.1005991}.
-
-\leavevmode\hypertarget{ref-Hunter:2007}{}%
-Hunter, J. D. 2007. ``Matplotlib: A 2d Graphics Environment.''
-\emph{Computing in Science \& Engineering} 9 (3). IEEE COMPUTER SOC:
-90--95.
-doi:\href{https://doi.org/10.1109/MCSE.2007.55}{10.1109/MCSE.2007.55}.
-
-\leavevmode\hypertarget{ref-scipy}{}%
-Jones, Eric, Travis Oliphant, Pearu Peterson, and others. 2001. ``SciPy:
-Open Source Scientific Tools for Python.'' \url{http://www.scipy.org/}.
-
-\leavevmode\hypertarget{ref-Kluyver:2016aa}{}%
-Kluyver, Thomas, Benjamin Ragan-Kelley, Fernando Pérez, Brian Granger,
-Matthias Bussonnier, Jonathan Frederic, Kyle Kelley, et al. 2016.
-``Jupyter Notebooks -- a Publishing Format for Reproducible
-Computational Workflows.'' Edited by F. Loizides and B. Schmidt. IOS
-Press.
-
-\leavevmode\hypertarget{ref-nanoHUB_2013}{}%
-Madhavan, Krishna, Lynn Zentner, Victoria Farnsworth, Swaroop
-Shivarajapura, Michael Zentner, Nathan Denny, and Gerhard Klimeck. 2013.
-``NanoHUB.org: Cloud-Based Services for Nanoscale Modeling, Simulation,
-and Education.'' \emph{Nanotechnology Reviews} 2 (1).
-doi:\href{https://doi.org/10.1515/ntrev-2012-0043}{10.1515/ntrev-2012-0043}.
-
-\leavevmode\hypertarget{ref-Nature_2018_Jupyter}{}%
-Perkel, Jeffrey M. 2018. ``Why Jupyter Is Data Scientists' Computational
-Notebook of Choice.'' \emph{Nature} 563: 145--46.
-doi:\href{https://doi.org/10.1038/d41586-018-07196-1}{10.1038/d41586-018-07196-1}.
 
 %%This defines the bibliographies style. Search online for a list of available styles.
 \bibliographystyle{abbrv}
