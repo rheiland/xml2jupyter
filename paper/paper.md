@@ -143,7 +143,7 @@ By adding additional Python modules to provide additional components (tabs) of t
 models, a user can configure, run, and visualize output from a simulation.
 <!-- (we currently assume the user will run the simulation from a shell window).  -->
 Two tabs that provide
-visualization of output files are shown below with results from the *biorobots* simulation.
+visualization of output files are shown in Figure 3 with results from the *biorobots* simulation.
 Note that some of the required modules are not available in the Python
 standard library, e.g., Matplotlib [@Hunter:2007] and SciPy [@scipy]. 
 We provide instructions for 
