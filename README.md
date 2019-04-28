@@ -10,11 +10,15 @@ To see an example application that has been generated with xml2jupyter, click th
 <!-- [![Azure Notebooks](https://notebooks.azure.com/launch.png)](https://notebooks.azure.com/import/gh/randy-heiland/xml2jupyter) -->
 
 ## Overview
-Using an XML configuration file, generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). This project is primarily in support of the [PhysiCell](http://physicell.mathcancer.org/) simulator and its configuration files, however, the basic idea can be extended to other text-based configuration files. The ```xml2jupyter.py``` Python script provides the core functionality for dynamically creating widgets from XML. The other Python scripts are static and provide a self-contained Jupyter GUI consisting of multiple tabs.
+Using a [PhysiCell](http://physicell.mathcancer.org/) XML configuration file, generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). The `xml2jupyter.py` Python script provides a core component of the GUI by generating a panel (Jupyter `Tab`) of customized model parameter widgets. The other Python scripts in this repository are static; all together, they provide a self-contained Jupyter GUI tailored to a custom PhysiCell simulator. While the project is specific to PhysiCell, the basic idea of generating Jupyter widgets can be extended to other text-based configuration files.
 
 <!--
 If you simply want to try the notebook, without downloading anything, try clicking on this Binder badge [![Binder](https://img.shields.io/badge/PhysiCell-JupyterGUI-E66581.svg)](https://mybinder.org/v2/gh/rheiland/xml2gui/master?filepath=PhysiCell.ipynb) to run it from your browser.
 -->
+
+## Installation
+
+Download the `xml2jupyter.py` Python script from this repository. (This will let you perform the core function of generating  Jupyter widgets associated with PhysiCell's `<user_parameters>` in an XML configuration file).
 
 <!--
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/rheiland/xml2gui/master?filepath=PhysiCell.ipynb) Click the binder badge to play with the notebook from your browser without installing anything.
