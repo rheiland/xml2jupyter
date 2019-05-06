@@ -5,6 +5,7 @@
 # Authors: Randy Heiland, Daniel Mishler, Tyler Zhang, Eric Bower, and Paul Macklin
 #
 import sys
+import os
 import math
 import xml.etree.ElementTree as ET
 
@@ -20,6 +21,10 @@ if ( num_args < 2):
 #    sys.exit(1)
 else:
   config_file = sys.argv[1]
+  if not os.path.isfile(config_file):
+    print(config_file, "does not exist")
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
+    sys.exit(1)
 
 colorname1 = 'lightgreen'
 colorname2 = 'tan'
@@ -128,7 +133,12 @@ fill_xml_str= """
 
 # Now parse a configuration file (.xml) and map the user parameters into GUI widgets
 #tree = ET.parse('../config/PhysiCell_settings.xml')
-tree = ET.parse(config_file)
+try:
+    tree = ET.parse(config_file)
+except:
+    print("Cannot parse",config_file, "- check it's XML syntax.")
+    sys.exit(1)
+
 root = tree.getroot()
 uep = root.find('.//user_parameters')  # find unique entry point (uep) to user params
 indent = "        "
