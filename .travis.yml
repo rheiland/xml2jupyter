@@ -6,11 +6,10 @@ install:
   - pip install -r requirements.txt
 
 # Build steps
+#  - do a basic test, defaulting to use "config.xml"
 script:
   - python xml2jupyter.py 
-#  - python xml2jupyter.py config_biorobots.xml test_user_params.py
-#  - cd tests
-#  - python ../xml2jupyter.py ../config_biorobots.xml ../test_user_params.py
+
 
 notifications:
   email:
