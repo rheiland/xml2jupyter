@@ -114,6 +114,4 @@ This is described more fully in the accompanying paper.
 
 ## Contributions
 
-We welcome users' feedback and contributions. Please use the Issues feature for comments related to this repository and project.
-
-For questions related to PhysiCell, please join us at https://groups.google.com/forum/#!forum/physicell-users.
+This project, at least in this early stage, targets the needs of the PhysiCell project. The primary script (`xml2jupyter.py`) only parses an XML configuration file with a handful of specific attributes, mostly related to numeric parameters. Therefore, PhysiCell developers and users will most likely provide contributions to this project (although anyone is welcome). We request that such contributions be made either as a [GitHub pull request](https://help.github.com/en/articles/about-pull-requests) or, if users are unfamiliar with GitHub, as a posting to https://groups.google.com/forum/#!forum/physicell-users.
