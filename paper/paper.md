@@ -176,7 +176,7 @@ file formats and provide similar functionality.
 xml2jupyter has helped us port PhysiCell-related Jupyter tools to nanoHUB, 
 a scientific cloud for nanoscience education and research that includes running 
 interactive <!-- or batch --> simulations in a browser. For example, 
-Figure 4 shows the xml2jupyter-generated *User Params* tab in our
+Figure 4 shows the xml2jupyter-generated *User Params* tab in 
 our [`pc4cancerbots`](https://nanohub.org/tools/pc4cancerbots)
 tool running on nanoHUB.
 Figure 5 shows the cells (upper-left) and three different substrate plots for this same tool.
