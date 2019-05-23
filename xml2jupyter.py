@@ -1,9 +1,32 @@
-#
-# Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
-# containing associated widgets for user parameters.
-#
-# Authors: Randy Heiland, Daniel Mishler, Tyler Zhang, Eric Bower, and Paul Macklin
-#
+"""
+====================================================================================================
+  Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
+  containing associated widgets for user parameters.
+====================================================================================================
+ 
+  Inputs - takes none, 1, 2, 3, or 4 arguments
+  ------
+    config filename (str, optional): the PhysiCell configuration file (.xml) (Default = config.xml)
+    GUI module (str, optional):      the primary GUI for the Jupyter notebook 
+    colorname1, colorname2 (str, optional): the colors to use for the alternating rows of widgets 
+                                            (Defaults: lightgreen, tan)
+  Examples (with 0,1,2,3,4 args):
+    python xml2jupyter.py
+    python xml2jupyter.py config_heterogeneity.xml
+    python xml2jupyter.py config_heterogeneity.xml mygui.py
+    python xml2jupyter.py config_biorobots.xml lightblue tan
+    python xml2jupyter.py config_biorobots.xml mygui.py lightblue tan
+  
+  Outputs
+  -------
+    user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
+ 
+Authors:
+Randy Heiland (heiland@iu.edu)
+Daniel Mishler, Tyler Zhang, Eric Bower (undergrad students in Intelligent Systems Engineering, IU)
+Dr. Paul Macklin (macklinp@iu.edu)
+"""
+
 import sys
 import os
 import math
@@ -17,16 +40,15 @@ colorname2 = 'tan'
 num_args = len(sys.argv)
 print("num_args=",num_args)
 if (num_args < 2):
-#    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
     print()
     print("*** NOTE:  using config.xml  ***")
     print()
 else:
-  config_file = sys.argv[1]
-  if not os.path.isfile(config_file):
-    print(config_file, "does not exist")
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1> <colorname2>]")
-    sys.exit(1)
+    config_file = sys.argv[1]
+    if not os.path.isfile(config_file):
+        print(config_file, "does not exist")
+        print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1> <colorname2>]")
+        sys.exit(1)
 
 if (num_args == 3):
     gui_file = sys.argv[2]
@@ -47,16 +69,8 @@ print("colorname1 = ",colorname1)
 print("colorname2 = ",colorname2)
 print()
 
-# First, let's use this config file name in the (main) mygui.py module:
-# f_main = open('mygui.py', 'r')
-# for line in f_main:
-#     if 'full_xml_filename' in line:
-#         print(line)
-# #        break
-#         sys.exit(1)
 if (num_args == 3):
-#    with open('mygui.py') as f:
-    with open(gui_file) as f:
+    with open(gui_file) as f:   # e.g., "mygui.py"
     #  newText = f.read().replace('myconfig.xml', config_file) # rwh todo: don't assume this string; find line
         file_str = f.read()
         idx = file_str.find('main_xml_filename')  # verify > -1
@@ -64,7 +78,6 @@ if (num_args == 3):
         idx2 = file_str[idx:].find('\n')
         file_post = file_str[idx+idx2:] 
 
-#    with open('mygui.py', "w") as f:
     with open(gui_file, "w") as f:
         f.write(file_pre)
         f.write("main_xml_filename = '" + config_file + "'")
