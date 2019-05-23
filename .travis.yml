@@ -9,9 +9,15 @@ install:
 #  - do a basic test, defaulting to use "config.xml"
 script:
   - cd tests
-# test with default config.xml
+# test with default config.xml (for biorobots)
   - python ../xml2jupyter.py
   - if [[ `diff user_params.py user_params_baseline_default.py` ]]; then >&2 echo "Fail"; exit 1; fi
+  - python ../xml2jupyter.py ../config_samples/config_heterogeneity.xml
+  - if [[ `diff user_params.py user_params_baseline_hetero.py` ]]; then >&2 echo "Fail"; exit 1; fi
+  - python ../xml2jupyter.py ../config_samples/config_cancer_biorobots.xml
+  - if [[ `diff user_params.py user_params_baseline_cancer_biobots.py` ]]; then >&2 echo "Fail"; exit 1; fi
+  - python ../xml2jupyter.py ../config_samples/config_cancer_immune.xml
+  - if [[ `diff user_params.py user_params_baseline_cancer_immune.py` ]]; then >&2 echo "Fail"; exit 1; fi
 
 
 notifications:
