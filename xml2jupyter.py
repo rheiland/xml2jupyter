@@ -9,38 +9,43 @@ import os
 import math
 import xml.etree.ElementTree as ET
 
-num_args = len(sys.argv)
+# Defaults
 config_file = "config.xml"
+colorname1 = 'lightgreen'
+colorname2 = 'tan'
+
+num_args = len(sys.argv)
 print("num_args=",num_args)
-if ( num_args < 2):
-#    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>]")
+if (num_args < 2):
 #    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
     print()
     print("*** NOTE:  using config.xml  ***")
     print()
-#    sys.exit(1)
 else:
   config_file = sys.argv[1]
   if not os.path.isfile(config_file):
     print(config_file, "does not exist")
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1> <colorname2>]")
     sys.exit(1)
 
-colorname1 = 'lightgreen'
-colorname2 = 'tan'
-
-if ( num_args == 3):
+if (num_args == 3):
     gui_file = sys.argv[2]
-elif ( num_args ==4 ):
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> <gui-file.py> <colorname1> <colorname2>")
-    sys.exit(1)
-elif ( num_args == 5):
+elif (num_args == 4):
+    colorname1 = sys.argv[2]
+    colorname2 = sys.argv[3]
+elif (num_args == 5):
     gui_file = sys.argv[2]
     colorname1 = sys.argv[3]
     colorname2 = sys.argv[4]
-elif ( num_args > 5):
-    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1>] [<colorname2>]")
+elif (num_args > 5):
+    print("Usage: python " + sys.argv[0] + " <config-file.xml> [<gui-file.py>] [<colorname1> <colorname2>]")
     sys.exit(1)
+
+print()
+print("config_file = ",config_file)
+print("colorname1 = ",colorname1)
+print("colorname2 = ",colorname2)
+print()
 
 # First, let's use this config file name in the (main) mygui.py module:
 # f_main = open('mygui.py', 'r')
