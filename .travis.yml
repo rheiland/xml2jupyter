@@ -8,7 +8,9 @@ install:
 # Build steps
 #  - do a basic test, defaulting to use "config.xml"
 script:
-  - python xml2jupyter.py 
+  - cd tests
+  - python ../xml2jupyter.py
+  - if [[ `diff user_params.py user_params_baseline_default.py` ]]; then >&2 echo "Fail"; exit 1; fi
 
 
 notifications:
