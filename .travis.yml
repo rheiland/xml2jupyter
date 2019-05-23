@@ -9,7 +9,7 @@ install:
 #  - do a basic test, defaulting to use "config.xml"
 script:
   - cd tests
-# test with default config.xml (for biorobots)
+# Test with multiple config files (default config.xml = biorobots)
   - python ../xml2jupyter.py
   - if [[ `diff user_params.py user_params_baseline_default.py` ]]; then >&2 echo "Fail"; exit 1; fi
   - python ../xml2jupyter.py ../config_samples/config_heterogeneity.xml
@@ -18,6 +18,11 @@ script:
   - if [[ `diff user_params.py user_params_baseline_cancer_biobots.py` ]]; then >&2 echo "Fail"; exit 1; fi
   - python ../xml2jupyter.py ../config_samples/config_cancer_immune.xml
   - if [[ `diff user_params.py user_params_baseline_cancer_immune.py` ]]; then >&2 echo "Fail"; exit 1; fi
+  - python ../xml2jupyter.py ../config_samples/config_biorobots.xml red green
+  - if [[ `diff user_params.py user_params_baseline_cancer_biobots_red_green.py` ]]; then >&2 echo "Fail"; exit 1; fi
+# Test with a supplied GUI script; the GUI script is edited in-place to provide the config filename.
+# No baseline test since as the GUI script itself is edited; just verify xml2jupyter runs OK.
+  - python ../xml2jupyter.py ../config_samples/config_heterogeneity.xml mygui_test.py
 
 
 notifications:
