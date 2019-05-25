@@ -11,6 +11,7 @@
     colorname1, colorname2 (str, optional): the colors to use for the alternating rows of widgets 
                                             (Defaults: lightgreen, tan)
   Examples (with 0,1,2,3,4 args):
+  --------
     python xml2jupyter.py
     python xml2jupyter.py config_heterogeneity.xml
     python xml2jupyter.py config_heterogeneity.xml mygui.py
