@@ -1,5 +1,18 @@
-# Rf  https://www.python.org/dev/peps/pep-0008/
-import ipywidgets as widgets
+"""
+=========================================================================
+Create a multi-tabbed Jupyter notebook GUI used for PhysiCell simulations
+=========================================================================
+
+Create a Jupyter notebook, consisting of multiple tabs (panels), that lets a user
+read/edit/write parameter values for a PhysiCell simulation, run it, and visualize output results.
+
+Authors:
+Randy Heiland (heiland@iu.edu)
+Daniel Mishler, Tyler Zhang, Eric Bower (undergrad students in Intelligent Systems Engineering, IU)
+Dr. Paul Macklin (macklinp@iu.edu)
+
+"""
+
 import xml.etree.ElementTree as ET  # https://docs.python.org/2/library/xml.etree.elementtree.html
 import os
 import glob
@@ -7,8 +20,12 @@ import shutil
 import datetime
 import subprocess
 from pathlib import Path
-from config import ConfigTab
+
+import ipywidgets as widgets
+
+# These modules define the tabs (panels)
 from about import AboutTab
+from config import ConfigTab
 from user_params import UserTab
 from svg import SVGTab
 from substrates import SubstrateTab
