@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
+Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
+containing associated widgets for user parameters.
+
 To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
 <!--
 (You can also launch an Azure notebook [![Azure Notebooks](https://notebooks.azure.com/launch.svg)](https://notebooks.azure.com/randy-heiland/projects/xml2jupyter), but from there, you will need to click on `demo_gui.ipynb`).
@@ -27,6 +30,7 @@ Download the `xml2jupyter.py` Python script from this repository. (This will let
 -->
 
 ## Dependencies
+
 1. Minimally, this project just requires Python (we recommend Python 3.x). A standard distribution of Python will let you convert sample XML configuration files into Jupyter widgets. 
 2. If you install [Jupyter](https://jupyter.org/install), you will be able to display the widgets in a notebook (in your web browser) and modify the XML via the widgets.
 3. If you install some additional Python modules (matplotlib and scipy), not available in the standard library, you will be able to display a GUI notebook for PhysiCell. 
@@ -38,6 +42,37 @@ However, an alternative, requiring less disk space, is to install [Miniconda Pyt
 conda install matplotlib
 conda install scipy
 conda install jupyter
+```
+
+## Usage
+
+Use this tool by directly running the file `xml2jupyter.py` with Python like so:
+
+```
+python xml2jupyter.py <config-files>
+```
+
+You can provide several configuration files that will affect the behavior of the
+output. Below is an explanation of the possible inputs for this script.
+
+``` 
+  Inputs - takes none, 1, 2, 3, or 4 arguments
+  ------
+    config filename (str, optional): the PhysiCell configuration file (.xml) (Default = config.xml)
+    GUI module (str, optional):      the primary GUI for the Jupyter notebook 
+    colorname1, colorname2 (str, optional): the colors to use for the alternating rows of widgets 
+                                            (Defaults: lightgreen, tan)
+  Examples (with 0,1,2,3,4 args):
+  --------
+    python xml2jupyter.py
+    python xml2jupyter.py config_heterogeneity.xml
+    python xml2jupyter.py config_heterogeneity.xml mygui.py
+    python xml2jupyter.py config_biorobots.xml lightblue tan
+    python xml2jupyter.py config_biorobots.xml mygui.py lightblue tan
+  
+  Outputs
+  -------
+    user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
 ```
 
 ## Simple example
