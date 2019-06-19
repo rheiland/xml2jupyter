@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
 Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
-containing associated widgets for user parameters.
+containing associated widgets for user parameters. For more information, we recommend checking out
+[the JOSS paper describing the functionality of this tool](paper/paper.md).
 
 To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
 <!--
