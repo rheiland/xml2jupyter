@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
+Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
+containing associated widgets for user parameters. For more information, we recommend checking out
+[the JOSS paper describing the functionality of this tool](paper/paper.md).
+
 To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
 <!--
 (You can also launch an Azure notebook [![Azure Notebooks](https://notebooks.azure.com/launch.svg)](https://notebooks.azure.com/randy-heiland/projects/xml2jupyter), but from there, you will need to click on `demo_gui.ipynb`).
@@ -10,7 +14,10 @@ To see an example application that has been generated with xml2jupyter, click th
 <!-- [![Azure Notebooks](https://notebooks.azure.com/launch.png)](https://notebooks.azure.com/import/gh/randy-heiland/xml2jupyter) -->
 
 ## Overview
-Using a [PhysiCell](http://physicell.mathcancer.org/) XML configuration file, generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). The `xml2jupyter.py` Python script provides a core component of the GUI by generating a panel (Jupyter `Tab`) of custom model parameter widgets. The other Python scripts in this repository are static; all together, they provide a self-contained Jupyter notebook GUI tailored to a custom PhysiCell simulator. While the project is specific to PhysiCell, the basic idea of generating Jupyter widgets can be extended to other text-based configuration files.
+
+Many scientific simulation packages use text-based configuration files to provide parameter values and run at the command line without a graphical interface. Manually editing these files to explore how different values affect a simulation can be burdensome for technical users, and impossible to use for those with other scientific backgrounds. xml2jupyter is a Python package that addresses these scientific bottlenecks. It provides a mapping between configuration files, formatted in the Extensible Markup Language (XML), and Jupyter widgets.
+
+Using a [PhysiCell](http://physicell.mathcancer.org/) XML configuration file, this tool lets you generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). The `xml2jupyter.py` Python script provides a core component of the GUI by generating a panel (Jupyter `Tab`) of custom model parameter widgets. The other Python scripts in this repository are static; all together, they provide a self-contained Jupyter notebook GUI tailored to a custom PhysiCell simulator. While the project is specific to PhysiCell, the basic idea of generating Jupyter widgets can be extended to other text-based configuration files.
 
 We realize the name "xml2jupyter" is pretty generic. We wanted a name that was descriptive, but also concise and, besides, its functionality can (and most likely will) be extended well beyond what is possible in the initial release - to generate custom parameter widgets for a PhysiCell configuration file.
 
@@ -27,6 +34,7 @@ Download the `xml2jupyter.py` Python script from this repository. (This will let
 -->
 
 ## Dependencies
+
 1. Minimally, this project just requires Python (we recommend Python 3.x). A standard distribution of Python will let you convert sample XML configuration files into Jupyter widgets. 
 2. If you install [Jupyter](https://jupyter.org/install), you will be able to display the widgets in a notebook (in your web browser) and modify the XML via the widgets.
 3. If you install some additional Python modules (matplotlib and scipy), not available in the standard library, you will be able to display a GUI notebook for PhysiCell. 
@@ -38,6 +46,37 @@ However, an alternative, requiring less disk space, is to install [Miniconda Pyt
 conda install matplotlib
 conda install scipy
 conda install jupyter
+```
+
+## Usage
+
+Use this tool by directly running the file `xml2jupyter.py` with Python like so:
+
+```
+python xml2jupyter.py <config-files>
+```
+
+You can provide several configuration files that will affect the behavior of the
+output. Below is an explanation of the possible inputs for this script.
+
+``` 
+  Inputs - takes none, 1, 2, 3, or 4 arguments
+  ------
+    config filename (str, optional): the PhysiCell configuration file (.xml) (Default = config.xml)
+    GUI module (str, optional):      the primary GUI for the Jupyter notebook 
+    colorname1, colorname2 (str, optional): the colors to use for the alternating rows of widgets 
+                                            (Defaults: lightgreen, tan)
+  Examples (with 0,1,2,3,4 args):
+  --------
+    python xml2jupyter.py
+    python xml2jupyter.py config_heterogeneity.xml
+    python xml2jupyter.py config_heterogeneity.xml mygui.py
+    python xml2jupyter.py config_biorobots.xml lightblue tan
+    python xml2jupyter.py config_biorobots.xml mygui.py lightblue tan
+  
+  Outputs
+  -------
+    user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
 ```
 
 ## Simple example
