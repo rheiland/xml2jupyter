@@ -162,14 +162,16 @@ The images above show hetero...  -->
 
 # Extensions and Discussion
 
+<!-- 
+https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ 
+-->
 We hope others will be inspired to extend the core idea of this project to other text-based 
-configuration files. XML is only one of several data-interchange formats, and while we  
-<!-- https://insights.dice.com/2018/01/05/5-xml-alternatives-to-consider-in-2018/ -->
+configuration files. XML is only one of several data-interchange formats and, although we
 created this tool for XML-based configurations based on needs to create GUIs for PhysiCell projects, 
 the approach should be more broadly applicable to these other formats. And
 while the additional Python modules that provide visualization are also tailored to PhysiCell
 output, they can serve as templates for other scientific applications whose input and output 
-file formats and provide similar functionality. 
+file formats provide similar functionality. 
 <!-- It just happens to be the one of interest to us for PhysiCell. -->
 <!-- We welcome contributions, especially for three-dimensional data. -->
 
