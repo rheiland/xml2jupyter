@@ -114,7 +114,7 @@ For example, the `radius` widget will have a step value of 10, whereas `threads`
 
 ## PhysiCell configuration example
 
-For a more realistic example, using an actual PhysiCell simulation configuration file provided in this repository, run the following commands in a shell windows (we demonstrate using Unix-style shell commands):
+For a more realistic example, using an actual PhysiCell simulation configuration file provided in this repository, run the following commands in a shell window (we demonstrate using Unix-style shell commands):
 ```
 $ cp config_samples/config_biorobots.xml .
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py 
