@@ -145,7 +145,7 @@ models, a user can configure, run, and visualize output from a simulation.
 Two tabs that provide
 visualization of output files are shown in Figure 3 with results from the *biorobots* simulation.
 Note that some of the required modules are not available in the Python
-standard library, e.g., Matplotlib [@Hunter:2007] and SciPy [@scipy]. 
+standard library, e.g., Matplotlib [@Hunter:2007] and SciPy [@Oliphant:2007:PSC:1251563.1251830]. 
 We provide instructions for 
 installing these additional dependencies in the repository README.
 
