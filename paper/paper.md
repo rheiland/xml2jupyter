@@ -228,7 +228,7 @@ will provide visualizations of 3-D models and welcome suggestions from the commu
 
 We thank the National Science Foundation (1720625) and the
 National Cancer Institute (U01-CA232137-01) for generous support.
-Undergraduate and graduate students in the Intelligent Systems Engineering deparment 
+Undergraduate and graduate students in the Intelligent Systems Engineering department 
 at Indiana University provided internal testing, and students and researchers 
 within the NSF nanoMFG (1720701) group generously provided external testing. All of
 their feedback resulted in considerable improvements to this project.
