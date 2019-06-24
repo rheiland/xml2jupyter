@@ -70,6 +70,7 @@ supported data types  and the various attributes:
 <!-- ![](images/silly_xml-60.png) -->
 <!-- ![](images/config_contrived.png) -->
 
+\newpage
 ```
 <PhysiCell_settings>
   <user_parameters>
