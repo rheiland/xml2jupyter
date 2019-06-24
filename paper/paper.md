@@ -123,9 +123,7 @@ The `xml2jupyter.py` script parses the XML and generates a Python
 module, `user_params.py`, containing the Jupyter widgets, together with methods to populate 
 their values from the XML and write their values back to the XML. 
 To "validate" the widgets were generated correctly, one could, minimally, open `user_params.py` 
-in an editor and inspect it.
-
-But to actually see the widgets rendered in a notebook, we provide a simple test:
+in an editor and inspect it. But to actually see the widgets rendered in a notebook, we provide a simple test:
 ```
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py
 $ jupyter notebook test_gui.ipynb
