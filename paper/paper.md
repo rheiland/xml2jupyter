@@ -41,8 +41,7 @@ xml2jupyter is a Python package that addresses these scientific bottlenecks.
 It provides a mapping between configuration files, formatted in 
 the Extensible Markup Language (XML), and Jupyter widgets. Widgets are automatically generated from the XML
 file and these can, optionally, be incorporated into a larger GUI for a simulation package, and optionally 
-hosted on cloud resources. Users modify parameter values via the widgets,  
-and the values are written to the XML configuration file which is input to the simulation's command-line interface. 
+hosted on cloud resources. Users modify parameter values via the widgets, and the values are written to the XML configuration file which is input to the simulation's command-line interface. 
 xml2jupyter has been tested using PhysiCell [@PhysiCell:2018], an open source, agent-based simulator for biology,
 and it is being used by students for classroom and research projects. In addition, we use xml2jupyter to help
 create Jupyter GUIs for PhysiCell-related applications running on nanoHUB [@nanoHUB_2013].
