@@ -1,5 +1,6 @@
 \documentclass[10pt,letterpaper]{article}
-\usepackage[top=0.85in,left=2.75in,footskip=0.75in,marginparwidth=2in]{geometry}
+% \usepackage[top=0.85in,left=2.75in,footskip=0.75in,marginparwidth=2in]{geometry}
+\usepackage[top=0.85in,left=1.25in,footskip=0.75in,marginparwidth=2in]{geometry}
 
 % use Unicode characters - try changing the option if you run into troubles with special characters (e.g. umlauts)
 \usepackage[utf8]{inputenc}
@@ -23,7 +24,8 @@
 % text layout - change as needed
 %\raggedright
 \setlength{\parindent}{0.5cm}
-\textwidth 5.25in 
+% \textwidth 5.25in 
+\textwidth 5.5in 
 \textheight 8.75in
 
 % Remove % for double line spacing
@@ -71,7 +73,7 @@
 \reversemarginpar
 
 %%\usepackage{biblatex}
-%%\addbibresource{preprint.bib}
+%%\addbibresource{preprint2.bib}
 
 % document begins here
 \begin{document}
@@ -99,7 +101,9 @@ Paul Macklin\textsuperscript{1,*}
 
 \end{flushleft}
 
-\section*{Abstract}
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
 Jupyter Notebooks \cite{Kluyver:2016aa,Nature_2018_Jupyter} provide
 executable documents (in a variety of programming languages) that can be
 run in a web browser. When a notebook contains graphical widgets, it
@@ -109,24 +113,22 @@ parameter values and run at the command line without a graphical
 interface. Manually editing these files to explore how different values
 affect a simulation can be burdensome for technical users, and
 impossible to use for those with other scientific backgrounds.
-xml2jupyter\footnote{https://github.com/rheiland/xml2jupyter} is a 
-Python package that addresses these scientific
+xml2jupyter\footnote{https://github.com/rheiland/xml2jupyter} is a Python package that addresses these scientific
 bottlenecks. It provides a mapping between configuration files,
 formatted in the Extensible Markup Language (XML), and Jupyter widgets.
 Widgets are automatically generated from the XML file and these can,
 optionally, be incorporated into a larger GUI for a simulation package,
 and optionally hosted on cloud resources. Users modify parameter values
-via the widgets,
-and the values are written to the XML configuration file which is input
-to the simulation's command-line interface. xml2jupyter has been tested
-using PhysiCell \cite{PhysiCell:2018}, an open source, agent-based
-simulator for biology, and it is being used by students for classroom
-and research projects. In addition, we use xml2jupyter to help create
-Jupyter GUIs for PhysiCell-related applications running on nanoHUB \cite{nanoHUB_2013}.
+via the widgets, and the values are written to the XML configuration
+file which is input to the simulation's command-line interface.
+xml2jupyter has been tested using PhysiCell \cite{PhysiCell:2018},
+an open source, agent-based simulator for biology, and it is being used
+by students for classroom and research projects. In addition, we use
+xml2jupyter to help create Jupyter GUIs for PhysiCell-related
+applications running on nanoHUB \cite{nanoHUB_2013}.
 
-\section*{Introduction}
 A PhysiCell configuration file defines model-specific
-\texttt{\textless{}user\char`_parameters\textgreater{}} in XML. Each
+\texttt{\textless{}user\_parameters\textgreater{}} in XML. Each
 parameter element consists of its name with attributes, defining its
 data \emph{type}, \emph{units} (optional), \emph{description}
 (optional), whether the widget should be \emph{hidden} (optional), and
@@ -166,14 +168,16 @@ a step value of 10, whereas \texttt{threads} will have a step value of
 
 \begin{figure}[H]
 \centering
+% \includegraphics{images/simple_widgets.png}
 \includegraphics[width=1.0\textwidth]{images/simple_widgets.png}
+\captionsetup{justification=centering}
 \caption{Simple example of XML parameters as Jupyter widgets.}
 \end{figure}
 
 For a more realistic example, consider the
-\texttt{config\char`_biorobots.xml} configuration file (found in the
-\texttt{config\char`_samples} directory). The XML elements in the
-\texttt{\textless{}user\char`_parameters\textgreater{}} block include the
+\texttt{config\_biorobots.xml} configuration file (found in the
+\texttt{config\_samples} directory). The XML elements in the
+\texttt{\textless{}user\_parameters\textgreater{}} block include the
 (optional) \emph{description} attribute which briefly describes the
 parameter and is displayed in another widget. To demonstrate xml2jupyter
 on this XML file, one would: 1) clone or download the repository, 2)
@@ -182,22 +186,17 @@ copy the XML configuration file to the root directory, and 3) run the
 
 \begin{verbatim}
 $ cp config_samples/config_biorobots.xml .
-$ python xml2jupyter.py config_biorobots.xml 
+$ python xml2jupyter.py config_biorobots.xml
 \end{verbatim}
 
-\begin{sloppypar}
 The \texttt{xml2jupyter.py} script parses the XML and generates a Python
-module, 
-\texttt{user\char`_params.py}, 
-containing the Jupyter widgets,
+module, \newline
+\texttt{user\_params.py}, containing the Jupyter widgets,
 together with methods to populate their values from the XML and write
 their values back to the XML. To ``validate'' the widgets were generated
-correctly, one could, minimally, open \texttt{user\char`_params.py} in an
-editor and inspect it.
-\end{sloppypar}
-
-But to actually see the widgets rendered in a notebook, we provide a
-simple test:
+correctly, one could, minimally, open \texttt{user\_params.py} in an
+editor and inspect it. But to actually see the widgets rendered in a
+notebook, we provide a simple test:
 
 \begin{verbatim}
 $ python xml2jupyter.py config_biorobots.xml test_user_params.py
@@ -210,11 +209,14 @@ the notebook shown in Figure 2.
 
 \begin{figure}
 \centering
+% \includegraphics{images/test_biorobots_params.png}
 \includegraphics[width=1.0\textwidth]{images/test_biorobots_params.png}
+\captionsetup{justification=centering}
 \caption{The biorobots parameters rendered as Jupyter widgets.}
 \end{figure}
 
-\section*{PhysiCell Jupyter GUI}
+\hypertarget{physicell-jupyter-gui}{%
+\section{PhysiCell Jupyter GUI}\label{physicell-jupyter-gui}}
 
 Our ultimate goal is to generate a fully functional GUI for PhysiCell
 users. xml2jupyter provides one important piece of this - dynamically
@@ -222,30 +224,33 @@ generating widgets for custom user parameters for a model. By adding
 additional Python modules to provide additional components (tabs) of the
 GUI that are common to all PhysiCell models, a user can configure, run,
 and visualize output from a simulation. Two tabs that provide
-visualization of output files are shown below with results from the
-\emph{biorobots} simulation. Note that some of the required modules are
-not available in the Python standard library, e.g., Matplotlib \cite{Hunter:2007}
-and SciPy \cite{Jones:2001}. 2001). We provide instructions for
+visualization of output files are shown in Figure 3 with results from
+the \emph{biorobots} simulation. Note that some of the required modules
+are not available in the Python standard library, e.g., Matplotlib
+\cite{Hunter:2007} and SciPy \cite{Oliphant:2007:PSC:1251563.1251830}. We provide instructions for
 installing these additional dependencies in the repository README.
 
 \begin{figure}
 \centering
+% \includegraphics{images/biorobots_About_montage.png}
 \includegraphics[width=1.0\textwidth]{images/biorobots_About_montage.png}
+\captionsetup{justification=centering}
 \caption{Plotting the biorobots (cells; left) and signals (substrates;
 right).}
 \end{figure}
 
-\section*{Extensions and Discussion}
+\hypertarget{extensions-and-discussion}{%
+\section{Extensions and Discussion}\label{extensions-and-discussion}}
 
 We hope others will be inspired to extend the core idea of this project
 to other text-based configuration files. XML is only one of several
-data-interchange formats, and while we
-created this tool for XML-based configurations based on needs to create
-GUIs for PhysiCell projects, the approach should be more broadly
-applicable to these other formats. And while the additional Python
-modules that provide visualization are also tailored to PhysiCell
-output, they can serve as templates for other scientific applications
-whose input and output file formats provide similar functionality.
+data-interchange formats and, although we created this tool for
+XML-based configurations based on needs to create GUIs for PhysiCell
+projects, the approach should be more broadly applicable to these other
+formats. And while the additional Python modules that provide
+visualization are also tailored to PhysiCell output, they can serve as
+templates for other scientific applications whose input and output file
+formats provide similar functionality.
 
 xml2jupyter has helped us port PhysiCell-related Jupyter tools to
 nanoHUB, a scientific cloud for nanoscience education and research that
@@ -273,15 +278,18 @@ model.)
 
 \begin{figure}
 \centering
+% \includegraphics{images/nanohub_cancerbots_params.png}
 \includegraphics[width=1.0\textwidth]{images/nanohub_cancerbots_params.png}
+\captionsetup{justification=centering}
 \caption{The cancer biorobots parameters in a nanoHUB Jupyter
 application.}
 \end{figure}
 
 \begin{figure}
 \centering
-%\includegraphics[scale=0.2]{images/nanohub_cancerbots_2x2.png}
+% \includegraphics{images/nanohub_cancerbots_2x2.png}
 \includegraphics[width=1.0\textwidth]{images/nanohub_cancerbots_2x2.png}
+\captionsetup{justification=centering}
 \caption{The cancer biorobots Jupyter notebook on nanoHUB.}
 \end{figure}
 
@@ -305,11 +313,12 @@ Also, we currently provide just 2-D visualizations of (spatial) data. In
 the near future, we will provide visualizations of 3-D models and
 welcome suggestions from the community.
 
-\section*{Acknowledgements}
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
 
 We thank the National Science Foundation (1720625) and the National
 Cancer Institute (U01-CA232137-01) for generous support. Undergraduate
-and graduate students in the Intelligent Systems Engineering deparment
+and graduate students in the Intelligent Systems Engineering department
 at Indiana University provided internal testing, and students and
 researchers within the NSF nanoMFG (1720701) group generously provided
 external testing. All of their feedback resulted in considerable
@@ -317,9 +326,9 @@ improvements to this project. Finally, we thank our collaborators at
 Purdue University, especially Martin Hunt and Steve Clark, who provided
 technical support with nanoHUB and Jupyter.
 
+\newpage
 %%This defines the bibliographies style. Search online for a list of available styles.
 \bibliographystyle{abbrv}
-\bibliography{preprint}   % .bib
-
+\bibliography{preprint2}   % .bib
 
 \end{document}
