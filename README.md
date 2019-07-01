@@ -1,5 +1,7 @@
 # xml2jupyter
 
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
+
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
 Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
