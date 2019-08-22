@@ -4,7 +4,7 @@
 
 Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
 containing associated widgets for user parameters. For more information, we recommend checking out
-[the JOSS paper describing the functionality of this tool](paper/paper.md).
+the JOSS paper describing the functionality of this tool [![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
 
 To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
 <!--
