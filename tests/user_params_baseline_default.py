@@ -272,7 +272,13 @@ class UserTab(object):
 
     # Populate the GUI widgets with values from the XML
     def fill_gui(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         self.cargo_signal_D.value = float(uep.find('.//cargo_signal_D').text)
         self.cargo_signal_decay.value = float(uep.find('.//cargo_signal_decay').text)
         self.director_signal_D.value = float(uep.find('.//director_signal_D').text)
@@ -293,7 +299,13 @@ class UserTab(object):
 
     # Read values from the GUI widgets to enable editing XML
     def fill_xml(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML 
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         uep.find('.//cargo_signal_D').text = str(self.cargo_signal_D.value)
         uep.find('.//cargo_signal_decay').text = str(self.cargo_signal_decay.value)
         uep.find('.//director_signal_D').text = str(self.director_signal_D.value)
