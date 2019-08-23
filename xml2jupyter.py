@@ -1,7 +1,9 @@
 """
 ====================================================================================================
-  Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
-  containing associated widgets for user parameters.
+  Parse a PhysiCell configuration file (XML) and generate two Jupyter (Python) modules: 
+    microenv_params.py - containing widgets for microenvironment parameters.
+    user_params.py - containing widgets for user parameters.
+  
 ====================================================================================================
  
   Inputs - takes none, 1, 2, 3, or 4 arguments
@@ -20,6 +22,7 @@
   
   Outputs
   -------
+    microenv_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
     user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
  
 Authors:
@@ -84,6 +87,7 @@ if (num_args == 3):
         f.write("main_xml_filename = '" + config_file + "'")
         f.write(file_post)
 
+#---------------------------------------------------------------------------------------------------
 user_tab_header = """ 
 # This file is auto-generated from a Python script that parses a PhysiCell configuration (.xml) file.
 #
@@ -190,267 +194,6 @@ color_count = 0
 #param_desc_count = 0
 name_count = 0
 units_count = 0
-
-#----------  micronenv --------------------
-		# <variable name="oxygen" units="mmHg" ID="0">
-		# 	<physical_parameter_set>
-		# 		<diffusion_coefficient units="micron^2/min">100000.000000</diffusion_coefficient>
-		# 		<decay_rate units="1/min">.1</decay_rate>  
-		# 	</physical_parameter_set>
-		# 	<initial_condition units="mmHg">38.0</initial_condition>
-		# 	<Dirichlet_boundary_condition units="mmHg" enabled="true">38.0</Dirichlet_boundary_condition>
-		# </variable>
-uep = root.find('.//microenvironment_setup')  # find unique entry point (uep) 
-if uep:
-    fill_gui_str += indent + "uep = xml_root.find('.//microenvironment_setup')  # find unique entry point\n"
-    fill_xml_str += indent + "uep = xml_root.find('.//microenvironment_setup')  # find unique entry point\n"
-    user_tab_header += "\n" 
-    pp_count = 0
-
-    units_buttons_str += indent + " #  ------- micronenv info\n"
-    var_idx = -1
-    # units_buttons_str += indent + " #  --- variable info\n"
-    for var in uep.findall('variable'):
-        fill_gui_str += "\n"
-
-        var_idx += 1
-        menv_var_count += 1
-        print('\n ==== new microenv var: ',var.tag, var.attrib)
-        # --- basic widgets: 
-    #    full_name = "self." + var.attrib['name']
-    #    name_count += 1
-        # param_name_button = "param_name" + str(name_count)
-        #  1) Variable name + [units]
-        menv_var_name_button = "menv_var" + str(menv_var_count)
-        menv_var_name = var.attrib['name']
-        print('menv_var_name=',menv_var_name)
-        units_str = ''
-        if ('units' in var.attrib) and (var.attrib['units'] != 'dimensionless'):
-            units_str = ' (' + var.attrib['units'] + ')'
-        user_tab_header += '\n' + indent + menv_var_name_button + " = " + "Button(description='" + menv_var_name + units_str + "', disabled=True, layout=name_button_layout)\n"
-        if (color_count % 2):
-            user_tab_header += indent + menv_var_name_button + ".style.button_color = '" + colorname1 + "'\n"
-        else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-            user_tab_header += indent + menv_var_name_button + ".style.button_color = '" + colorname2 + "'\n"
-        color_count += 1   # color each menv variable block the same, but alternating color
-    #    print(user_tab_header)
-
-
-        # --- row_str: appear AFTER all the basic widgets are defined 
-        row_name = "row_" + menv_var_name   # str(param_count)
-        # row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + ", " + desc_row_name + "] \n"
-        row_str += indent +  row_name + " = [" + menv_var_name_button + ",  ] \n"
-        # box_name = "box" + str(param_count)
-        box_name = "box_" + menv_var_name
-        box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
-        vbox_str += indent2 + box_name + ",\n"
-
-        for child in var:
-            print(' child in var-----> ',child.tag, child.attrib)
-            print(' child.tag.lower() ----> ',child.tag.lower())
-
-            # if (child.tag.lower == 'physical_parameter_set'):
-            if ('physical_parameter_set' in child.tag.lower() ):
-            #  2) <physical_parameter_set> variables
-                for pp in var.findall('physical_parameter_set'):
-                    for ppchild in pp:
-                        print(' -- ppchild in pp: ',ppchild.tag, ppchild.attrib, float(ppchild.text))
-                        pp_button_name = "pp_button" + str(pp_count)
-                        pp_units_name = "pp_button_units" + str(pp_count)
-                        pp_count += 1
-                        param_count += 1
-
-                        param_name_button = "menv_param" + str(pp_count)
-
-                        # desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=desc_button_layout) \n"
-            #            desc_buttons_str += indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout) \n"
-
-
-                        #user_tab_header += indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout) \n"
-
-                        name_count += 1
-                        param_name_button = "param_name" + str(name_count)
-                        user_tab_header += "\n" + indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout)\n"
-
-
-                    # self.therapy_activation_time = FloatText(
-                    #   value=10080,
-                    #   step=1000,
-                    #   style=style, layout=widget_layout)
-
-                        full_name = "self." + menv_var_name + "_" + ppchild.tag
-                        user_tab_header += "\n" + indent + full_name + " = FloatText(value=" + ppchild.text + ",style=style, layout=widget_layout)\n"
-
-                        # float, int, bool
-                        # if (type_cast[ppchild.attrib['type']] == "bool"):
-                        #     fill_gui_str += indent + full_name + ".value = ('true' == (uep.find('.//" + ppchild.tag + "').text.lower()) )\n"
-                        # else:
-
-                        # self.oxygen_diffusion_coefficient.value = float(menv_uep.find('.//oxygen//diffusion_coefficient').text)
-                        # fill_gui_str += indent + full_name + ".value = " + 'float' + "(uep.find('.//" + menv_var_name + '//'+ ppchild.tag + "').text)\n"
-                        # fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + menv_var_name + '//'+ ppchild.tag + "').text)\n"
-                        fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + ppchild.tag + "').text)\n"
-
-    #                    fill_xml_str += indent + "uep.find('.//" + menv_var_name + '//' + ppchild.tag + "').text = str("+ full_name + ".value)\n"
-                        # fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + menv_var_name + '//' + ppchild.tag + "').text = str("+ full_name + ".value)\n"
-                        fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + ppchild.tag + "').text = str("+ full_name + ".value)\n"
-
-                        # Try to calculate and provide a "good" delta step (for the tiny "up/down" arrows on a numeric widget)
-                        # fval_abs = abs(float(ppchild.text))
-                        # if (fval_abs > 0.0):
-                        #     if (fval_abs > 1.0):  # crop
-                        #         delta_val = pow(10, int(math.log10(abs(float(ppchild.text)))) - 1)
-                        #     else:   # round
-                        #         delta_val = pow(10, round(math.log10(abs(float(ppchild.text)))) - 1)
-                        # else:
-                        #     delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
-                        # if print_var_types:
-                        #     print('double: ',float(ppchild.text),', delta_val=',delta_val)
-
-                        # user_tab_header += indent2 + "value=" + ppchild.text + ",\n"
-                        # # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
-                        # user_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
-
-
-                        if 'units' in ppchild.attrib.keys():
-                            if ppchild.attrib['units'] != "dimensionless" and ppchild.attrib['units'] != "none":
-                    #            units_str = ppchild.attrib['units']
-                                # units_count += 1
-                                units_btn_name = "menv_units_button" + str(pp_count)
-                                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + ppchild.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
-                                # if (param_count % 2):
-                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                                # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-                            else:
-                                units_count += 1
-                                units_btn_name = "units_button" + str(units_count)
-                                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
-                                # if (param_count % 2):
-                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                                # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-                        else:
-                            units_count += 1
-                            units_btn_name = "units_button" + str(units_count)
-                            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
-                            # if (param_count % 2):
-                            #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                            # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                            #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-
-                        row_name = "row" + str(param_count)
-                        row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + "]\n"
-                        box_name = "box" + str(param_count)
-                        box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
-                        vbox_str += indent2 + box_name + ",\n"
-            #---------------
-            else:   # in <variable>, but not in <physical_parameter_set>; e.g., IC, Dirichlet BC
-                print(' >>>> child: ',child.tag, child.attrib, float(child.text))
-                pp_button_name = "pp_button" + str(pp_count)
-                pp_units_name = "pp_button_units" + str(pp_count)
-                pp_count += 1
-                param_count += 1
-
-                param_name_button = "menv_param" + str(pp_count)
-
-                name_count += 1
-                param_name_button = "param_name" + str(name_count)
-                user_tab_header += "\n" + indent + param_name_button + " = " + "Button(description='" + child.tag + "', disabled=True, layout=name_button_layout)\n"
-
-                full_name = "self." + menv_var_name + "_" + child.tag
-                user_tab_header += "\n" + indent + full_name + " = FloatText(value=" + child.text + ",style=style, layout=widget_layout)\n"
-
-                # fill_gui_str += indent + full_name + ".value = " + 'float' + "(uep.find('.//" + child.tag + "').text)\n"
-                fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + child.tag + "').text)\n"
-
-                # fill_xml_str += indent + "uep.find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
-                fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
-
-                # Try to calculate and provide a "good" delta step (for the tiny "up/down" arrows on a numeric widget)
-                # fval_abs = abs(float(child.text))
-                # if (fval_abs > 0.0):
-                #     if (fval_abs > 1.0):  # crop
-                #         delta_val = pow(10, int(math.log10(abs(float(child.text)))) - 1)
-                #     else:   # round
-                #         delta_val = pow(10, round(math.log10(abs(float(child.text)))) - 1)
-                # else:
-                #     delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
-                # if print_var_types:
-                #     print('double: ',float(child.text),', delta_val=',delta_val)
-
-                # user_tab_header += indent2 + "value=" + child.text + ",\n"
-                # # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
-                # user_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
-
-
-
-                if 'enabled' in child.attrib.keys():
-                    # menv_toggle1 = Checkbox(description='on/off', disabled=False, layout=desc_button_layout) 
-                    toggle_name = full_name + "_toggle" 
-                    user_tab_header += indent + toggle_name + " = Checkbox(description='on/off', disabled=False" + ",style=style, layout=widget_layout)\n"
-    #                toggle_name = "menv_toggle" + str(pp_count)
-    #                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
-
-                if 'units' in child.attrib.keys():
-                    if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
-            #            units_str = child.attrib['units']
-                        # units_count += 1
-                        units_btn_name = "menv_units_button" + str(pp_count)
-                        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
-                        # if (param_count % 2):
-                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                        # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-                    else:
-                        units_count += 1
-                        units_btn_name = "units_button" + str(units_count)
-                        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
-                        # if (param_count % 2):
-                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                        # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-                else:
-                    # fill_gui_str += "\n"
-
-                    units_count += 1
-                    units_btn_name = "units_button" + str(units_count)
-                    units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
-                    # if (param_count % 2):
-                    #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
-                    # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
-                    #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
-
-                # fill_gui_str += "\n"
-
-                row_name = "row" + str(param_count)
-                row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + "]\n"
-                box_name = "box" + str(param_count)
-                box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
-                vbox_str += indent2 + box_name + ",\n"
-
-    # units_buttons_str += indent + " #  --- options info\n"
-    uep_opt = uep.find('options')
-    if uep_opt:
-        print('------- found microenv options --------')
-        # print( uep_opt.find('calculate_gradients'))
-        if uep_opt.find('calculate_gradients') != None:
-            print('---- calculate_gradients')
-        if uep_opt.find('foobar') != None:
-            print('---- foobar')
-        if uep_opt.find('track_internalized_substrates_in_each_agent') != None:
-            print('---- track_internalized_substrates_in_each_agent')
-#    fill_gui_str += "self.calculate_gradients.value = float(uep.find('.//macrophage_relative_adhesion').text)
-
-
-    print('--------- done with microenv --------------')
-    fill_gui_str += indent + "\n"
-    #fill_gui_str += indent + "uep = xml_root.find('.//user_parameters')  # find unique entry point\n"
-    user_tab_header += "\n"
-    desc_buttons_str += "\n"
-    units_buttons_str += "\n"
-    row_str += "\n"
-
 
 #---------- custom user_parameters --------------------
 # TODO: cast attributes to lower case before doing equality tests; perform more testing!
@@ -618,6 +361,449 @@ user_tab_file = "user_params.py"
 print("\n --------------------------------- ")
 print("Generated a new: ", user_tab_file)
 print()
+fp= open(user_tab_file, 'w')
+fp.write(user_tab_header)
+fp.write(units_buttons_str)
+fp.write(desc_buttons_str)
+fp.write(row_str)
+fp.write(box_str)
+fp.write(vbox_str)
+fp.write(fill_gui_str)
+fp.write(fill_xml_str)
+fp.close()
+
+#---------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------
+microenv_tab_header = """ 
+# This file is auto-generated from a Python script that parses a PhysiCell configuration (.xml) file.
+#
+# Edit at your own risk.
+#
+import os
+from ipywidgets import Label,Text,Checkbox,Button,HBox,VBox,FloatText,IntText,BoundedIntText,BoundedFloatText,Layout,Box
+    
+class MicroenvTab(object):
+
+    def __init__(self):
+        
+        micron_units = Label('micron')   # use "option m" (Mac, for micro symbol)
+
+        constWidth = '180px'
+        tab_height = '500px'
+        stepsize = 10
+
+        #style = {'description_width': '250px'}
+        style = {'description_width': '25%'}
+        layout = {'width': '400px'}
+
+        name_button_layout={'width':'25%'}
+        widget_layout = {'width': '15%'}
+        units_button_layout ={'width':'15%'}
+        desc_button_layout={'width':'45%'}
+"""
+
+"""
+        self.therapy_activation_time = BoundedFloatText(
+            min=0.,
+            max=100000000,
+            step=stepsize,
+            description='therapy_activation_time',
+            style=style, layout=layout,
+            # layout=Layout(width=constWidth),
+        )
+        self.save_interval_after_therapy_start = BoundedFloatText(
+            min=0.,
+            max=100000000,
+            step=stepsize,
+            description='save_interval_after_therapy_start',
+            style=style, layout=layout,
+        )
+
+        label_blankline = Label('')
+
+        self.tab = VBox([HBox([self.therapy_activation_time, Label('min')]), 
+                         HBox([self.save_interval_after_therapy_start, Label('min')]), 
+                         ])  
+"""
+
+fill_gui_str= """
+
+    # Populate the GUI widgets with values from the XML
+    def fill_gui(self, xml_root):
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+"""
+
+fill_xml_str= """
+
+    # Read values from the GUI widgets to enable editing XML
+    def fill_xml(self, xml_root):
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+"""
+
+# Now parse a configuration file (.xml) and map the user parameters into GUI widgets
+#tree = ET.parse('../config/PhysiCell_settings.xml')
+try:
+    tree = ET.parse(config_file)
+except:
+    print("Cannot parse",config_file, "- check it's XML syntax.")
+    sys.exit(1)
+
+root = tree.getroot()
+
+indent = "        "
+indent2 = "          "
+widgets = {"double":"FloatText", "int":"IntText", "bool":"Checkbox", "string":"Text"}
+type_cast = {"double":"float", "int":"int", "bool":"bool", "string":""}
+vbox_str = "\n" + indent + "self.tab = VBox([\n"
+#param_desc_buttons_str = "\n" 
+#name_buttons_str = "\n" 
+units_buttons_str = "\n" 
+desc_buttons_str = "\n" 
+row_str = "\n"
+box_str = "\n" + indent + "box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')\n"
+
+#        box1 = Box(children=row1, layout=box_layout)\n"
+
+menv_var_count = 0   # micronenv 
+param_count = 0
+color_count = 0
+#param_desc_count = 0
+name_count = 0
+units_count = 0
+
+#----------  micronenv --------------------
+		# <variable name="oxygen" units="mmHg" ID="0">
+		# 	<physical_parameter_set>
+		# 		<diffusion_coefficient units="micron^2/min">100000.000000</diffusion_coefficient>
+		# 		<decay_rate units="1/min">.1</decay_rate>  
+		# 	</physical_parameter_set>
+		# 	<initial_condition units="mmHg">38.0</initial_condition>
+		# 	<Dirichlet_boundary_condition units="mmHg" enabled="true">38.0</Dirichlet_boundary_condition>
+		# </variable>
+uep = root.find('.//microenvironment_setup')  # find unique entry point (uep) 
+if uep:
+    fill_gui_str += indent + "uep = xml_root.find('.//microenvironment_setup')  # find unique entry point\n"
+    fill_xml_str += indent + "uep = xml_root.find('.//microenvironment_setup')  # find unique entry point\n"
+    microenv_tab_header += "\n" 
+    pp_count = 0
+
+    units_buttons_str += indent + " #  ------- micronenv info\n"
+    var_idx = -1
+    # units_buttons_str += indent + " #  --- variable info\n"
+    for var in uep.findall('variable'):
+        fill_gui_str += "\n"
+
+        var_idx += 1
+        menv_var_count += 1
+        print('\n ==== new microenv var: ',var.tag, var.attrib)
+        # --- basic widgets: 
+    #    full_name = "self." + var.attrib['name']
+    #    name_count += 1
+        # param_name_button = "param_name" + str(name_count)
+        #  1) Variable name + [units]
+        menv_var_name_button = "menv_var" + str(menv_var_count)
+        menv_var_name = var.attrib['name']
+        print('menv_var_name=',menv_var_name)
+        units_str = ''
+        if ('units' in var.attrib) and (var.attrib['units'] != 'dimensionless'):
+            units_str = ' (' + var.attrib['units'] + ')'
+        microenv_tab_header += '\n' + indent + menv_var_name_button + " = " + "Button(description='" + menv_var_name + units_str + "', disabled=True, layout=name_button_layout)\n"
+        if (color_count % 2):
+            microenv_tab_header += indent + menv_var_name_button + ".style.button_color = '" + colorname1 + "'\n"
+        else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+            microenv_tab_header += indent + menv_var_name_button + ".style.button_color = '" + colorname2 + "'\n"
+        color_count += 1   # color each menv variable block the same, but alternating color
+    #    print(microenv_tab_header)
+
+
+        # --- row_str: appear AFTER all the basic widgets are defined 
+        row_name = "row_" + menv_var_name   # str(param_count)
+        # row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + ", " + desc_row_name + "] \n"
+        row_str += indent +  row_name + " = [" + menv_var_name_button + ",  ] \n"
+        # box_name = "box" + str(param_count)
+        box_name = "box_" + menv_var_name
+        box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
+        vbox_str += indent2 + box_name + ",\n"
+
+        for child in var:
+            print(' child in var-----> ',child.tag, child.attrib)
+            print(' child.tag.lower() ----> ',child.tag.lower())
+
+            # if (child.tag.lower == 'physical_parameter_set'):
+            if ('physical_parameter_set' in child.tag.lower() ):
+            #  2) <physical_parameter_set> variables
+                for pp in var.findall('physical_parameter_set'):
+                    for ppchild in pp:
+                        print(' -- ppchild in pp: ',ppchild.tag, ppchild.attrib, float(ppchild.text))
+                        pp_button_name = "pp_button" + str(pp_count)
+                        pp_units_name = "pp_button_units" + str(pp_count)
+                        pp_count += 1
+                        param_count += 1
+
+                        param_name_button = "menv_param" + str(pp_count)
+
+                        # desc_buttons_str += indent + desc_row_name + " = " + "Button(description='" + describe_str + "', disabled=True, layout=desc_button_layout) \n"
+            #            desc_buttons_str += indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout) \n"
+
+
+                        #microenv_tab_header += indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout) \n"
+
+                        name_count += 1
+                        param_name_button = "param_name" + str(name_count)
+                        microenv_tab_header += "\n" + indent + param_name_button + " = " + "Button(description='" + ppchild.tag + "', disabled=True, layout=name_button_layout)\n"
+
+
+                    # self.therapy_activation_time = FloatText(
+                    #   value=10080,
+                    #   step=1000,
+                    #   style=style, layout=widget_layout)
+
+                        full_name = "self." + menv_var_name + "_" + ppchild.tag
+                        microenv_tab_header += "\n" + indent + full_name + " = FloatText(value=" + ppchild.text + ",style=style, layout=widget_layout)\n"
+
+                        # float, int, bool
+                        # if (type_cast[ppchild.attrib['type']] == "bool"):
+                        #     fill_gui_str += indent + full_name + ".value = ('true' == (uep.find('.//" + ppchild.tag + "').text.lower()) )\n"
+                        # else:
+
+                        # self.oxygen_diffusion_coefficient.value = float(menv_uep.find('.//oxygen//diffusion_coefficient').text)
+                        # fill_gui_str += indent + full_name + ".value = " + 'float' + "(uep.find('.//" + menv_var_name + '//'+ ppchild.tag + "').text)\n"
+                        # fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + menv_var_name + '//'+ ppchild.tag + "').text)\n"
+                        fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + ppchild.tag + "').text)\n"
+
+    #                    fill_xml_str += indent + "uep.find('.//" + menv_var_name + '//' + ppchild.tag + "').text = str("+ full_name + ".value)\n"
+                        # fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + menv_var_name + '//' + ppchild.tag + "').text = str("+ full_name + ".value)\n"
+                        fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + ppchild.tag + "').text = str("+ full_name + ".value)\n"
+
+                        # Try to calculate and provide a "good" delta step (for the tiny "up/down" arrows on a numeric widget)
+                        # fval_abs = abs(float(ppchild.text))
+                        # if (fval_abs > 0.0):
+                        #     if (fval_abs > 1.0):  # crop
+                        #         delta_val = pow(10, int(math.log10(abs(float(ppchild.text)))) - 1)
+                        #     else:   # round
+                        #         delta_val = pow(10, round(math.log10(abs(float(ppchild.text)))) - 1)
+                        # else:
+                        #     delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
+                        # if print_var_types:
+                        #     print('double: ',float(ppchild.text),', delta_val=',delta_val)
+
+                        # microenv_tab_header += indent2 + "value=" + ppchild.text + ",\n"
+                        # # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
+                        # microenv_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
+
+
+                        if 'units' in ppchild.attrib.keys():
+                            if ppchild.attrib['units'] != "dimensionless" and ppchild.attrib['units'] != "none":
+                    #            units_str = ppchild.attrib['units']
+                                # units_count += 1
+                                units_btn_name = "menv_units_button" + str(pp_count)
+                                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + ppchild.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
+                                # if (param_count % 2):
+                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                                # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+                            else:
+                                units_count += 1
+                                units_btn_name = "units_button" + str(units_count)
+                                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
+                                # if (param_count % 2):
+                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                                # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                                #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+                        else:
+                            units_count += 1
+                            units_btn_name = "units_button" + str(units_count)
+                            units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
+                            # if (param_count % 2):
+                            #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                            # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                            #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+
+                        row_name = "row" + str(param_count)
+                        row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + "]\n"
+                        box_name = "box" + str(param_count)
+                        box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
+                        vbox_str += indent2 + box_name + ",\n"
+            #---------------
+            else:   # in <variable> (not in <physical_parameter_set>), e.g., IC, Dirichlet BC
+                print(' >>>> child: ',child.tag, child.attrib, float(child.text))
+                pp_button_name = "pp_button" + str(pp_count)
+                pp_units_name = "pp_button_units" + str(pp_count)
+                pp_count += 1
+                param_count += 1
+
+                param_name_button = "menv_param" + str(pp_count)
+
+                name_count += 1
+                param_name_button = "param_name" + str(name_count)
+                microenv_tab_header += indent + param_name_button + " = " + "Button(description='" + child.tag + "', disabled=True, layout=name_button_layout)\n"
+
+                full_name = "self." + menv_var_name + "_" + child.tag
+                microenv_tab_header += "\n" + indent + full_name + " = FloatText(value=" + child.text + ",style=style, layout=widget_layout)\n"
+
+                # fill_gui_str += indent + full_name + ".value = " + 'float' + "(uep.find('.//" + child.tag + "').text)\n"
+                fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + child.tag + "').text)\n"
+
+                # fill_xml_str += indent + "uep.find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
+                fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
+
+                # This toggle is a unique, one-off widget. So very ugly.
+                if ("dirichlet_foobar" in child.tag.lower()):
+                    print('----- handle Dirichlet BC checkbox')
+                    dirichlet_toggle_name = "self.toggle_Dirichlet_boundary_condition"
+                    microenv_tab_header += indent + dirichlet_toggle_name + " = " + "Checkbox(description='on/off', disabled=False, layout=widget_layout)\n"
+
+                    # box_name = "box_toggle_Dirichlet_boundary_condition"
+                    # box_str += indent + box_name + " = Box(children=[" + dirichlet_toggle_name + "], layout=box_layout)\n"
+                    # vbox_str += indent2 + box_name + ",\n"
+
+                    # row4 = [param_name4, self.oxygen_Dirichlet_boundary_condition, menv_units_button4, togglewidget]
+
+                    # self.toggle_svg.value = bool(xml_root.find(".//SVG").find(".//enable").text)
+                    # uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+                    if ('enabled' in child.attrib):
+                        if (child.attrib['enabled'] == 'true'):
+                            fill_gui_str += indent + dirichlet_toggle_name + ".value = True\n"
+                        else:
+                            fill_gui_str += indent + dirichlet_toggle_name + ".value = False\n"
+                    else:
+                        print("\n")
+                        print("  *** Error: missing 'enabled' attribute in ", child.tag,"\n")
+                        sys.exit(1)
+
+                    # self.virus_Dirichlet_boundary_condition_toggle = Checkbox(description='on/off', disabled=False,style=style, layout=widget_layout)
+
+                # Try to calculate and provide a "good" delta step (for the tiny "up/down" arrows on a numeric widget)
+                # fval_abs = abs(float(child.text))
+                # if (fval_abs > 0.0):
+                #     if (fval_abs > 1.0):  # crop
+                #         delta_val = pow(10, int(math.log10(abs(float(child.text)))) - 1)
+                #     else:   # round
+                #         delta_val = pow(10, round(math.log10(abs(float(child.text)))) - 1)
+                # else:
+                #     delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
+                # if print_var_types:
+                #     print('double: ',float(child.text),', delta_val=',delta_val)
+
+                # microenv_tab_header += indent2 + "value=" + child.text + ",\n"
+                # # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
+                # microenv_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
+
+
+
+                # Handle the one-off, Dirichlet BC toggle widget. So very ugly.
+                if 'enabled' in child.attrib.keys():
+                    # menv_toggle1 = Checkbox(description='on/off', disabled=False, layout=desc_button_layout) 
+                    toggle_name = full_name + "_toggle" 
+                    microenv_tab_header += indent + toggle_name + " = Checkbox(description='on/off', disabled=False" + ",style=style, layout=widget_layout)\n"
+                    if (child.attrib['enabled'].lower() == 'true'):
+                        fill_gui_str += indent + toggle_name + ".value = True\n"
+                    else:
+                        fill_gui_str += indent + toggle_name + ".value = False\n"
+
+    #                toggle_name = "menv_toggle" + str(pp_count)
+    #                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
+
+                if 'units' in child.attrib.keys():
+                    if child.attrib['units'] != "dimensionless" and child.attrib['units'] != "none":
+            #            units_str = child.attrib['units']
+                        # units_count += 1
+                        units_btn_name = "menv_units_button" + str(pp_count)
+                        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
+                        # if (param_count % 2):
+                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                        # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+                    else:
+                        units_count += 1
+                        units_btn_name = "units_button" + str(units_count)
+                        units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
+                        # if (param_count % 2):
+                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                        # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                        #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+                else:
+                    # fill_gui_str += "\n"
+
+                    units_count += 1
+                    units_btn_name = "units_button" + str(units_count)
+                    units_buttons_str += indent + units_btn_name + " = " + "Button(description='" +  "', disabled=True, layout=units_button_layout) \n"
+                    # if (param_count % 2):
+                    #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname1 + "'\n"
+                    # else:  # rf.  https://www.w3schools.com/colors/colors_names.asp
+                    #     units_buttons_str += indent + units_btn_name + ".style.button_color = '" + colorname2 + "'\n"
+
+                # fill_gui_str += "\n"
+
+                row_name = "row" + str(param_count)
+                if ("dirichlet" in child.tag.lower()):
+                    print('----- handle Dirichlet BC checkbox')
+                    dirichlet_toggle_name = "self.toggle_Dirichlet_boundary_condition"
+                    # toggle_name = full_name + "_toggle" 
+                    row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + ", " + toggle_name + "]\n"
+                else:
+                    row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + "]\n"
+
+                # row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + "]\n"
+                box_name = "box" + str(param_count)
+                box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
+                vbox_str += indent2 + box_name + ",\n"
+
+    # units_buttons_str += indent + " #  --- options info\n"
+    uep_opt = uep.find('options')
+    gradients_toggle_name = "self.calculate_gradient"
+    track_toggle_name = "self.track_internal"
+    if uep_opt:
+        print('------- found microenv options --------')
+        # print( uep_opt.find('calculate_gradients'))
+        if uep_opt.find('calculate_gradients') != None:
+            print('---- calculate_gradients')
+            microenv_tab_header += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)\n"
+            param_count += 1
+            row_name = "row" + str(param_count)
+            row_str += indent +  row_name + " = [" + gradients_toggle_name + ",]\n"
+            box_name = "box" + str(param_count)
+            box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
+            vbox_str += indent2 + box_name + ",\n"
+            # fill_gui_str += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)"
+        if uep_opt.find('foobar') != None:
+            print('---- foobar')
+        if uep_opt.find('track_internalized_substrates_in_each_agent') != None:
+            print('---- track_internalized_substrates_in_each_agent')
+            microenv_tab_header += indent + track_toggle_name + " = Checkbox(description='track_in_agents', disabled=False, layout=desc_button_layout)\n"
+            param_count += 1
+            row_name = "row" + str(param_count)
+            row_str += indent +  row_name + " = [" + track_toggle_name + ",]\n"
+            box_name = "box" + str(param_count)
+            box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
+            vbox_str += indent2 + box_name + ",\n"
+#    fill_gui_str += "self.calculate_gradients.value = float(uep.find('.//macrophage_relative_adhesion').text)
+
+
+    print('--------- done with microenv --------------')
+    fill_gui_str += indent + "\n"
+    microenv_tab_header += "\n"
+    desc_buttons_str += "\n"
+    units_buttons_str += "\n"
+    row_str += "\n"
+
+vbox_str += indent + "])"
+
+# Write the beginning of the Python module for the user parameters tab in the GUI
+microenv_tab_file = "microenv_params.py"
+print("\n --------------------------------- ")
+print("Generated a new: ", microenv_tab_file)
+print()
 #print("If this is your first time:")
 #print("Run the GUI via:  jupyter notebook mygui.ipynb")
 print("Test the minimal GUI via:  jupyter notebook test_gui.ipynb")
@@ -626,8 +812,8 @@ print()
 print("(or, if you already have a previous GUI running and want to see new params:")
 print("run the Jupyter menu item:  Kernel -> Restart & Run All)")
 print()
-fp= open(user_tab_file, 'w')
-fp.write(user_tab_header)
+fp= open(microenv_tab_file, 'w')
+fp.write(microenv_tab_header)
 fp.write(units_buttons_str)
 fp.write(desc_buttons_str)
 fp.write(row_str)
