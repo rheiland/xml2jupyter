@@ -373,6 +373,7 @@ fp.write(fill_xml_str)
 fp.close()
 
 #---------------------------------------------------------------------------------------------------
+#----------  micronenv 
 #---------------------------------------------------------------------------------------------------
 microenv_tab_header = """ 
 # This file is auto-generated from a Python script that parses a PhysiCell configuration (.xml) file.
@@ -481,7 +482,7 @@ color_count = 0
 name_count = 0
 units_count = 0
 
-#----------  micronenv --------------------
+#----------  micronenv 
 		# <variable name="oxygen" units="mmHg" ID="0">
 		# 	<physical_parameter_set>
 		# 		<diffusion_coefficient units="micron^2/min">100000.000000</diffusion_coefficient>
@@ -761,12 +762,16 @@ if uep:
 
     # units_buttons_str += indent + " #  --- options info\n"
     uep_opt = uep.find('options')
+    # gradients_toggle_name = "self." + menv_var_name + "_calculate_gradient"
+    # track_toggle_name = "self." + menv_var_name + "_track_internal"
     gradients_toggle_name = "self.calculate_gradient"
     track_toggle_name = "self.track_internal"
+
     if uep_opt:
         print('------- found microenv options --------')
         # print( uep_opt.find('calculate_gradients'))
-        if uep_opt.find('calculate_gradients') != None:
+        elm = uep_opt.find('calculate_gradients') 
+        if elm != None:
             print('---- calculate_gradients')
             microenv_tab_header += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)\n"
             param_count += 1
@@ -775,10 +780,18 @@ if uep:
             box_name = "box" + str(param_count)
             box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
             vbox_str += indent2 + box_name + ",\n"
+
             # fill_gui_str += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)"
+            if (elm.text.lower() == 'true'):
+                fill_gui_str += indent + gradients_toggle_name + ".value = True\n"
+            else:
+                fill_gui_str += indent + gradients_toggle_name + ".value = False\n"
+
         if uep_opt.find('foobar') != None:
             print('---- foobar')
-        if uep_opt.find('track_internalized_substrates_in_each_agent') != None:
+
+        elm = uep_opt.find('track_internalized_substrates_in_each_agent') 
+        if elm != None:
             print('---- track_internalized_substrates_in_each_agent')
             microenv_tab_header += indent + track_toggle_name + " = Checkbox(description='track_in_agents', disabled=False, layout=desc_button_layout)\n"
             param_count += 1
@@ -787,7 +800,11 @@ if uep:
             box_name = "box" + str(param_count)
             box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
             vbox_str += indent2 + box_name + ",\n"
-#    fill_gui_str += "self.calculate_gradients.value = float(uep.find('.//macrophage_relative_adhesion').text)
+            # fill_gui_str += indent + "self.calculate_gradients.value = float(uep.find('.//macrophage_relative_adhesion').text)
+            if (elm.text.lower() == 'true'):
+                fill_gui_str += indent + track_toggle_name + ".value = True\n"
+            else:
+                fill_gui_str += indent + track_toggle_name + ".value = False\n"
 
 
     print('--------- done with microenv --------------')
