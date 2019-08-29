@@ -1,8 +1,8 @@
 """
 ====================================================================================================
   Parse a PhysiCell configuration file (XML) and generate two Jupyter (Python) modules: 
-    microenv_params.py - containing widgets for microenvironment parameters.
     user_params.py - containing widgets for user parameters.
+    microenv_params.py - containing widgets for microenvironment parameters.
   
 ====================================================================================================
  
@@ -22,8 +22,8 @@
   
   Outputs
   -------
-    microenv_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
     user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
+    microenv_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
  
 Authors:
 Randy Heiland (heiland@iu.edu)
@@ -207,7 +207,7 @@ fill_xml_str += indent + "uep = xml_root.find('.//user_parameters')  # find uniq
 # name_count = 0
 # units_count = 0
 
-print_vars = False
+print_vars = True
 print_var_types = False
 
 tag_list = []
@@ -506,7 +506,7 @@ if uep:
 
         var_idx += 1
         menv_var_count += 1
-        print('\n ==== new microenv var: ',var.tag, var.attrib)
+        print('==== new microenv var: ',var.tag, var.attrib)
         # --- basic widgets: 
     #    full_name = "self." + var.attrib['name']
     #    name_count += 1
@@ -514,7 +514,7 @@ if uep:
         #  1) Variable name + [units]
         menv_var_name_button = "menv_var" + str(menv_var_count)
         menv_var_name = var.attrib['name']
-        print('menv_var_name=',menv_var_name)
+#        print('menv_var_name=',menv_var_name)
         units_str = ''
         if ('units' in var.attrib) and (var.attrib['units'] != 'dimensionless'):
             units_str = ' (' + var.attrib['units'] + ')'
@@ -537,15 +537,15 @@ if uep:
         vbox_str += indent2 + box_name + ",\n"
 
         for child in var:
-            print(' child in var-----> ',child.tag, child.attrib)
-            print(' child.tag.lower() ----> ',child.tag.lower())
+#            print(' child in var-----> ',child.tag, child.attrib)
+#            print(' child.tag.lower() ----> ',child.tag.lower())
 
             # if (child.tag.lower == 'physical_parameter_set'):
             if ('physical_parameter_set' in child.tag.lower() ):
             #  2) <physical_parameter_set> variables
                 for pp in var.findall('physical_parameter_set'):
                     for ppchild in pp:
-                        print(' -- ppchild in pp: ',ppchild.tag, ppchild.attrib, float(ppchild.text))
+#                        print(' -- ppchild in pp: ',ppchild.tag, ppchild.attrib, float(ppchild.text))
                         pp_button_name = "pp_button" + str(pp_count)
                         pp_units_name = "pp_button_units" + str(pp_count)
                         pp_count += 1
@@ -637,7 +637,7 @@ if uep:
                         vbox_str += indent2 + box_name + ",\n"
             #---------------
             else:   # in <variable> (not in <physical_parameter_set>), e.g., IC, Dirichlet BC
-                print(' >>>> child: ',child.tag, child.attrib, float(child.text))
+#                print(' >>>> child: ',child.tag, child.attrib, float(child.text))
                 pp_button_name = "pp_button" + str(pp_count)
                 pp_units_name = "pp_button_units" + str(pp_count)
                 pp_count += 1
@@ -658,31 +658,6 @@ if uep:
                 # fill_xml_str += indent + "uep.find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
                 fill_xml_str += indent + "vp["+str(var_idx)+"].find('.//" + child.tag + "').text = str("+ full_name + ".value)\n"
 
-                # This toggle is a unique, one-off widget. So very ugly.
-                if ("dirichlet_foobar" in child.tag.lower()):
-                    print('----- handle Dirichlet BC checkbox')
-                    dirichlet_toggle_name = "self.toggle_Dirichlet_boundary_condition"
-                    microenv_tab_header += indent + dirichlet_toggle_name + " = " + "Checkbox(description='on/off', disabled=False, layout=widget_layout)\n"
-
-                    # box_name = "box_toggle_Dirichlet_boundary_condition"
-                    # box_str += indent + box_name + " = Box(children=[" + dirichlet_toggle_name + "], layout=box_layout)\n"
-                    # vbox_str += indent2 + box_name + ",\n"
-
-                    # row4 = [param_name4, self.oxygen_Dirichlet_boundary_condition, menv_units_button4, togglewidget]
-
-                    # self.toggle_svg.value = bool(xml_root.find(".//SVG").find(".//enable").text)
-                    # uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
-                    if ('enabled' in child.attrib):
-                        if (child.attrib['enabled'] == 'true'):
-                            fill_gui_str += indent + dirichlet_toggle_name + ".value = True\n"
-                        else:
-                            fill_gui_str += indent + dirichlet_toggle_name + ".value = False\n"
-                    else:
-                        print("\n")
-                        print("  *** Error: missing 'enabled' attribute in ", child.tag,"\n")
-                        sys.exit(1)
-
-                    # self.virus_Dirichlet_boundary_condition_toggle = Checkbox(description='on/off', disabled=False,style=style, layout=widget_layout)
 
                 # Try to calculate and provide a "good" delta step (for the tiny "up/down" arrows on a numeric widget)
                 # fval_abs = abs(float(child.text))
@@ -707,10 +682,22 @@ if uep:
                     # menv_toggle1 = Checkbox(description='on/off', disabled=False, layout=desc_button_layout) 
                     toggle_name = full_name + "_toggle" 
                     microenv_tab_header += indent + toggle_name + " = Checkbox(description='on/off', disabled=False" + ",style=style, layout=widget_layout)\n"
-                    if (child.attrib['enabled'].lower() == 'true'):
-                        fill_gui_str += indent + toggle_name + ".value = True\n"
-                    else:
-                        fill_gui_str += indent + toggle_name + ".value = False\n"
+
+
+                    # if (child.attrib['enabled'].lower() == 'true'):
+                    #     fill_gui_str += indent + toggle_name + ".value = True\n"
+                    # else:
+                    #     fill_gui_str += indent + toggle_name + ".value = False\n"
+
+                    # Ugly.
+                    # fill_gui_str += indent + full_name + ".value = " + 'float' + "(vp["+str(var_idx)+"].find('.//" + ppchild.tag + "').text)\n"
+                    fill_gui_str += indent + "if vp[" + str(var_idx) + "].find('.//Dirichlet_boundary_condition').attrib['enabled'].lower() == 'true':\n"
+                    fill_gui_str += indent2 + toggle_name + ".value = True\n"
+                    fill_gui_str += indent + "else:\n"
+                    fill_gui_str += indent2 + toggle_name + ".value = False\n"
+
+#                    vp[0].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(self.oxygen_Dirichlet_boundary_condition_toggle.value)
+                    fill_xml_str += indent + "vp[" + str(var_idx) + "].find('.//Dirichlet_boundary_condition').attrib['enabled'] = str(" + toggle_name + ".value).lower()\n\n"
 
     #                toggle_name = "menv_toggle" + str(pp_count)
     #                units_buttons_str += indent + units_btn_name + " = " + "Button(description='" + child.attrib['units'] + "', disabled=True, layout=units_button_layout) \n"
@@ -748,7 +735,7 @@ if uep:
 
                 row_name = "row" + str(param_count)
                 if ("dirichlet" in child.tag.lower()):
-                    print('----- handle Dirichlet BC checkbox')
+#                    print('----- handle Dirichlet BC checkbox')
                     dirichlet_toggle_name = "self.toggle_Dirichlet_boundary_condition"
                     # toggle_name = full_name + "_toggle" 
                     row_str += indent +  row_name + " = [" + param_name_button + ", " + full_name + ", " + units_btn_name + ", " + toggle_name + "]\n"
@@ -760,6 +747,7 @@ if uep:
                 box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
                 vbox_str += indent2 + box_name + ",\n"
 
+
     # units_buttons_str += indent + " #  --- options info\n"
     uep_opt = uep.find('options')
     # gradients_toggle_name = "self." + menv_var_name + "_calculate_gradient"
@@ -768,11 +756,15 @@ if uep:
     track_toggle_name = "self.track_internal"
 
     if uep_opt:
-        print('------- found microenv options --------')
+#        print('------- found microenv options --------')
+        	# <calculate_gradients>true</calculate_gradients>
+			# <track_internalized_substrates_in_each_agent>true</track_internalized_substrates_in_each_agent>
+        fill_gui_str += "\n"
+        fill_xml_str += "\n"
         # print( uep_opt.find('calculate_gradients'))
         elm = uep_opt.find('calculate_gradients') 
         if elm != None:
-            print('---- calculate_gradients')
+#            print('---- calculate_gradients')
             microenv_tab_header += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)\n"
             param_count += 1
             row_name = "row" + str(param_count)
@@ -782,17 +774,40 @@ if uep:
             vbox_str += indent2 + box_name + ",\n"
 
             # fill_gui_str += indent + gradients_toggle_name + " = Checkbox(description='calculate_gradients', disabled=False, layout=desc_button_layout)"
-            if (elm.text.lower() == 'true'):
-                fill_gui_str += indent + gradients_toggle_name + ".value = True\n"
-            else:
-                fill_gui_str += indent + gradients_toggle_name + ".value = False\n"
+            # self.calculate_gradient.value = False
+            # if (elm.text.lower() == 'true'):
+            #     fill_gui_str += indent + gradients_toggle_name + ".value = True\n"
+            # else:
+            #     fill_gui_str += indent + gradients_toggle_name + ".value = False\n"
 
-        if uep_opt.find('foobar') != None:
-            print('---- foobar')
+            # fill_gui_str += indent + gradients_toggle_name + ".value = bool(uep.find('.//options//calculate_gradients').text)\n"
+
+            # Ugly.
+            fill_gui_str += indent + "if uep.find('.//options//calculate_gradients').text.lower() == 'true':\n"
+            fill_gui_str += indent2 + gradients_toggle_name + ".value = True\n"
+            fill_gui_str += indent + "else:\n"
+            fill_gui_str += indent2 + gradients_toggle_name + ".value = False\n"
+#            self.calculate_gradient.value = True
+#        else:
+#            self.calculate_gradient.value = False
+
+                # rwh
+            # self.calculate_gradient.value = bool(uep.find(".//options//calculate_gradients").text)
+            # self.track_internal.value = bool(uep.find(".//options//track_internalized_substrates_in_each_agent").text)
+
+            # note that in Python: str(True) --> 'True'
+            fill_xml_str += indent + "uep.find('.//options//calculate_gradients').text = str("+ gradients_toggle_name + ".value)\n"
+
+        # uep.find('.//options//calculate_gradients').text = str(self.calculate_gradient.value)
+        # uep.find('.//options//track_internalized_substrates_in_each_agent').text = str(self.track_internal.value)
+
+        # if uep_opt.find('foobar') != None:   # testing for false condition
+            # print('---- foobar')
+
 
         elm = uep_opt.find('track_internalized_substrates_in_each_agent') 
         if elm != None:
-            print('---- track_internalized_substrates_in_each_agent')
+#            print('---- track_internalized_substrates_in_each_agent')
             microenv_tab_header += indent + track_toggle_name + " = Checkbox(description='track_in_agents', disabled=False, layout=desc_button_layout)\n"
             param_count += 1
             row_name = "row" + str(param_count)
@@ -800,11 +815,22 @@ if uep:
             box_name = "box" + str(param_count)
             box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
             vbox_str += indent2 + box_name + ",\n"
+
             # fill_gui_str += indent + "self.calculate_gradients.value = float(uep.find('.//macrophage_relative_adhesion').text)
-            if (elm.text.lower() == 'true'):
-                fill_gui_str += indent + track_toggle_name + ".value = True\n"
-            else:
-                fill_gui_str += indent + track_toggle_name + ".value = False\n"
+            # if (elm.text.lower() == 'true'):
+            #     fill_gui_str += indent + track_toggle_name + ".value = True\n"
+            # else:
+            #     fill_gui_str += indent + track_toggle_name + ".value = False\n"
+
+            # fill_gui_str += indent + track_toggle_name + ".value = bool(uep.find('.//options//track_internalized_substrates_in_each_agent').text)\n"
+
+            # Ugly.
+            fill_gui_str += indent + "if uep.find('.//options//track_internalized_substrates_in_each_agent').text.lower() == 'true':\n"
+            fill_gui_str += indent2 + track_toggle_name + ".value = True\n"
+            fill_gui_str += indent + "else:\n"
+            fill_gui_str += indent2 + track_toggle_name + ".value = False\n"
+
+            fill_xml_str += indent + "uep.find('.//options//track_internalized_substrates_in_each_agent').text = str("+ track_toggle_name + ".value)\n"
 
 
     print('--------- done with microenv --------------')
