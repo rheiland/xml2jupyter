@@ -29,6 +29,10 @@ Authors:
 Randy Heiland (heiland@iu.edu)
 Daniel Mishler, Tyler Zhang, Eric Bower (undergrad students in Intelligent Systems Engineering, IU)
 Dr. Paul Macklin (macklinp@iu.edu)
+
+--- History ---
+v2 - also generate the microenv_params.py
+v1 - generate the user_params.py
 """
 
 import sys
@@ -163,6 +167,17 @@ fill_xml_str= """
                 vp.append(var)
 
 """
+def get_float_stepsize(val_str):
+    # fval_abs = abs(float(ppchild.text))
+    fval_abs = abs(float(val_str))
+    if (fval_abs > 0.0):
+        if (fval_abs > 1.0):  # crop
+            delta_val = pow(10, int(math.log10(abs(float(ppchild.text)))) - 1)
+        else:   # round
+            delta_val = pow(10, round(math.log10(abs(float(ppchild.text)))) - 1)
+    else:
+        delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
+    return delta_val
 
 # Now parse a configuration file (.xml) and map the user parameters into GUI widgets
 #tree = ET.parse('../config/PhysiCell_settings.xml')
@@ -483,6 +498,7 @@ name_count = 0
 units_count = 0
 
 #----------  micronenv 
+	# <microenvironment_setup>
 		# <variable name="oxygen" units="mmHg" ID="0">
 		# 	<physical_parameter_set>
 		# 		<diffusion_coefficient units="micron^2/min">100000.000000</diffusion_coefficient>
@@ -491,6 +507,21 @@ units_count = 0
 		# 	<initial_condition units="mmHg">38.0</initial_condition>
 		# 	<Dirichlet_boundary_condition units="mmHg" enabled="true">38.0</Dirichlet_boundary_condition>
 		# </variable>
+        # ...
+        #
+        # <options>
+		# 	<calculate_gradients>False</calculate_gradients>
+		# 	<track_internalized_substrates_in_each_agent>False</track_internalized_substrates_in_each_agent>
+			 
+		# 	<initial_condition enabled="false" type="matlab">
+		# 		<filename>./config/initial.mat</filename>
+		# 	</initial_condition>
+			 
+		# 	<dirichlet_nodes enabled="false" type="matlab">
+		# 		<filename>./config/dirichlet.mat</filename>
+		# 	</dirichlet_nodes>
+		# </options>
+	# </microenvironment_setup>
 uep = root.find('.//microenvironment_setup')  # find unique entry point (uep) 
 if uep:
     fill_gui_str += indent + "uep = xml_root.find('.//microenvironment_setup')  # find unique entry point\n"
@@ -544,7 +575,7 @@ if uep:
             if ('physical_parameter_set' in child.tag.lower() ):
             #  2) <physical_parameter_set> variables
                 for pp in var.findall('physical_parameter_set'):
-                    for ppchild in pp:
+                    for ppchild in pp:  # e.g., diffusion_coefficient, decay_rate
 #                        print(' -- ppchild in pp: ',ppchild.tag, ppchild.attrib, float(ppchild.text))
                         pp_button_name = "pp_button" + str(pp_count)
                         pp_units_name = "pp_button_units" + str(pp_count)
@@ -570,7 +601,24 @@ if uep:
                     #   style=style, layout=widget_layout)
 
                         full_name = "self." + menv_var_name + "_" + ppchild.tag
-                        microenv_tab_header += "\n" + indent + full_name + " = FloatText(value=" + ppchild.text + ",style=style, layout=widget_layout)\n"
+                        # todo: add stepsize
+                        delta_val = get_float_stepsize(ppchild.text)
+                        # fval_abs = abs(float(ppchild.text))
+                        # if (fval_abs > 0.0):
+                        #     if (fval_abs > 1.0):  # crop
+                        #         delta_val = pow(10, int(math.log10(abs(float(ppchild.text)))) - 1)
+                        #     else:   # round
+                        #         delta_val = pow(10, round(math.log10(abs(float(ppchild.text)))) - 1)
+                        # else:
+                        #     delta_val = 0.01  # if initial value=0.0, we're totally guessing at what a good delta is
+
+                        if print_var_types:
+                            print('double: ',float(ppchild.text),', delta_val=',delta_val)
+
+                # Note: "step" values will advance the value to the nearest multiple of the step value itself :-/
+                # user_tab_header += indent2 + "step=" + str(delta_val) + ",\n"
+                        microenv_tab_header += "\n" + indent + full_name + " = FloatText(value=" + ppchild.text + ",\n"
+                        microenv_tab_header += indent2 + "step=" + str(delta_val) + ",style=style, layout=widget_layout)\n"
 
                         # float, int, bool
                         # if (type_cast[ppchild.attrib['type']] == "bool"):
@@ -636,7 +684,7 @@ if uep:
                         box_str += indent + box_name + " = Box(children=" + row_name + ", layout=box_layout)\n"
                         vbox_str += indent2 + box_name + ",\n"
             #---------------
-            else:   # in <variable> (not in <physical_parameter_set>), e.g., IC, Dirichlet BC
+            else:   # in <variable> (not in <physical_parameter_set>), e.g., initial_condition, Dirichlet_boundary_condition
 #                print(' >>>> child: ',child.tag, child.attrib, float(child.text))
                 pp_button_name = "pp_button" + str(pp_count)
                 pp_units_name = "pp_button_units" + str(pp_count)
