@@ -22,8 +22,8 @@ microenv_tab = MicroenvTab()
 user_tab = UserTab()
 
 # read in/parse the .xml file used to generate the GUI widgets.
-#main_xml_filename = 'config-biorobots.xml'
-main_xml_filename = 'config.xml'
+#main_xml_filename = 'config.xml'
+main_xml_filename = 'config_biorobots.xml'
 full_xml_filename = os.path.abspath(main_xml_filename)
 print('full_xml_filename=',full_xml_filename)
 
