@@ -544,8 +544,8 @@ if uep:
         # param_name_button = "param_name" + str(name_count)
         #  1) Variable name + [units]
         menv_var_name_button = "menv_var" + str(menv_var_count)
-        menv_var_name = var.attrib['name']
-#        print('menv_var_name=',menv_var_name)
+        menv_var_name = var.attrib['name'].replace(" ","_")   # e.g., "director signal" --> "director_signal"
+        print('menv_var_name=',menv_var_name)
         units_str = ''
         if ('units' in var.attrib) and (var.attrib['units'] != 'dimensionless'):
             units_str = ' (' + var.attrib['units'] + ')'
