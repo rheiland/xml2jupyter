@@ -9,6 +9,19 @@ import matplotlib.colors as mplc
 import scipy.io
 import xml.etree.ElementTree as ET  # https://docs.python.org/2/library/xml.etree.elementtree.html
 import glob
+import platform
+import zipfile
+from debug import debug_view 
+
+hublib_flag = True
+if platform.system() != 'Windows':
+    try:
+#        print("Trying to import hublib.ui")
+        from hublib.ui import Download
+    except:
+        hublib_flag = False
+else:
+    hublib_flag = False
 
 
 class SubstrateTab(object):
@@ -24,6 +37,10 @@ class SubstrateTab(object):
         self.field_index = 4
         # self.field_index = self.mcds_field.value + 4
 
+        # define dummy size of mesh (set in the tool's primary module)
+        self.numx = 0
+        self.numy = 0
+
         tab_height = '500px'
         constWidth = '180px'
         constWidth2 = '150px'
@@ -32,7 +49,9 @@ class SubstrateTab(object):
 
         max_frames = 1   
         self.mcds_plot = interactive(self.plot_substrate, frame=(0, max_frames), continuous_update=False)  
-        svg_plot_size = '700px'
+        svg_plot_size = '500px'  # small: controls the size of the tab height, not the plot (rf. figsize for that)
+        svg_plot_size = '800px'  # medium
+        svg_plot_size = '750px'  # medium
         self.mcds_plot.layout.width = svg_plot_size
         self.mcds_plot.layout.height = svg_plot_size
 
@@ -166,7 +185,16 @@ class SubstrateTab(object):
                             align_items='stretch',
                             flex_direction='row',
                             display='flex'))
-        self.tab = VBox([row1, row2, self.mcds_plot])
+        if (hublib_flag):
+            self.download_button = Download('mcds.zip', style='warning', icon='cloud-download', 
+                                                tooltip='Download data', cb=self.download_cb)
+            download_row = HBox([self.download_button.w, Label("Download all substrate data (browser must allow pop-ups).")])
+
+    #        self.tab = VBox([row1, row2, self.mcds_plot])
+            self.tab = VBox([row1, row2, self.mcds_plot, download_row])
+        else:
+            # self.tab = VBox([row1, row2])
+            self.tab = VBox([row1, row2, self.mcds_plot])
 
     #---------------------------------------------------
     def update_dropdown_fields(self, data_dir):
@@ -176,9 +204,9 @@ class SubstrateTab(object):
         try:
             fname = os.path.join(self.output_dir, "initial.xml")
             tree = ET.parse(fname)
-#            return
+            xml_root = tree.getroot()
         except:
-            print("Cannot open ",fname," to get names of substrate fields.")
+            print("Cannot open ",fname," to read info, e.g., names of substrate fields.")
             return
 
         xml_root = tree.getroot()
@@ -212,25 +240,50 @@ class SubstrateTab(object):
         self.max_frames.value = value  # assumes naming scheme: "snapshot%08d.svg"
         self.mcds_plot.children[0].max = self.max_frames.value
 
-    def update(self, rdir):
-        self.output_dir = rdir
-        if rdir == '':
-            # self.max_frames.value = 0
-            tmpdir = os.path.abspath('tmpdir')
-            self.output_dir = tmpdir
-            all_files = sorted(glob.glob(os.path.join(tmpdir, 'output*.xml')))
-            if len(all_files) > 0:
-                last_file = all_files[-1]
-                self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "output%08d.xml"
-                self.mcds_plot.update()
-            return
+#    def update(self, rdir):
+    def update(self, rdir=''):
+        # with debug_view:
+        #     print("substrates: update rdir=", rdir)        
 
-        all_files = sorted(glob.glob(os.path.join(rdir, 'output*.xml')))
+        if rdir:
+            self.output_dir = rdir
+
+        all_files = sorted(glob.glob(os.path.join(self.output_dir, 'output*.xml')))
         if len(all_files) > 0:
             last_file = all_files[-1]
-            self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "output%08d.xml"
-            self.mcds_plot.update()
+            self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "snapshot%08d.svg"
 
+        # with debug_view:
+        #     print("substrates: added %s files" % len(all_files))
+
+
+        # self.output_dir = rdir
+        # if rdir == '':
+        #     # self.max_frames.value = 0
+        #     tmpdir = os.path.abspath('tmpdir')
+        #     self.output_dir = tmpdir
+        #     all_files = sorted(glob.glob(os.path.join(tmpdir, 'output*.xml')))
+        #     if len(all_files) > 0:
+        #         last_file = all_files[-1]
+        #         self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "output%08d.xml"
+        #         self.mcds_plot.update()
+        #     return
+
+        # all_files = sorted(glob.glob(os.path.join(rdir, 'output*.xml')))
+        # if len(all_files) > 0:
+        #     last_file = all_files[-1]
+        #     self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "output%08d.xml"
+        #     self.mcds_plot.update()
+
+    def download_cb(self):
+        file_xml = os.path.join(self.output_dir, '*.xml')
+        file_mat = os.path.join(self.output_dir, '*.mat')
+        # print('zip up all ',file_str)
+        with zipfile.ZipFile('mcds.zip', 'w') as myzip:
+            for f in glob.glob(file_xml):
+                myzip.write(f, os.path.basename(f)) # 2nd arg avoids full filename path in the archive
+            for f in glob.glob(file_mat):
+                myzip.write(f, os.path.basename(f))
 
     def update_max_frames(self,_b):
         self.mcds_plot.children[0].max = self.max_frames.value
@@ -275,10 +328,7 @@ class SubstrateTab(object):
 
 #        if not os.path.isfile(fullname):
         if not os.path.isfile(full_fname):
-#            print("File does not exist: ", full_fname)
-#            print("No: ", full_fname)
             print("Once output files are generated, click the slider.")  # No:  output00000000_microenvironment0.mat
-
             return
 
 #        tree = ET.parse(xml_fname)
@@ -300,7 +350,9 @@ class SubstrateTab(object):
         # plt.clf()
         # my_plot = plt.imshow(f.reshape(400,400), cmap='jet', extent=[0,20, 0,20])
     
-        self.fig = plt.figure(figsize=(7.2,6))  # this strange figsize results in a ~square contour plot
+        # self.fig = plt.figure(figsize=(7.2,6))  # this strange figsize results in a ~square contour plot
+        self.fig = plt.figure(figsize=(24.0,20))  # this strange figsize results in a ~square contour plot
+        # self.fig = plt.figure(figsize=(28.8,24))  # this strange figsize results in a ~square contour plot
         #     fig.set_tight_layout(True)
         #     ax = plt.axes([0, 0.05, 0.9, 0.9 ]) #left, bottom, width, height
         #     ax = plt.axes([0, 0.0, 1, 1 ])
@@ -308,21 +360,42 @@ class SubstrateTab(object):
         #     im = ax.imshow(f.reshape(100,100), interpolation='nearest', cmap=cmap, extent=[0,20, 0,20])
         #     ax.grid(False)
 
-        N = int(math.sqrt(len(M[0,:])))
-        grid2D = M[0, :].reshape(N,N)
-        xvec = grid2D[0, :]
+        # print("substrates.py: ------- numx, numy = ", self.numx, self.numy )
+        if (self.numx == 0):   # need to parse vals from the config.xml
+            fname = os.path.join(self.output_dir, "config.xml")
+            tree = ET.parse(fname)
+            xml_root = tree.getroot()
+            xmin = float(xml_root.find(".//x_min").text)
+            xmax = float(xml_root.find(".//x_max").text)
+            dx = float(xml_root.find(".//dx").text)
+            ymin = float(xml_root.find(".//y_min").text)
+            ymax = float(xml_root.find(".//y_max").text)
+            dy = float(xml_root.find(".//dy").text)
+            self.numx =  math.ceil( (xmax - xmin) / dx)
+            self.numy =  math.ceil( (ymax - ymin) / dy)
+
+        xgrid = M[0, :].reshape(self.numy, self.numx)
+        ygrid = M[1, :].reshape(self.numy, self.numx)
 
         num_contours = 15
-#        levels = MaxNLocator(nbins=10).tick_values(vmin, vmax)
         levels = MaxNLocator(nbins=num_contours).tick_values(self.cmap_min.value, self.cmap_max.value)
+        contour_ok = True
         if (self.cmap_fixed.value):
-            my_plot = plt.contourf(xvec, xvec, M[self.field_index, :].reshape(N,N), levels=levels, extend='both', cmap=self.field_cmap.value)
+            try:
+                my_plot = plt.contourf(xgrid, ygrid, M[self.field_index, :].reshape(self.numy, self.numx), levels=levels, extend='both', cmap=self.field_cmap.value)
+            except:
+                contour_ok = False
+                # print('got error on contourf 1.')
         else:    
-#        my_plot = plt.contourf(xvec, xvec, M[self.field_index, :].reshape(N,N), num_contours, cmap=self.field_cmap.value)
-            my_plot = plt.contourf(xvec, xvec, M[self.field_index, :].reshape(N,N), num_contours, cmap=self.field_cmap.value)
+            try:
+                my_plot = plt.contourf(xgrid, ygrid, M[self.field_index, :].reshape(self.numy,self.numx), num_contours, cmap=self.field_cmap.value)
+            except:
+                contour_ok = False
+                # print('got error on contourf 2.')
 
-        plt.title(title_str)
-        plt.colorbar(my_plot)
+        if (contour_ok):
+            plt.title(title_str)
+            plt.colorbar(my_plot)
         axes_min = 0
         axes_max = 2000
         # plt.xlim(axes_min, axes_max)
