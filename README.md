@@ -3,9 +3,9 @@
 
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
-Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
-containing associated widgets for user parameters. For more information, we recommend checking out
-the JOSS paper describing the functionality of this tool [![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
+Parse a PhysiCell configuration file (XML) and generate Jupyter (Python) modules (microenv_params.py and user_params.py)
+containing associated widgets for model parameters. For more information, we recommend checking out
+the JOSS paper describing the (version 1) functionality of this tool [![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
 
 To see an example application that has been generated with xml2jupyter, click the binder badge [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rheiland/xml2jupyter/master?filepath=PhysiCell_GUI%2Fmygui.ipynb)
 <!--
@@ -18,7 +18,7 @@ To see an example application that has been generated with xml2jupyter, click th
 
 Many scientific simulation packages use text-based configuration files to provide parameter values and run at the command line without a graphical interface. Manually editing these files to explore how different values affect a simulation can be burdensome for technical users, and impossible to use for those with other scientific backgrounds. xml2jupyter is a Python package that addresses these scientific bottlenecks. It provides a mapping between configuration files, formatted in the Extensible Markup Language (XML), and Jupyter widgets.
 
-Using a [PhysiCell](http://physicell.mathcancer.org/) XML configuration file, this tool lets you generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). The `xml2jupyter.py` Python script provides a core component of the GUI by generating a panel (Jupyter `Tab`) of custom model parameter widgets. The other Python scripts in this repository are static; all together, they provide a self-contained Jupyter notebook GUI tailored to a custom PhysiCell simulator. While the project is specific to PhysiCell, the basic idea of generating Jupyter widgets can be extended to other text-based configuration files.
+Using a [PhysiCell](http://physicell.mathcancer.org/) XML configuration file, this tool lets you generate a graphical user interface (GUI) consisting of [Jupyter widgets](https://ipywidgets.readthedocs.io/en/stable/index.html). The `xml2jupyter.py` Python script provides a core component of the GUI by generating two panels (Jupyter `Tab`s) of custom model parameter widgets. The other Python scripts in this repository are static; all together, they provide a self-contained Jupyter notebook GUI tailored to a custom PhysiCell simulator. While the project is specific to PhysiCell, the basic idea of generating Jupyter widgets can be extended to other text-based configuration files.
 
 We realize the name "xml2jupyter" is somewhat generic. We wanted a name that was descriptive, but also concise and, besides, its functionality can (and most likely will) be extended well beyond what is possible in the initial release - to generate custom parameter widgets for a PhysiCell configuration file.
 
@@ -28,7 +28,7 @@ If you simply want to try the notebook, without downloading anything, try clicki
 
 ## Installation
 
-Download the `xml2jupyter.py` Python script from this repository. (This will let you perform the core function of generating  Jupyter widgets associated with PhysiCell's `<user_parameters>` in an XML configuration file).
+Download the `xml2jupyter.py` Python script from this repository. (This will let you perform the core function of generating  Jupyter widgets associated with PhysiCell's `<microenvironment_setup>` and `<user_parameters>` in an XML configuration file).
 
 <!--
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/rheiland/xml2gui/master?filepath=PhysiCell.ipynb) Click the binder badge to play with the notebook from your browser without installing anything.
@@ -77,6 +77,7 @@ output. Below is an explanation of the possible inputs for this script.
   
   Outputs
   -------
+    microenv_params.py: Python module used to create/edit microenvironment parameters (--> "Microenvironment" GUI tab)
     user_params.py: Python module used to create/edit custom user parameters (--> "User Params" GUI tab)
 ```
 
