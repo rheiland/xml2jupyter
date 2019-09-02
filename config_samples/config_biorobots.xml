@@ -113,16 +113,43 @@
 			<enable>false</enable>
 		</legacy_data>
 	</save>
-	
+
+	<microenvironment_setup>
+		<variable name="director signal" units="dimensionless" ID="0">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">1000</diffusion_coefficient>
+				<decay_rate units="1/min">.1</decay_rate> <!-- 1 for cells  --> 
+			</physical_parameter_set>
+			<initial_condition units="dimensionless">0</initial_condition>
+			<Dirichlet_boundary_condition units="dimensionless" enabled="false">1</Dirichlet_boundary_condition>
+		</variable>
+		
+		<variable name="cargo signal" units="dimensionless" ID="1">
+			<physical_parameter_set>
+				<diffusion_coefficient units="micron^2/min">1000</diffusion_coefficient>
+				<decay_rate units="1/min">.4</decay_rate> <!-- 1 for cells  --> 
+			</physical_parameter_set>
+			<initial_condition units="dimensionless">0</initial_condition>
+			<Dirichlet_boundary_condition units="dimensionless" enabled="false">1</Dirichlet_boundary_condition>
+		</variable>
+				
+		<options>
+			<calculate_gradients>true</calculate_gradients>
+			<track_internalized_substrates_in_each_agent>false</track_internalized_substrates_in_each_agent>
+			<!-- not yet supported --> 
+			<initial_condition type="matlab" enabled="false">
+				<filename>./config/initial.mat</filename>
+			</initial_condition>
+			<!-- not yet supported --> 
+			<dirichlet_nodes type="matlab" enabled="false">
+				<filename>./config/dirichlet.mat</filename>
+			</dirichlet_nodes>
+		</options>
+	</microenvironment_setup>		
+
 	<user_parameters>
 		<random_seed type="int" units="dimensionless" hidden="true">0</random_seed> 
 
-		<!-- for microenvironment setup --> 
-		<cargo_signal_D type="double" units="micron/min^2" description="cargo signal diffusion coefficient">1e3</cargo_signal_D>
-		<cargo_signal_decay type="double" units="1/min" description="cargo signal decay rate">.4</cargo_signal_decay> <!-- 50 micron length scale -->
-		<director_signal_D type="double" units="micron/min^2" description="director signal diffusion coefficient">1e3</director_signal_D>
-		<director_signal_decay type="double" units="1/min" description="director signal decay rate">.1</director_signal_decay> <!-- 100 micron length scale -->
-		
 		<!-- for cell definitions -->
 		<elastic_coefficient type="double" units="1/min" description="elastic coefficient of cells">0.05</elastic_coefficient>
 
