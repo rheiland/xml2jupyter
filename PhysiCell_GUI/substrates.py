@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET  # https://docs.python.org/2/library/xml.etre
 import glob
 import platform
 import zipfile
-from debug import debug_view 
+# from debug import debug_view 
 
 hublib_flag = True
 if platform.system() != 'Windows':

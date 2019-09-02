@@ -193,6 +193,7 @@ class ConfigTab(object):
         
         self.omp_threads.value = int(xml_root.find(".//omp_num_threads").text)
         
+        # rwh - todo: test these bool conversions!
         self.toggle_svg.value = bool(xml_root.find(".//SVG").find(".//enable").text)
         self.svg_interval.value = int(xml_root.find(".//SVG").find(".//interval").text)
         self.toggle_mcds.value = bool(xml_root.find(".//full_data").find(".//enable").text)

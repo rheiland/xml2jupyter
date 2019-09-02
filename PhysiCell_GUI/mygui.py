@@ -26,6 +26,7 @@ import ipywidgets as widgets
 # These modules define the tabs (panels)
 from about import AboutTab
 from config import ConfigTab
+from microenv_params import MicroenvTab
 from user_params import UserTab
 from svg import SVGTab
 from substrates import SubstrateTab
@@ -41,6 +42,7 @@ constWidth = '180px'
 # create the tabs, but don't display yet
 about_tab = AboutTab()
 config_tab = ConfigTab()
+microenv_tab = MicroenvTab()
 user_tab = UserTab()
 svg = SVGTab()
 sub = SubstrateTab()
@@ -92,6 +94,7 @@ def write_config_file(name):
     tree = ET.parse(full_xml_filename)  # this file cannot be overwritten; part of tool distro
     xml_root = tree.getroot()
     config_tab.fill_xml(xml_root)
+    microenv_tab.fill_xml(xml_root)
     user_tab.fill_xml(xml_root)
     tree.write(name)
 
@@ -138,6 +141,7 @@ def fill_gui_params(config_file):
     tree = ET.parse(config_file)
     xml_root = tree.getroot()
     config_tab.fill_gui(xml_root)
+    microenv_tab.fill_gui(xml_root)
     user_tab.fill_gui(xml_root)
     # cells.fill_gui(xml_root)
 
@@ -192,8 +196,8 @@ tab_height = '500px'
 tab_height = 'auto'
 tab_layout = widgets.Layout(width='950px',   # border='2px solid black',
                             height=tab_height, overflow_y='scroll',)
-titles = ['About', 'Config Basics', 'User Params', 'Out: Cell Plots', 'Out: Substrate Plots']
-tabs = widgets.Tab(children=[about_tab.tab, config_tab.tab, user_tab.tab, svg.tab, sub.tab],
+titles = ['About', 'Config Basics', 'Microenvironment', 'User Params', 'Out: Cell Plots', 'Out: Substrate Plots']
+tabs = widgets.Tab(children=[about_tab.tab, config_tab.tab, microenv_tab.tab, user_tab.tab, svg.tab, sub.tab],
                    _titles={i: t for i, t in enumerate(titles)},
                    layout=tab_layout)
 

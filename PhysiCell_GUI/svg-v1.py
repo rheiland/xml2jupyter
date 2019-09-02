@@ -1,78 +1,67 @@
-# SVG (Cell Plot) Tab
+# SVG  Tab
+
 import os
 from ipywidgets import Layout, Label, Text, Checkbox, Button, HBox, VBox, Box, \
     FloatText, BoundedIntText, BoundedFloatText, HTMLMath, Dropdown, interactive, Output
 from collections import deque
 import xml.etree.ElementTree as ET
+import matplotlib as mpl
 import matplotlib.pyplot as plt
-#from matplotlib.patches import Circle, Ellipse, Rectangle
-from matplotlib.patches import Circle
-from matplotlib.collections import PatchCollection
 import matplotlib.colors as mplc
 import numpy as np
+# from hublib.ui import Download
 import zipfile
 import glob
-import platform
-# from debug import debug_view
 
-hublib_flag = True
-if platform.system() != 'Windows':
-    try:
-#        print("Trying to import hublib.ui")
-        from hublib.ui import Download
-    except:
-        hublib_flag = False
-else:
-    hublib_flag = False
+#mpl.rcParams['figure.max_open_warning'] = 100
 
+debug_view = Output(layout={'border': '1px solid black'})
 
 class SVGTab(object):
 
+#    myplot = None
+
     def __init__(self):
-        # tab_height = '520px'
-        # tab_layout = Layout(width='900px',   # border='2px solid black',
-        #                     height=tab_height, overflow_y='scroll')
+        tab_height = '520px'
+        tab_height = '550px'
+        tab_layout = Layout(width='900px',   # border='2px solid black',
+                            height=tab_height)  #, overflow_y='scroll')
 
         self.output_dir = '.'
+#        self.output_dir = 'tmpdir'
 
-        constWidth = '180px'
-
-#        self.fig = plt.figure(figsize=(6, 6))
-        # self.fig = plt.figure(figsize=(7, 7))
-
-        max_frames = 1
+        max_frames = 1 
         self.svg_plot = interactive(self.plot_svg, frame=(0, max_frames), continuous_update=False)
-        plot_size = '500px'  # small: controls the size of the tab height, not the plot (rf. figsize for that)
-        plot_size = '700px'  # medium
-        plot_size = '750px'  # medium
-        self.svg_plot.layout.width = plot_size
-        self.svg_plot.layout.height = plot_size
+        svg_plot_size = '700px'
+        self.svg_plot.layout.width = svg_plot_size
+        self.svg_plot.layout.height = svg_plot_size
         self.use_defaults = True
+
+
         self.show_nucleus = 0  # 0->False, 1->True in Checkbox!
         self.show_edge = 1  # 0->False, 1->True in Checkbox!
         self.scale_radius = 1.0
         self.axes_min = 0.0
         self.axes_max = 2000   # hmm, this can change (TODO?)
+        # self.fig = plt.figure(figsize=(6, 6))
+#        self.tab = HBox([svg_plot], layout=tab_layout)
 
         self.max_frames = BoundedIntText(
             min=0, max=99999, value=max_frames,
-            description='Max',
-            layout=Layout(width='160px'),
-#            layout=Layout(flex='1 1 auto', width='auto'),  #Layout(width='160px'),
+            description='Max', 
+            # layout=Layout(flex='0 1 auto', width='auto'),  #Layout(width='160px'),
         )
         self.max_frames.observe(self.update_max_frames)
 
         self.show_nucleus_checkbox= Checkbox(
             description='nucleus', value=False, disabled=False,
-            layout=Layout(width=constWidth),
-#            layout=Layout(flex='1 1 auto', width='auto'),  #Layout(width='160px'),
+            # layout=Layout(flex='1 1 auto', width='auto'),  #Layout(width='160px'),
         )
         self.show_nucleus_checkbox.observe(self.show_nucleus_cb)
 
         self.show_edge_checkbox= Checkbox(
             description='edge', value=True, disabled=False,
-            layout=Layout(width=constWidth),
-#            layout=Layout(flex='1 1 auto', width='auto'),  #Layout(width='160px'),
+            # layout=Layout(flex='1 1 auto', width='auto'),  #Layout(width='160px'),
         )
         self.show_edge_checkbox.observe(self.show_edge_cb)
 
@@ -82,7 +71,10 @@ class SVGTab(object):
 
 #        self.tab = VBox([row1,self.svg_plot], layout=tab_layout)
 
-        items_auto = [Label('select slider: drag or left/right arrows'), 
+        self.help_label = Label('select slider: drag or left/right arrows', 
+                                    layout=Layout(flex='0 1 auto', width='auto'))
+#                                    layout=Layout(flex='3 1 auto', width='auto'))
+        items_auto = [self.help_label, 
             self.max_frames, 
             self.show_nucleus_checkbox,  
             self.show_edge_checkbox, 
@@ -92,39 +84,66 @@ class SVGTab(object):
 #            layout=Layout(width='800px'))
         box_layout = Layout(display='flex',
                     flex_flow='row',
+                    align_items='stretch', 
+                    width='90%')
+        # row1 = Box(children=items_auto, layout=box_layout)
+        #row1 = Box(children=items_auto)
+        row1=Box([self.help_label, Box([self.max_frames, self.show_nucleus_checkbox, self.show_edge_checkbox] , layout=Layout(border='0px solid black',
+                    width='60%',
+                    height='',
                     align_items='stretch',
-                    width='70%')
-        row1 = Box(children=items_auto, layout=box_layout)
+                    flex_direction='row',
+                    display='flex'))] )
 
-        if (hublib_flag):
-            self.download_button = Download('svg.zip', style='warning', icon='cloud-download', 
-                                            tooltip='You need to allow pop-ups in your browser', cb=self.download_cb)
-            download_row = HBox([self.download_button.w, Label("Download all cell plots (browser must allow pop-ups).")])
-    #        self.tab = VBox([row1, self.svg_plot, self.download_button.w], layout=tab_layout)
-    #        self.tab = VBox([row1, self.svg_plot, self.download_button.w])
-            self.tab = VBox([row1, self.svg_plot, download_row])
-        else:
-            self.tab = VBox([row1, self.svg_plot])
+        # self.download_button = Download('svg.zip', style='warning', icon='cloud-download', tooltip='Download results', cb=self.download_cb)
+        #self.download_button = Download('svg.zip', style='warning', icon='cloud-download', tooltip='Download results')
 
-    def update(self, rdir=''):
-        # with debug_view:
-        #     print("SVG: update rdir=", rdir)        
+#        self.tab = VBox([row1, self.svg_plot], layout=tab_layout)
+#        self.tab = VBox([row1, self.svg_plot, self.download_button.w], layout=tab_layout)
+        self.tab = VBox([row1, self.svg_plot ], layout=tab_layout)
 
-        if rdir:
-            self.output_dir = rdir
+ #       self.output_dir_str = os.getenv('RESULTSDIR') + "/pc4nanobio/"
 
-        all_files = sorted(glob.glob(os.path.join(self.output_dir, 'snapshot*.svg')))
+    def update_max_frames_expected(self, value):  # called when beginning an interactive Run
+       with debug_view:
+        print("update_max_frames_expected: SVG UPDATE", rdir)
+        self.max_frames.value = value  # assumes naming scheme: "snapshot%08d.svg"
+        self.svg_plot.children[0].max = self.max_frames.value
+#        self.svg_plot.update()
+
+    def update(self, rdir):
+        with debug_view:
+            print("svg.py: update(): rdir (->self.output_dir)=", rdir)
+        self.output_dir = rdir
+
+        if rdir == '':
+            # self.max_frames.value = 0
+            tmpdir = os.path.abspath('tmpdir')
+            # with debug_view:
+            #     print("svg.py: update(): tmpdir=", tmpdir)
+            self.output_dir = tmpdir
+            all_files = sorted(glob.glob(os.path.join(tmpdir, 'snapshot*.svg')))
+            # with debug_view:
+            #     print("svg.py: update(): len(all_files)=", len(all_files))
+            if len(all_files) > 0:
+                last_file = all_files[-1]
+                self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "snapshot%08d.svg"
+                self.svg_plot.update()
+            return
+
+        all_files = sorted(glob.glob(os.path.join(rdir, 'snapshot*.svg')))
+        with debug_view:
+            print("svg.py: update(): rdir != blank; len(all_files)=", len(all_files))
         if len(all_files) > 0:
             last_file = all_files[-1]
             self.max_frames.value = int(last_file[-12:-4])  # assumes naming scheme: "snapshot%08d.svg"
+            self.svg_plot.update()
 
-        # with debug_view:
-        #     print("SVG: added %s files" % len(all_files))
 
     def download_cb(self):
-        file_str = os.path.join(self.output_dir, '*.svg')
+        file_str = os.path.join(self.output_dir,'*.svg')
         # print('zip up all ',file_str)
-        with zipfile.ZipFile('svg.zip', 'w') as myzip:
+        with zipfile.ZipFile('svg.zip','w') as myzip:
             for f in glob.glob(file_str):
                 myzip.write(f, os.path.basename(f))   # 2nd arg avoids full filename path in the archive
 
@@ -148,91 +167,20 @@ class SVGTab(object):
     def update_max_frames(self,_b):
         self.svg_plot.children[0].max = self.max_frames.value
 
-    #-----------------------------------------------------
-    def circles(self, x, y, s, c='b', vmin=None, vmax=None, **kwargs):
-        """
-        See https://gist.github.com/syrte/592a062c562cd2a98a83 
-
-        Make a scatter plot of circles. 
-        Similar to plt.scatter, but the size of circles are in data scale.
-        Parameters
-        ----------
-        x, y : scalar or array_like, shape (n, )
-            Input data
-        s : scalar or array_like, shape (n, ) 
-            Radius of circles.
-        c : color or sequence of color, optional, default : 'b'
-            `c` can be a single color format string, or a sequence of color
-            specifications of length `N`, or a sequence of `N` numbers to be
-            mapped to colors using the `cmap` and `norm` specified via kwargs.
-            Note that `c` should not be a single numeric RGB or RGBA sequence 
-            because that is indistinguishable from an array of values
-            to be colormapped. (If you insist, use `color` instead.)  
-            `c` can be a 2-D array in which the rows are RGB or RGBA, however. 
-        vmin, vmax : scalar, optional, default: None
-            `vmin` and `vmax` are used in conjunction with `norm` to normalize
-            luminance data.  If either are `None`, the min and max of the
-            color array is used.
-        kwargs : `~matplotlib.collections.Collection` properties
-            Eg. alpha, edgecolor(ec), facecolor(fc), linewidth(lw), linestyle(ls), 
-            norm, cmap, transform, etc.
-        Returns
-        -------
-        paths : `~matplotlib.collections.PathCollection`
-        Examples
-        --------
-        a = np.arange(11)
-        circles(a, a, s=a*0.2, c=a, alpha=0.5, ec='none')
-        plt.colorbar()
-        License
-        --------
-        This code is under [The BSD 3-Clause License]
-        (http://opensource.org/licenses/BSD-3-Clause)
-        """
-
-        if np.isscalar(c):
-            kwargs.setdefault('color', c)
-            c = None
-
-        if 'fc' in kwargs:
-            kwargs.setdefault('facecolor', kwargs.pop('fc'))
-        if 'ec' in kwargs:
-            kwargs.setdefault('edgecolor', kwargs.pop('ec'))
-        if 'ls' in kwargs:
-            kwargs.setdefault('linestyle', kwargs.pop('ls'))
-        if 'lw' in kwargs:
-            kwargs.setdefault('linewidth', kwargs.pop('lw'))
-        # You can set `facecolor` with an array for each patch,
-        # while you can only set `facecolors` with a value for all.
-
-        zipped = np.broadcast(x, y, s)
-        patches = [Circle((x_, y_), s_)
-                for x_, y_, s_ in zipped]
-        collection = PatchCollection(patches, **kwargs)
-        if c is not None:
-            c = np.broadcast_to(c, zipped.shape).ravel()
-            collection.set_array(c)
-            collection.set_clim(vmin, vmax)
-
-        ax = plt.gca()
-        ax.add_collection(collection)
-        ax.autoscale_view()
-        plt.draw_if_interactive()
-        if c is not None:
-            plt.sci(collection)
-        return collection
-
-    #-------------------------
     def plot_svg(self, frame):
         # global current_idx, axes_max
         global current_frame
         current_frame = frame
         fname = "snapshot%08d.svg" % frame
+
+#        fullname = self.output_dir_str + fname
+#        fullname = fname  # do this for nanoHUB! (data appears in root dir?)
         full_fname = os.path.join(self.output_dir, fname)
-        # with debug_view:
-        #     print("plot_svg:", full_fname) 
         if not os.path.isfile(full_fname):
-            print("Once output files are generated, click the slider.")   
+            # print("File does not exist: ", fname)
+            # print("File does not exist: ", full_fname)
+            #print("No: ", full_fname)
+            print("Once output files are generated, click the slider.")   #  No:  snapshot00000000.svg
             return
 
         xlist = deque()
@@ -258,8 +206,6 @@ class SVGTab(object):
                 # print("debug> found width --> axes_max =", axes_max)
             if child.text and "Current time" in child.text:
                 svals = child.text.split()
-                # title_str = "(" + str(current_idx) + ") Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
-                # title_str = "Current time: " + svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
                 title_str = svals[2] + "d, " + svals[4] + "h, " + svals[7] + "m"
 
             # print("width ",child.attrib['width'])
@@ -349,11 +295,10 @@ class SVGTab(object):
         #   plt.xlim(axes_min,axes_max)
         #   plt.ylim(axes_min,axes_max)
         #   plt.scatter(xvals,yvals, s=rvals*scale_radius, c=rgbs)
-#        self.fig = plt.figure(figsize=(6, 6))
-        # self.fig = plt.figure(figsize=(7, 7))
-        # self.fig = plt.figure(figsize=(9, 9))
-        # self.fig = plt.figure(figsize=(18, 18))
-        self.fig = plt.figure(figsize=(15, 15))
+#        plt.axes().set_aspect('equal', 'datalim')
+
+        self.fig = plt.figure(figsize=(6, 6))   #rwh: move to __init__
+#        plt.figure(figsize=(7, 7))
 
 #        axx = plt.axes([0, 0.05, 0.9, 0.9])  # left, bottom, width, height
 #        axx = fig.gca()
@@ -364,32 +309,35 @@ class SVGTab(object):
         #   ax.ylim(axes_min,axes_max)
 
         # convert radii to radii in pixels
-        # ax2 = self.fig.gca()
-        # N = len(xvals)
-        # rr_pix = (ax2.transData.transform(np.vstack([rvals, rvals]).T) -
-        #             ax2.transData.transform(np.vstack([np.zeros(N), np.zeros(N)]).T))
-        # rpix, _ = rr_pix.T
+#        ax2 = fig.gca()
+        ax2 = self.fig.gca()
+        N = len(xvals)
+        rr_pix = (ax2.transData.transform(np.vstack([rvals, rvals]).T) -
+                    ax2.transData.transform(np.vstack([np.zeros(N), np.zeros(N)]).T))
+        rpix, _ = rr_pix.T
 
-        # markers_size = (144. * rpix / self.fig.dpi)**2   # = (2*rpix / fig.dpi * 72)**2
-        # markers_size = markers_size/4000000.
-        # print('max=',markers_size.max())
+#        markers_size = (144. * rpix / fig.dpi)**2   # = (2*rpix / fig.dpi * 72)**2
+        markers_size = (144. * rpix / self.fig.dpi)**2   # = (2*rpix / fig.dpi * 72)**2
+#        markers_size = (2*rpix / fig.dpi * 72)**2
+        markers_size = markers_size/4000000.
+        #print('markers_size.max()=',markers_size.max())
 
-        #rwh - temp fix - Ah, error only occurs when "edges" is toggled on
+#        ax.scatter(xvals,yvals, s=rvals*self.scale_radius, c=rgbs)
+#        axx.scatter(xvals,yvals, s=markers_size, c=rgbs)
+
+#rwh - temp fix - Ah, error only occurs when "edges" is toggled on
         if (self.show_edge):
-            try:
-                # plt.scatter(xvals,yvals, s=markers_size, c=rgbs, edgecolor='black', linewidth=0.5)
-                self.circles(xvals,yvals, s=rvals, color=rgbs, edgecolor='black', linewidth=0.5)
-            except (ValueError):
-                pass
+            plt.scatter(xvals,yvals, s=markers_size, c=rgbs, edgecolor='black', linewidth=0.5)
         else:
-            # plt.scatter(xvals,yvals, s=markers_size, c=rgbs)
-            self.circles(xvals,yvals, s=rvals, color=rgbs)
+            plt.scatter(xvals,yvals, s=markers_size, c=rgbs)
 
         plt.xlim(self.axes_min, self.axes_max)
         plt.ylim(self.axes_min, self.axes_max)
         #   ax.grid(False)
 #        axx.set_title(title_str)
         plt.title(title_str)
+
+        # plt.close(fig)
 
 # video-style widget - perhaps for future use
 # svg_play = widgets.Play(
