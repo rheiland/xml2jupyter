@@ -231,7 +231,7 @@ class UserTab(object):
         units_button6.style.button_color = 'tan'
         units_button7 = Button(description='micron/min', disabled=True, layout=units_button_layout) 
         units_button7.style.button_color = 'lightgreen'
-        units_button8 = Button(description='min', disabled=True, layout=units_button_layout) 
+        units_button8 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button8.style.button_color = 'tan'
         units_button9 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button9.style.button_color = 'lightgreen'
@@ -395,7 +395,13 @@ class UserTab(object):
 
     # Populate the GUI widgets with values from the XML
     def fill_gui(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         self.random_seed.value = int(uep.find('.//random_seed').text)
         self.immune_activation_time.value = float(uep.find('.//immune_activation_time').text)
         self.save_interval_after_therapy_start.value = float(uep.find('.//save_interval_after_therapy_start').text)
@@ -424,7 +430,13 @@ class UserTab(object):
 
     # Read values from the GUI widgets to enable editing XML
     def fill_xml(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML 
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         uep.find('.//random_seed').text = str(self.random_seed.value)
         uep.find('.//immune_activation_time').text = str(self.immune_activation_time.value)
         uep.find('.//save_interval_after_therapy_start').text = str(self.save_interval_after_therapy_start.value)

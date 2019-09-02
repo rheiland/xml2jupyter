@@ -113,156 +113,156 @@ class UserTab(object):
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name12 = Button(description='attached_worker_migration_bias', disabled=True, layout=name_button_layout)
+        param_name12 = Button(description='worker_relative_adhesion', disabled=True, layout=name_button_layout)
         param_name12.style.button_color = 'tan'
-
-        self.attached_worker_migration_bias = FloatText(
-          value=1.0,
-          step=0.1,
-          style=style, layout=widget_layout)
-
-        param_name13 = Button(description='unattached_worker_migration_bias', disabled=True, layout=name_button_layout)
-        param_name13.style.button_color = 'lightgreen'
-
-        self.unattached_worker_migration_bias = FloatText(
-          value=1.0,
-          step=0.1,
-          style=style, layout=widget_layout)
-
-        param_name14 = Button(description='worker_relative_adhesion', disabled=True, layout=name_button_layout)
-        param_name14.style.button_color = 'tan'
 
         self.worker_relative_adhesion = FloatText(
           value=0,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name15 = Button(description='worker_relative_repulsion', disabled=True, layout=name_button_layout)
-        param_name15.style.button_color = 'lightgreen'
+        param_name13 = Button(description='worker_relative_repulsion', disabled=True, layout=name_button_layout)
+        param_name13.style.button_color = 'lightgreen'
 
         self.worker_relative_repulsion = FloatText(
           value=5,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name16 = Button(description='elastic_coefficient', disabled=True, layout=name_button_layout)
-        param_name16.style.button_color = 'tan'
+        param_name14 = Button(description='elastic_coefficient', disabled=True, layout=name_button_layout)
+        param_name14.style.button_color = 'tan'
 
         self.elastic_coefficient = FloatText(
           value=0.05,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name17 = Button(description='receptor', disabled=True, layout=name_button_layout)
-        param_name17.style.button_color = 'lightgreen'
+        param_name15 = Button(description='receptor', disabled=True, layout=name_button_layout)
+        param_name15.style.button_color = 'lightgreen'
 
         self.receptor = FloatText(
           value=0.0,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name18 = Button(description='cargo_release_o2_threshold', disabled=True, layout=name_button_layout)
-        param_name18.style.button_color = 'tan'
+        param_name16 = Button(description='cargo_release_o2_threshold', disabled=True, layout=name_button_layout)
+        param_name16.style.button_color = 'tan'
 
         self.cargo_release_o2_threshold = FloatText(
           value=10,
           step=1,
           style=style, layout=widget_layout)
 
-        param_name19 = Button(description='max_relative_cell_adhesion_distance', disabled=True, layout=name_button_layout)
-        param_name19.style.button_color = 'lightgreen'
+        param_name17 = Button(description='max_relative_cell_adhesion_distance', disabled=True, layout=name_button_layout)
+        param_name17.style.button_color = 'lightgreen'
 
         self.max_relative_cell_adhesion_distance = FloatText(
           value=1.25,
           step=0.1,
           style=style, layout=widget_layout)
 
-        param_name20 = Button(description='damage_rate', disabled=True, layout=name_button_layout)
-        param_name20.style.button_color = 'tan'
+        param_name18 = Button(description='damage_rate', disabled=True, layout=name_button_layout)
+        param_name18.style.button_color = 'tan'
 
         self.damage_rate = FloatText(
           value=0.03333,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name21 = Button(description='repair_rate', disabled=True, layout=name_button_layout)
-        param_name21.style.button_color = 'lightgreen'
+        param_name19 = Button(description='repair_rate', disabled=True, layout=name_button_layout)
+        param_name19.style.button_color = 'lightgreen'
 
         self.repair_rate = FloatText(
           value=0.004167,
           step=0.001,
           style=style, layout=widget_layout)
 
-        param_name22 = Button(description='drug_death_rate', disabled=True, layout=name_button_layout)
-        param_name22.style.button_color = 'tan'
+        param_name20 = Button(description='drug_death_rate', disabled=True, layout=name_button_layout)
+        param_name20.style.button_color = 'tan'
 
         self.drug_death_rate = FloatText(
           value=0.004167,
           step=0.001,
           style=style, layout=widget_layout)
 
-        param_name23 = Button(description='worker_fraction', disabled=True, layout=name_button_layout)
-        param_name23.style.button_color = 'lightgreen'
+        param_name21 = Button(description='worker_fraction', disabled=True, layout=name_button_layout)
+        param_name21.style.button_color = 'lightgreen'
 
         self.worker_fraction = FloatText(
           value=0.10,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name24 = Button(description='number_of_injected_cells', disabled=True, layout=name_button_layout)
-        param_name24.style.button_color = 'tan'
+        param_name22 = Button(description='number_of_injected_cells', disabled=True, layout=name_button_layout)
+        param_name22.style.button_color = 'tan'
 
         self.number_of_injected_cells = IntText(
           value=500,
           step=10,
           style=style, layout=widget_layout)
 
-        param_name25 = Button(description='tumor_radius', disabled=True, layout=name_button_layout)
-        param_name25.style.button_color = 'lightgreen'
+        param_name23 = Button(description='tumor_radius', disabled=True, layout=name_button_layout)
+        param_name23.style.button_color = 'lightgreen'
 
         self.tumor_radius = FloatText(
           value=200,
           step=10,
           style=style, layout=widget_layout)
 
-        param_name26 = Button(description='max_elastic_displacement', disabled=True, layout=name_button_layout)
-        param_name26.style.button_color = 'tan'
+        param_name24 = Button(description='max_elastic_displacement', disabled=True, layout=name_button_layout)
+        param_name24.style.button_color = 'tan'
 
         self.max_elastic_displacement = FloatText(
           value=50.0,
           step=1,
           style=style, layout=widget_layout)
 
-        param_name27 = Button(description='attachment_receptor_threshold', disabled=True, layout=name_button_layout)
-        param_name27.style.button_color = 'lightgreen'
+        param_name25 = Button(description='attachment_receptor_threshold', disabled=True, layout=name_button_layout)
+        param_name25.style.button_color = 'lightgreen'
 
         self.attachment_receptor_threshold = FloatText(
           value=0.1,
           step=0.01,
           style=style, layout=widget_layout)
 
-        param_name28 = Button(description='max_attachment_distance', disabled=True, layout=name_button_layout)
-        param_name28.style.button_color = 'tan'
+        param_name26 = Button(description='max_attachment_distance', disabled=True, layout=name_button_layout)
+        param_name26.style.button_color = 'tan'
 
         self.max_attachment_distance = FloatText(
           value=18.0,
           step=1,
           style=style, layout=widget_layout)
 
-        param_name29 = Button(description='min_attachment_distance', disabled=True, layout=name_button_layout)
-        param_name29.style.button_color = 'lightgreen'
+        param_name27 = Button(description='min_attachment_distance', disabled=True, layout=name_button_layout)
+        param_name27.style.button_color = 'lightgreen'
 
         self.min_attachment_distance = FloatText(
           value=14.0,
           step=1,
           style=style, layout=widget_layout)
 
-        param_name30 = Button(description='motility_shutdown_detection_threshold', disabled=True, layout=name_button_layout)
-        param_name30.style.button_color = 'tan'
+        param_name28 = Button(description='motility_shutdown_detection_threshold', disabled=True, layout=name_button_layout)
+        param_name28.style.button_color = 'tan'
 
         self.motility_shutdown_detection_threshold = FloatText(
           value=0.001,
           step=0.0001,
+          style=style, layout=widget_layout)
+
+        param_name29 = Button(description='attached_worker_migration_bias', disabled=True, layout=name_button_layout)
+        param_name29.style.button_color = 'lightgreen'
+
+        self.attached_worker_migration_bias = FloatText(
+          value=0.5,
+          step=0.1,
+          style=style, layout=widget_layout)
+
+        param_name30 = Button(description='unattached_worker_migration_bias', disabled=True, layout=name_button_layout)
+        param_name30.style.button_color = 'tan'
+
+        self.unattached_worker_migration_bias = FloatText(
+          value=0.5,
+          step=0.1,
           style=style, layout=widget_layout)
 
         units_button1 = Button(description='', disabled=True, layout=units_button_layout) 
@@ -287,41 +287,41 @@ class UserTab(object):
         units_button10.style.button_color = 'tan'
         units_button11 = Button(description='micron/min', disabled=True, layout=units_button_layout) 
         units_button11.style.button_color = 'lightgreen'
-        units_button12 = Button(description='min', disabled=True, layout=units_button_layout) 
+        units_button12 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button12.style.button_color = 'tan'
-        units_button13 = Button(description='min', disabled=True, layout=units_button_layout) 
+        units_button13 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button13.style.button_color = 'lightgreen'
-        units_button14 = Button(description='', disabled=True, layout=units_button_layout) 
+        units_button14 = Button(description='1/min', disabled=True, layout=units_button_layout) 
         units_button14.style.button_color = 'tan'
         units_button15 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button15.style.button_color = 'lightgreen'
-        units_button16 = Button(description='1/min', disabled=True, layout=units_button_layout) 
+        units_button16 = Button(description='mmHg', disabled=True, layout=units_button_layout) 
         units_button16.style.button_color = 'tan'
         units_button17 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button17.style.button_color = 'lightgreen'
-        units_button18 = Button(description='mmHg', disabled=True, layout=units_button_layout) 
+        units_button18 = Button(description='1/min', disabled=True, layout=units_button_layout) 
         units_button18.style.button_color = 'tan'
-        units_button19 = Button(description='', disabled=True, layout=units_button_layout) 
+        units_button19 = Button(description='1/min', disabled=True, layout=units_button_layout) 
         units_button19.style.button_color = 'lightgreen'
         units_button20 = Button(description='1/min', disabled=True, layout=units_button_layout) 
         units_button20.style.button_color = 'tan'
-        units_button21 = Button(description='1/min', disabled=True, layout=units_button_layout) 
+        units_button21 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button21.style.button_color = 'lightgreen'
-        units_button22 = Button(description='1/min', disabled=True, layout=units_button_layout) 
+        units_button22 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button22.style.button_color = 'tan'
-        units_button23 = Button(description='', disabled=True, layout=units_button_layout) 
+        units_button23 = Button(description='micron', disabled=True, layout=units_button_layout) 
         units_button23.style.button_color = 'lightgreen'
-        units_button24 = Button(description='', disabled=True, layout=units_button_layout) 
+        units_button24 = Button(description='micron', disabled=True, layout=units_button_layout) 
         units_button24.style.button_color = 'tan'
-        units_button25 = Button(description='micron', disabled=True, layout=units_button_layout) 
+        units_button25 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button25.style.button_color = 'lightgreen'
         units_button26 = Button(description='micron', disabled=True, layout=units_button_layout) 
         units_button26.style.button_color = 'tan'
-        units_button27 = Button(description='', disabled=True, layout=units_button_layout) 
+        units_button27 = Button(description='micron', disabled=True, layout=units_button_layout) 
         units_button27.style.button_color = 'lightgreen'
-        units_button28 = Button(description='micron', disabled=True, layout=units_button_layout) 
+        units_button28 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button28.style.button_color = 'tan'
-        units_button29 = Button(description='micron', disabled=True, layout=units_button_layout) 
+        units_button29 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button29.style.button_color = 'lightgreen'
         units_button30 = Button(description='', disabled=True, layout=units_button_layout) 
         units_button30.style.button_color = 'tan'
@@ -398,25 +398,25 @@ class UserTab(object):
         row9 = [param_name9, self.worker_apoptosis_rate, units_button9, desc_button9] 
         row10 = [param_name10, self.worker_motility_persistence_time, units_button10, desc_button10] 
         row11 = [param_name11, self.worker_migration_speed, units_button11, desc_button11] 
-        row12 = [param_name12, self.attached_worker_migration_bias, units_button12, desc_button12] 
-        row13 = [param_name13, self.unattached_worker_migration_bias, units_button13, desc_button13] 
-        row14 = [param_name14, self.worker_relative_adhesion, units_button14, desc_button14] 
-        row15 = [param_name15, self.worker_relative_repulsion, units_button15, desc_button15] 
-        row16 = [param_name16, self.elastic_coefficient, units_button16, desc_button16] 
-        row17 = [param_name17, self.receptor, units_button17, desc_button17] 
-        row18 = [param_name18, self.cargo_release_o2_threshold, units_button18, desc_button18] 
-        row19 = [param_name19, self.max_relative_cell_adhesion_distance, units_button19, desc_button19] 
-        row20 = [param_name20, self.damage_rate, units_button20, desc_button20] 
-        row21 = [param_name21, self.repair_rate, units_button21, desc_button21] 
-        row22 = [param_name22, self.drug_death_rate, units_button22, desc_button22] 
-        row23 = [param_name23, self.worker_fraction, units_button23, desc_button23] 
-        row24 = [param_name24, self.number_of_injected_cells, units_button24, desc_button24] 
-        row25 = [param_name25, self.tumor_radius, units_button25, desc_button25] 
-        row26 = [param_name26, self.max_elastic_displacement, units_button26, desc_button26] 
-        row27 = [param_name27, self.attachment_receptor_threshold, units_button27, desc_button27] 
-        row28 = [param_name28, self.max_attachment_distance, units_button28, desc_button28] 
-        row29 = [param_name29, self.min_attachment_distance, units_button29, desc_button29] 
-        row30 = [param_name30, self.motility_shutdown_detection_threshold, units_button30, desc_button30] 
+        row12 = [param_name12, self.worker_relative_adhesion, units_button12, desc_button12] 
+        row13 = [param_name13, self.worker_relative_repulsion, units_button13, desc_button13] 
+        row14 = [param_name14, self.elastic_coefficient, units_button14, desc_button14] 
+        row15 = [param_name15, self.receptor, units_button15, desc_button15] 
+        row16 = [param_name16, self.cargo_release_o2_threshold, units_button16, desc_button16] 
+        row17 = [param_name17, self.max_relative_cell_adhesion_distance, units_button17, desc_button17] 
+        row18 = [param_name18, self.damage_rate, units_button18, desc_button18] 
+        row19 = [param_name19, self.repair_rate, units_button19, desc_button19] 
+        row20 = [param_name20, self.drug_death_rate, units_button20, desc_button20] 
+        row21 = [param_name21, self.worker_fraction, units_button21, desc_button21] 
+        row22 = [param_name22, self.number_of_injected_cells, units_button22, desc_button22] 
+        row23 = [param_name23, self.tumor_radius, units_button23, desc_button23] 
+        row24 = [param_name24, self.max_elastic_displacement, units_button24, desc_button24] 
+        row25 = [param_name25, self.attachment_receptor_threshold, units_button25, desc_button25] 
+        row26 = [param_name26, self.max_attachment_distance, units_button26, desc_button26] 
+        row27 = [param_name27, self.min_attachment_distance, units_button27, desc_button27] 
+        row28 = [param_name28, self.motility_shutdown_detection_threshold, units_button28, desc_button28] 
+        row29 = [param_name29, self.attached_worker_migration_bias, units_button29, desc_button29] 
+        row30 = [param_name30, self.unattached_worker_migration_bias, units_button30, desc_button30] 
 
         box_layout = Layout(display='flex', flex_flow='row', align_items='stretch', width='100%')
         box1 = Box(children=row1, layout=box_layout)
@@ -485,7 +485,13 @@ class UserTab(object):
 
     # Populate the GUI widgets with values from the XML
     def fill_gui(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         self.random_seed.value = int(uep.find('.//random_seed').text)
         self.therapy_activation_time.value = float(uep.find('.//therapy_activation_time').text)
         self.save_interval_after_therapy_start.value = float(uep.find('.//save_interval_after_therapy_start').text)
@@ -497,8 +503,6 @@ class UserTab(object):
         self.worker_apoptosis_rate.value = float(uep.find('.//worker_apoptosis_rate').text)
         self.worker_motility_persistence_time.value = float(uep.find('.//worker_motility_persistence_time').text)
         self.worker_migration_speed.value = float(uep.find('.//worker_migration_speed').text)
-        self.attached_worker_migration_bias.value = float(uep.find('.//attached_worker_migration_bias').text)
-        self.unattached_worker_migration_bias.value = float(uep.find('.//unattached_worker_migration_bias').text)
         self.worker_relative_adhesion.value = float(uep.find('.//worker_relative_adhesion').text)
         self.worker_relative_repulsion.value = float(uep.find('.//worker_relative_repulsion').text)
         self.elastic_coefficient.value = float(uep.find('.//elastic_coefficient').text)
@@ -516,11 +520,19 @@ class UserTab(object):
         self.max_attachment_distance.value = float(uep.find('.//max_attachment_distance').text)
         self.min_attachment_distance.value = float(uep.find('.//min_attachment_distance').text)
         self.motility_shutdown_detection_threshold.value = float(uep.find('.//motility_shutdown_detection_threshold').text)
+        self.attached_worker_migration_bias.value = float(uep.find('.//attached_worker_migration_bias').text)
+        self.unattached_worker_migration_bias.value = float(uep.find('.//unattached_worker_migration_bias').text)
 
 
     # Read values from the GUI widgets to enable editing XML
     def fill_xml(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML 
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         uep.find('.//random_seed').text = str(self.random_seed.value)
         uep.find('.//therapy_activation_time').text = str(self.therapy_activation_time.value)
         uep.find('.//save_interval_after_therapy_start').text = str(self.save_interval_after_therapy_start.value)
@@ -532,8 +544,6 @@ class UserTab(object):
         uep.find('.//worker_apoptosis_rate').text = str(self.worker_apoptosis_rate.value)
         uep.find('.//worker_motility_persistence_time').text = str(self.worker_motility_persistence_time.value)
         uep.find('.//worker_migration_speed').text = str(self.worker_migration_speed.value)
-        uep.find('.//attached_worker_migration_bias').text = str(self.attached_worker_migration_bias.value)
-        uep.find('.//unattached_worker_migration_bias').text = str(self.unattached_worker_migration_bias.value)
         uep.find('.//worker_relative_adhesion').text = str(self.worker_relative_adhesion.value)
         uep.find('.//worker_relative_repulsion').text = str(self.worker_relative_repulsion.value)
         uep.find('.//elastic_coefficient').text = str(self.elastic_coefficient.value)
@@ -551,3 +561,5 @@ class UserTab(object):
         uep.find('.//max_attachment_distance').text = str(self.max_attachment_distance.value)
         uep.find('.//min_attachment_distance').text = str(self.min_attachment_distance.value)
         uep.find('.//motility_shutdown_detection_threshold').text = str(self.motility_shutdown_detection_threshold.value)
+        uep.find('.//attached_worker_migration_bias').text = str(self.attached_worker_migration_bias.value)
+        uep.find('.//unattached_worker_migration_bias').text = str(self.unattached_worker_migration_bias.value)

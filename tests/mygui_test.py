@@ -45,7 +45,7 @@ user_tab = UserTab()
 svg = SVGTab()
 sub = SubstrateTab()
 
-main_xml_filename = '../config_samples/config_biorobots.xml'
+main_xml_filename = '../config_samples/config_heterogeneity.xml'
 full_xml_filename = os.path.abspath(main_xml_filename)
 #print('full_xml_filename=',full_xml_filename)
 

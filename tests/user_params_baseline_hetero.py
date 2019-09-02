@@ -125,7 +125,13 @@ class UserTab(object):
 
     # Populate the GUI widgets with values from the XML
     def fill_gui(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         self.tumor_radius.value = float(uep.find('.//tumor_radius').text)
         self.oncoprotein_mean.value = float(uep.find('.//oncoprotein_mean').text)
         self.oncoprotein_sd.value = float(uep.find('.//oncoprotein_sd').text)
@@ -136,7 +142,13 @@ class UserTab(object):
 
     # Read values from the GUI widgets to enable editing XML
     def fill_xml(self, xml_root):
-        uep = xml_root.find('.//user_parameters')  # find unique entry point into XML 
+        uep = xml_root.find('.//microenvironment_setup')  # find unique entry point
+        vp = []   # pointers to <variable> nodes
+        if uep:
+            for var in uep.findall('variable'):
+                vp.append(var)
+
+        uep = xml_root.find('.//user_parameters')  # find unique entry point
         uep.find('.//tumor_radius').text = str(self.tumor_radius.value)
         uep.find('.//oncoprotein_mean').text = str(self.oncoprotein_mean.value)
         uep.find('.//oncoprotein_sd').text = str(self.oncoprotein_sd.value)
