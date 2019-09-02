@@ -1,8 +1,8 @@
 # xml2jupyter
 
-<!--
+
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
--->
+
 Parse a PhysiCell configuration file (XML) and generate a Jupyter (Python) module (user_params.py)
 containing associated widgets for user parameters. For more information, we recommend checking out
 the JOSS paper describing the functionality of this tool [![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
