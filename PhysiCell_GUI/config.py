@@ -193,11 +193,17 @@ class ConfigTab(object):
         
         self.omp_threads.value = int(xml_root.find(".//omp_num_threads").text)
         
-        # rwh - todo: test these bool conversions!
-        self.toggle_svg.value = bool(xml_root.find(".//SVG").find(".//enable").text)
+        if xml_root.find(".//SVG//enable").text.lower() == 'true':
+            self.toggle_svg.value = True
+        else:
+            self.toggle_svg.value = False
         self.svg_interval.value = int(xml_root.find(".//SVG").find(".//interval").text)
-        self.toggle_mcds.value = bool(xml_root.find(".//full_data").find(".//enable").text)
-        self.mcds_interval.value = int(xml_root.find(".//full_data").find(".//interval").text)
+
+        if xml_root.find(".//full_data//enable").text.lower() == 'true':
+            self.toggle_mcds.value = True
+        else:
+            self.toggle_mcds.value = False
+        self.mcds_interval.value = int(xml_root.find(".//full_data//interval").text)
 
 
     # Read values from the GUI widgets and generate/write a new XML
