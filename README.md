@@ -3,6 +3,8 @@
 
 [![Build Status](https://travis-ci.com/rheiland/xml2jupyter.svg?branch=master)](https://travis-ci.com/rheiland/xml2jupyter) 
 
+### NOTE: This repo is associated with our JOSS paper, however, the same functionality (and more) is now being maintained at https://github.com/PhysiCell-Tools/PhysiCell-Jupyter-GUI
+
 Parse a PhysiCell configuration file (XML) and generate Jupyter (Python) modules (microenv_params.py and user_params.py)
 containing associated widgets for model parameters. For more information, we recommend checking out
 the JOSS paper describing the (version 1) functionality of this tool [![DOI](http://joss.theoj.org/papers/10.21105/joss.01408/status.svg)](https://doi.org/10.21105/joss.01408)
